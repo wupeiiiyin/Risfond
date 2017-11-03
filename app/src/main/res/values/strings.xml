@@ -42,7 +42,6 @@
     </string-array>
 
     <string name="recommend_people">推荐人选</string>
-
     <string name="process_tip1">客户面试： 只有客户真正对人选进行了面试，并撰写不少于30字的面试反馈信息后才能算绩效</string>
     <string name="process_tip2">客户发OFFER：包含口头、书面、电子的同意录用确认信息，撰写不少于30个字的offer内容信息，且入职年薪【不能为空】或【暂定】！</string>
     <string name="process_tip3">成功入职：人选去企业报道开始正式上班，并撰写不少于30个字的入职沟通反馈信息，且入职年薪【不能为空】或【暂定】！</string>
