@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_chat_voice_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:text="3&apos;&apos;"
+        android:textColor="#818181"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/iv_send_failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/send_failed"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/pb_chat"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/chat_send_bg"
+        android:gravity="right"
+        android:padding="10dp">
+
+        <View
+            android:id="@+id/v_chat_voice"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/voice_send_anim3"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_chat_person_photo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/person_default"/>
+
+</LinearLayout>

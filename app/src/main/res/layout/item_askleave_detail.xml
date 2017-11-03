@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_wentout_list"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@drawable/bg_attendance_text_click"
+        android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_askleave_leavetype"
+                style="@style/my_text_blue_13_0E97FF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="病假" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_askleave_dayformat"
+                style="@style/my_text_left_12_646464"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08 - 09" />
+
+            <TextView
+                android:id="@+id/tv_askleave_timeformat"
+                style="@style/my_text_left_12_646464"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="10:00" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_askleave_leavenum"
+                style="@style/my_text_13_646464"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="6天" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_askleave_leavestatus"
+                style="@style/my_text_red_13_F35631"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="同意" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/item_line"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"/>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/ll_wentout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="36dp"
+            android:paddingRight="36dp">
+
+            <TextView
+                android:id="@+id/tv_askleave_reason"
+                style="@style/my_text_13_646464"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="由于身体不适，去医院检查，医生建议修养一周，故请假一段时间。"
+                android:lineSpacingMultiplier="1.2"/>
+        </LinearLayout>
+
+        <View style="@style/item_line"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

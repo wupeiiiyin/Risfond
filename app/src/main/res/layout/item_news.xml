@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_mine_text_click"
+    android:orientation="vertical"
+    android:paddingBottom="13dp"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp"
+    android:paddingTop="13dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="15sp"
+        tools:text="锐仕方达西南区总裁受邀出席"/>
+
+    <com.risfond.rnss.widget.ExpandableTextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/color_customer_black"
+        android:textSize="12sp"
+        app:etv_EnableToggle="false"
+        app:etv_MaxLinesOnShrink="2"
+        app:etv_ToExpandHint="...详情"
+        app:etv_ToExpandHintColor="#0e97ff"
+        tools:text="下周签订合作，已准备好合同。"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/zicontimeblue"
+            android:drawablePadding="5dp"
+            android:textColor="@color/text_blue"
+            android:textSize="12sp"
+            tools:text="2017.10.27"/>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:drawableLeft="@mipmap/zicontagblue"
+            android:drawablePadding="5dp"
+            android:textColor="@color/text_blue"
+            android:textSize="12sp"
+            tools:text="公司新闻"/>
+
+    </LinearLayout>
+
+</LinearLayout>

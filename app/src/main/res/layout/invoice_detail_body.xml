@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="14dp"
+    android:paddingRight="14dp"
+    android:paddingLeft="20dp"
+    android:paddingBottom="14dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_invoice_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="客户名称： "
+            android:textColor="@color/color_home_gray_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_salary_invoice_company_name_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_invoice_company_name"
+            android:text="京东世纪商贸有限公司"
+            android:textColor="@color/color_customer_black"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_invoice_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="税务识别号： "
+            android:textColor="@color/color_home_gray_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_salary_invoice_account_name_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_invoice_account_name"
+            android:text="8579465874"
+            android:textColor="@color/color_customer_black"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</LinearLayout>

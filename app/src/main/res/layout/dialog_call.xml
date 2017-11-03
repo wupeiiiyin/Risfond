@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_user_dialog_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_phone"
+    tools:context="com.risfond.rnss.home.call.activity.CallActivity"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/toppic"/>
+
+        <ImageView
+            android:id="@+id/iv_call_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="10dp"
+            android:src="@mipmap/iconclose"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:text="通话线路"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="13sp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_line1"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="线路1"/>
+
+        <RadioButton
+            android:id="@+id/rb_line2"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="线路2"/>
+
+        <RadioButton
+            android:id="@+id/rb_line3"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="线路3"/>
+
+        <RadioButton
+            android:id="@+id/rb_line4"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="线路4"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:text="我的号码"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="13sp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_phone"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="18810352611"/>
+
+        <RadioButton
+            android:id="@+id/rb_landline"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="010-55399923"/>
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="对方号码"
+            android:textColor="@color/color_home_black_text"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_show_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="显示更多"
+            android:textColor="@color/color_home_gray_text"
+            android:textSize="11sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_area1"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxWidth="90dp"
+            android:text="中国大陆 +86"/>
+
+        <RadioButton
+            android:id="@+id/rb_area2"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/rb_area3"
+            android:layout_toRightOf="@+id/rb_area1"
+            android:button="@null"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:maxWidth="90dp"
+            android:text="香港 +852"/>
+
+        <RadioButton
+            android:id="@+id/rb_area3"
+            style="@style/rb_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:button="@null"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxWidth="90dp"
+            android:text="美国 +1"/>
+
+    </RelativeLayout>
+
+    <com.risfond.rnss.widget.ClearEditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_et_phone"
+        android:hint="请输入对方号码（国内座机号需加区号）"
+        android:imeOptions="actionNext"
+        android:inputType="phone"
+        android:padding="5dp"
+        android:textColor="@color/color_login_input"
+        android:textColorHint="@color/color_call_gray"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/btn_confirm"
+        android:layout_width="133dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_call_confim"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/color_white_real"
+        android:textSize="15sp"/>
+
+</LinearLayout>

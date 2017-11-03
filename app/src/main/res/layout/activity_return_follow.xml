@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_title_white" />
+
+    <View
+        android:id="@+id/view_line"
+        style="@style/item_line"
+        android:layout_below="@+id/title" />
+
+    <com.risfond.rnss.widget.MyScrollview
+        android:id="@+id/my_sl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="57dp"
+        android:layout_below="@+id/view_line">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_client_applation_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+            <RelativeLayout
+                android:id="@+id/rl_all_client_reason"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rv_client_applation_list"
+                android:background="@color/color_grey"
+                android:visibility="invisible">
+
+                <View
+                    android:id="@+id/line"
+                    style="@style/edit_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_client_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:paddingTop="10dp"
+                    android:layout_below="@+id/line">
+
+
+                    <RelativeLayout
+                        android:id="@+id/we_media_publish_content_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_leave_reason"
+                        android:background="@color/color_white"
+                        android:minHeight="160dp">
+
+                        <EditText
+                            android:id="@+id/et_leave_reason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:background="@null"
+                            android:hint="请输入10-500字的申请理由"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/color_home_black_text"
+                            android:textColorHint="@color/text_dimgray"
+                            android:textSize="15sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_leave_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_vertical"
+                        android:text="申请理由"
+                        android:textColor="@color/color_home_black_text"
+                        android:textSize="15sp" />
+
+
+                </RelativeLayout>
+
+                <View
+                    style="@style/edit_line"
+                    android:layout_below="@+id/rl_client_reason" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </com.risfond.rnss.widget.MyScrollview>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_grey"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/button_blue"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_leave_selector"
+            android:text="提交" />
+    </RelativeLayout>
+
+</RelativeLayout>

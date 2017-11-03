@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_recommend_management"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_recommend_management_item_click"
+    android:paddingBottom="15dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="15dp">
+
+    <TextView
+        android:id="@+id/tv_numbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="190"
+        android:textColor="@color/color_recommend_management_blue"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_describe_cn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_numbers"
+        android:layout_marginTop="5dp"
+        android:text="全部"
+        android:textColor="@color/color_recommend_management_black"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_describe_en"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_describe_cn"
+        android:layout_marginTop="10dp"
+        android:text="COMPLETE"
+        android:textColor="@color/color_recommend_management_gray"
+        android:textSize="10sp"/>
+
+    <ImageView
+        android:id="@+id/iv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/more"/>
+
+    <ImageView
+        android:id="@+id/iv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="13dp"
+        android:layout_toLeftOf="@+id/iv_more"
+        android:src="@mipmap/position0"/>
+
+
+</RelativeLayout>

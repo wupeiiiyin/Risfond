@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    tools:context="com.risfond.rnss.chat.activity.GroupListActivity">
+
+    <include layout="@layout/include_title"/>
+
+    <include layout="@layout/include_search"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colo_bg_login"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_group_county"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
+
+            <ImageView
+                android:id="@+id/iv_group_county"
+                android:layout_width="@dimen/w"
+                android:layout_height="@dimen/h"/>
+
+            <TextView
+                android:id="@+id/tv_group_county"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawablePadding="12dp"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/color_mine_black_text"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_group_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
+
+            <ImageView
+                android:id="@+id/iv_group_company"
+                android:layout_width="@dimen/w"
+                android:layout_height="@dimen/h"/>
+
+            <TextView
+                android:id="@+id/tv_group_company"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawablePadding="12dp"
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/color_mine_black_text"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
