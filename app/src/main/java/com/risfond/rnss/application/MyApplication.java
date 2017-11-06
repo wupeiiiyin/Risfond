@@ -41,7 +41,6 @@ public class MyApplication extends Application {
 
             @Override
             public void onCoreInitFinished() {
-                // TODO Auto-generated method stub
             }
         };
 
