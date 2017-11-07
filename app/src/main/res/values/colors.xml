@@ -48,5 +48,8 @@
     <color name="color_dynamics_gray">#8a8a8a</color>
     <color name="color_select_dialog">#057dff</color>
     <color name="color_dynamics_blue">#4e6889</color>
+    <color name="color_quick_resume_blue_txt">#0e97ff</color>
+    <color name="color_quick_resume_text">#969696</color>
+    <color name="color_quick_black_text">#323232</color>
 
 </resources>

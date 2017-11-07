@@ -277,7 +277,7 @@ public class MoreFragment extends BaseFragment {
             page = "1";
         }
 
-        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, page);
+        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, page);//回调
     }
 
     @OnCheckedChanged({R.id.cb_0, R.id.cb_1, R.id.cb_2, R.id.cb_3, R.id.cb_4,

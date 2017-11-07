@@ -113,19 +113,19 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private EducationFragment educationFragment;
     private MoreFragment moreFragment;
 
-    private List<String> selectedIds = new ArrayList<>();
-    private List<String> selectedNames = new ArrayList<>();
-    private List<String> educations = new ArrayList<>();
-    private List<String> educationNames = new ArrayList<>();
-    private String experience_from = "";
-    private String experience_to = "";
-    private List<String> languages = new ArrayList<>();
-    private List<String> recommends = new ArrayList<>();
-    private List<String> sexs = new ArrayList<>();
-    private String age_From = "";
-    private String age_To = "";
-    private String salary_From = "";
-    private String salary_To = "";
+    private List<String> selectedIds = new ArrayList<>();//城市ID
+    private List<String> selectedNames = new ArrayList<>();//城市名称
+    private List<String> educations = new ArrayList<>();//学历ID
+    private List<String> educationNames = new ArrayList<>();//学历名称
+    private String experience_from = "";//经验from
+    private String experience_to = "";//经验to
+    private List<String> languages = new ArrayList<>();//语言ID
+    private List<String> recommends = new ArrayList<>();//推荐状态ID
+    private List<String> sexs = new ArrayList<>();//性别ID
+    private String age_From = "";//年龄from
+    private String age_To = "";//年龄to
+    private String salary_From = "";//薪资from
+    private String salary_To = "";//薪资to
 
     private String yearfrom = "";
     private String yearto = "";
@@ -522,6 +522,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
+    //填充职位页面
     private void initPositionFragment() {
         transaction = getSupportFragmentManager().beginTransaction();
         positionFragment = new PositionFragment(selectedIds, selectedNames, this);
@@ -540,6 +541,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
+    //填充经验页面
     private void initExperienceFragment() {
         transaction = getSupportFragmentManager().beginTransaction();
         experienceFragment = new ExperienceFragment(experience_from, experience_to, this);
@@ -558,6 +560,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
+    //填充学历页面
     private void initEducationFragment() {
         transaction = getSupportFragmentManager().beginTransaction();
         educationFragment = new EducationFragment(educations, educationNames, this);
@@ -575,6 +578,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
+    //填充更多页面
     private void initMoreFragment() {
         transaction = getSupportFragmentManager().beginTransaction();
         if (searches.size() > 0) {

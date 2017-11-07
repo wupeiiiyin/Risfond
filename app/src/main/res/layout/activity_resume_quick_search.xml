@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_resume_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.risfond.rnss.home.resume.activity.ResumeQuickSearchActivity">
+
+    <include layout="@layout/include_search_quick_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="40dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="14sp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/hiconbag"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="按已有的职位搜索"
+                android:layout_gravity="center"
+                android:paddingLeft="14sp"
+                android:textColor="@color/color_quick_black_text"
+                android:textSize="15sp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:paddingLeft="14sp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="( "
+                    android:textColor="@color/color_quick_resume_blue_txt"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_resume_quick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_quick_resume_blue_txt"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" )"
+                    android:textColor="@color/color_quick_resume_blue_txt"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:paddingRight="14sp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/hiconmore"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_home_back"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共 "
+                    android:textColor="@color/color_quick_resume_text"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_resume_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_quick_resume_blue_txt"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 个快捷搜索"
+                    android:textColor="@color/color_quick_resume_text"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_quick_resume_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+        <LinearLayout
+            android:id="@+id/ll_empty_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="暂无简历"
+                android:textColor="@color/color_quick_resume_text"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

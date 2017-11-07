@@ -43,13 +43,15 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
     @BindView(R.id.tv_resume_search)
     TextView tvResumeSearch;
     @BindView(R.id.tv_resume_total)
-    TextView tvResumeTotal;
+    TextView tvResumeTotal;//简历份数
     @BindView(R.id.rv_resume_list)
     RecyclerView rvResumeList;
     @BindView(R.id.activity_resume_search)
     LinearLayout activityResumeSearch;
     @BindView(R.id.ll_empty_search)
     LinearLayout llEmptySearch;
+    @BindView(R.id.tv_search_quick)
+    TextView tvQuickSearch;//快捷搜索
 
     private Context context;
     private ResumeSearchAdapter adapter;
@@ -126,10 +128,14 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
         });
     }
 
-    @OnClick({R.id.tv_resume_search})
+    //监听事件
+    @OnClick({R.id.tv_resume_search,R.id.tv_search_quick})
     public void onClick(View v) {
         if (v.getId() == R.id.tv_resume_search) {
             ResumeSearchResultActivity.StartAction(context);
+        }
+        if(v.getId() == R.id.tv_search_quick){
+
         }
     }
 
