@@ -308,6 +308,8 @@
         </activity>
         <activity android:name=".home.commonFuctions.news.activity.NewsDetailActivity">
         </activity>
+        <activity android:name=".home.resume.activity.ResumeQuickSearchActivity">
+        </activity>
     </application>
 
 </manifest>
