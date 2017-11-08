@@ -1,6 +1,7 @@
 package com.risfond.rnss.home.resume.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -9,13 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.callback.ResponseCallBack;
 import com.risfond.rnss.common.constant.URLConstant;
+import com.risfond.rnss.common.utils.CustomDialog;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.ImeUtil;
 import com.risfond.rnss.common.utils.JsonUtil;
@@ -32,6 +37,7 @@ import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchResponse;
+import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
 import com.risfond.rnss.home.resume.fragment.EducationFragment;
@@ -91,6 +97,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     View line;
     @BindView(R.id.frame)
     View Frame;
+    @BindView(R.id.tv_search_save)
+    TextView tvSave;//保存搜索简历
+    @BindView(R.id.cb_whole)
+    CheckBox cbWhole;//搜索分类按钮
 
     private Context context;
     private ResumeSearchAdapter adapter;
@@ -137,6 +147,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private String salaryto = "";
     private boolean isHasData;
 
+    private PopupWindow popupwindow;
+
 
     @Override
     public int getContentViewResId() {
@@ -149,7 +161,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         histories = new ArrayList<>();
         historiesAESC = new ArrayList<>();
         iResumeSearch = new ResumeSearchImpl();
-
+        cbWhole.setText("全部");//初始值
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
 
@@ -219,11 +231,24 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
     }
 
-    @OnClick({R.id.tv_search_cancel})
+    @OnClick({R.id.tv_search_cancel,R.id.tv_search_save})//监听事件
     public void onClick(View v) {
         if (v.getId() == R.id.tv_search_cancel) {
             ImeUtil.hideSoftKeyboard(etResumeSearch);
             onFinish();
+        }
+        if (v.getId() == R.id.tv_search_save) {
+            //弹框对话
+            CustomDialog.Builder builder = new CustomDialog.Builder(context);
+            builder.setMessage("您已保存成功，可在快捷搜索查看");
+            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    //设置你的操作事项
+                }
+            });
+
+            builder.create().show();//显示
         }
     }
 
@@ -478,7 +503,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         });
     }
 
-    @OnCheckedChanged({R.id.cb_position, R.id.cb_experience, R.id.cb_education, R.id.cb_more})
+    @OnCheckedChanged({R.id.cb_position, R.id.cb_experience, R.id.cb_education, R.id.cb_more,R.id.cb_whole})
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         ImeUtil.hideSoftKeyboard(etResumeSearch);
 
@@ -519,7 +544,109 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     clearMoreFragment();
                 }
                 break;
+            case R.id.cb_whole://搜索分类
+                if (isChecked) {
+
+                    if (popupwindow != null && popupwindow.isShowing()) {
+                        popupwindow.dismiss();
+                        cbWhole.setChecked(false);
+                        return;
+                    } else {
+                        initmPopupWindowView();
+                        popupwindow.showAsDropDown(buttonView, 0, 5);
+                    }
+                }else if(!isChecked){
+                    cbWhole.setChecked(false);
+                }
+                break;
         }
+    }
+
+    /**
+     * popupwindow方法
+     */
+    public void initmPopupWindowView() {
+
+        // // 获取自定义布局文件pop.xml的视图
+        View customView = LayoutInflater.from(ResumeSearchResultActivity.this).inflate(R.layout.popview_item_whole, null);
+        // 创建PopupWindow实例,200,150分别是宽度和高度
+        popupwindow = new PopupWindow(customView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
+        //        popupwindow.setAnimationStyle(R.style.AnimationFade);
+        // 自定义view添加触摸事件
+        //        popupwindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupwindow.setFocusable(false);
+        popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
+
+        //        popupwindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        //        int popupWidth = popupwindow.getContentView().getMeasuredWidth();
+        //        int popupHeight = popupwindow.getContentView().getMeasuredHeight();
+        //        // 设置好参数之后再show
+        //        int[] location = new int[2];
+        //        customView.getLocationOnScreen(location);
+        //        popupwindow.showAtLocation(customView,  Gravity.CENTER_HORIZONTAL, (location[0]+customView.getWidth()/2)-popupWidth/2 , location[1]-popupHeight);
+
+
+        customView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (popupwindow != null && popupwindow.isShowing()) {
+                    popupwindow.dismiss();
+                    popupwindow = null;
+                    cbWhole.setChecked(false);
+                }
+
+                return false;
+            }
+        });
+
+        /** 在这里可以实现自定义视图的功能 */
+        final TextView whole = (TextView) customView.findViewById(R.id.tv_one);//全部
+        final TextView positions = (TextView) customView.findViewById(R.id.tv_two);//职位
+        final TextView company = (TextView) customView.findViewById(R.id.tv_three);//公司
+        //监听事件
+        whole.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View view) {
+                                          cbWhole.setText("全部");
+                                              if (popupwindow != null && popupwindow.isShowing()) {
+                                                  popupwindow.dismiss();
+                                                  popupwindow = null;
+                                                  cbWhole.setChecked(false);
+                                          }
+                                      }
+                                  }
+
+        );
+        positions.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View view) {
+                                          cbWhole.setText("职位");
+                                              if (popupwindow != null && popupwindow.isShowing()) {
+                                                  popupwindow.dismiss();
+                                                  popupwindow = null;
+                                                  cbWhole.setChecked(false);//设置为默认状态
+                                          }
+                                      }
+                                  }
+
+        );
+        company.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View view) {
+                                          cbWhole.setText("公司");
+                                              if (popupwindow != null && popupwindow.isShowing()) {
+                                                  popupwindow.dismiss();
+                                                  popupwindow = null;
+                                                  cbWhole.setChecked(false);
+                                          }
+                                      }
+                                  }
+
+        );
+
     }
 
     //填充职位页面

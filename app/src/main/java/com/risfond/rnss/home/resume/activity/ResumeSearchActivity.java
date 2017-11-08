@@ -135,7 +135,7 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
             ResumeSearchResultActivity.StartAction(context);
         }
         if(v.getId() == R.id.tv_search_quick){
-
+            ResumeQuickSearchActivity.StartAction(context);//跳转到快捷搜索界面
         }
     }
 

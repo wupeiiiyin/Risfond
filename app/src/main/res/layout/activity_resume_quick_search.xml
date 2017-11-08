@@ -99,7 +99,7 @@
                     android:textSize="12sp"/>
 
                 <TextView
-                    android:id="@+id/tv_resume_total"
+                    android:id="@+id/tv_resume_quick_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -123,7 +123,7 @@
             android:scrollbars="vertical"/>
 
         <LinearLayout
-            android:id="@+id/ll_empty_search"
+            android:id="@+id/ll_empty_quicksearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="暂无简历"
+                android:text="暂无职位"
                 android:textColor="@color/color_quick_resume_text"
                 android:textSize="16sp"/>
 

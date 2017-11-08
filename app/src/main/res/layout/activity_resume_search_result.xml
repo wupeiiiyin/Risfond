@@ -136,8 +136,14 @@
                     android:background="@color/color_home_back"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:paddingRight="15dp"
                     android:paddingLeft="15dp">
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -158,6 +164,14 @@
                         android:layout_height="wrap_content"
                         android:text=" 份简历"
                         android:textColor="@color/color_home_gray_text"
+                        android:textSize="12sp"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_search_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="保存搜索条件"
+                        android:textColor="@color/color_resume_blue_txt"
                         android:textSize="12sp"/>
                 </LinearLayout>
 
