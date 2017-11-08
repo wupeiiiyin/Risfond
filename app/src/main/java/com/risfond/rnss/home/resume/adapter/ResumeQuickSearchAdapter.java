@@ -43,7 +43,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     @Override
     public ResumeQuickSearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_resume_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resume_quick_list, parent, false);
         ResumeQuickSearchViewHolder holder = new ResumeQuickSearchViewHolder(view);
         return holder;
     }
@@ -54,7 +54,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         if (holder instanceof ResumeQuickSearchViewHolder) {
             ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
 
-            mholder.tvAge.setText(data.get(position) + "岁");
+            mholder.tvQuick.setText(data.get(position) + "运营经理/总监按已有的职位搜索dddddddddd运营经斤斤计较点");
 //            mholder.tvExperience.setText(search.getWorkExperience() + "年经验");
 //            mholder.tvResumeNumber.setText(search.getResumeCode());
 //            mholder.tvUpdateTime.setText(search.getUpdateDate());
@@ -85,24 +85,10 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     }
 
     public static class ResumeQuickSearchViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_head)
-        ImageView ivHead;
-        @BindView(R.id.iv_sex)
-        ImageView ivSex;
-        @BindView(R.id.tv_name)
-        TextView tvName;
-        @BindView(R.id.tv_recommend_state)
-        ImageView tvRecommendState;
-        @BindView(R.id.tv_position)
-        TextView tvPosition;
-        @BindView(R.id.tv_company)
-        TextView tvCompany;
-        @BindView(R.id.tv_city)
-        TextView tvCity;
-        @BindView(R.id.tv_age)
-        TextView tvAge;
-        @BindView(R.id.tv_experience)
-        TextView tvExperience;
+        @BindView(R.id.tv_quick)
+        TextView tvQuick;
+//        @BindView(R.id.tv_q)
+//        TextView tvPosition;
         @BindView(R.id.tv_education)
         TextView tvEducation;
         @BindView(R.id.tv_resume_number)
