@@ -7,7 +7,8 @@
         android:id="@+id/ll_line"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="300dp">
+        android:layout_marginTop="50dp"
+        android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/ll_history"
             android:layout_width="match_parent"
@@ -55,8 +56,4 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
     </LinearLayout>
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.1sp"
-        android:background="#ffd0d0d0" />
 </LinearLayout>

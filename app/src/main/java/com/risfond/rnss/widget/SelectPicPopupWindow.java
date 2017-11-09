@@ -20,7 +20,6 @@ import com.risfond.rnss.R;
 
 public class SelectPicPopupWindow extends PopupWindow {
 
-    private Button btn_take_photo, btn_pick_photo, btn_cancel;
     private View mMenuView;
 
     public SelectPicPopupWindow(Activity context) {
@@ -28,9 +27,6 @@ public class SelectPicPopupWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popview_item_search, null);
-//        btn_take_photo = (Button) mMenuView.findViewById(R.id.btn_take_photo);
-//        btn_pick_photo = (Button) mMenuView.findViewById(R.id.btn_pick_photo);
-//        btn_cancel = (Button) mMenuView.findViewById(R.id.btn_cancel);
 
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
