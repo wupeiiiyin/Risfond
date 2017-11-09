@@ -265,7 +265,6 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
             @Override
             public void onItemClick(View view, int position) {
 //                ResumeDetailActivity.startAction(context, String.valueOf(searches.get(position).getId()));
-                findViewById(R.id.tv_quick);
             }
         });
     }

@@ -155,7 +155,7 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
                 if (obj instanceof ResumeSearchResponse) {
                     response = (ResumeSearchResponse) obj;
                     if (tvResumeTotal != null) {
-                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
+                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));//设置简历数量
                     }
                     if (response.getData().size() == 15) {
                         pageindex++;
