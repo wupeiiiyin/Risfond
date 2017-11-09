@@ -23,7 +23,7 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textColor="@color/color_home_black_text"
-                android:text="按已有位置搜索历史"/>
+                android:text="按已有职位搜索"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:orientation="vertical"

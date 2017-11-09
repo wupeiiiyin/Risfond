@@ -563,7 +563,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     }
 
     /**
-     * popupwindow方法
+     * popupwindow分类方法
      */
     public void initmPopupWindowView() {
 

@@ -3,6 +3,7 @@ package com.risfond.rnss.home.resume.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
@@ -31,6 +33,7 @@ import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.PositionSearchResponse;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.home.commonFuctions.myAttenDance.Util.SystemBarTintManager;
 import com.risfond.rnss.home.position.adapter.PositionSearchAdapter;
 import com.risfond.rnss.home.position.modelImpl.PositionSearchImpl;
 import com.risfond.rnss.home.position.modelInterface.IPositionSearch;
@@ -42,6 +45,7 @@ import com.risfond.rnss.widget.EmptyRecyclerView;
 import com.risfond.rnss.widget.RecycleViewDivider;
 import com.risfond.rnss.widget.SelectPicPopupWindow;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,6 +93,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     //自定义的弹出框类
 //    SelectPicPopupWindow menuWindow;
     private PositionSearchAdapter padapter;
+    private LinearLayout llChenjinshi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,9 +108,11 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     public void init(Bundle savedInstanceState) {
 //        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
 //        recruitmentQuick = (EmptyRecyclerView) findViewById(R.id.rv_quick_resume_list);
+
+        llChenjinshi = (LinearLayout)findViewById(R.id.ll_chenjinshi);
         context = ResumeQuickSearchActivity.this;
         iPositionSearch = new PositionSearchImpl();
-
+        setStatusBarColor(R.color.transparent);//设置沉浸式
         //模拟数据
 
         for (int i=0;i<2;i++){
@@ -155,11 +162,11 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
             public void onClick(View v) {
                 initmPopupWindowViews();
                 popupwindow.showAsDropDown(tvTitle);
-                popupwindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+
             }
         });
     }
-
+    //按已有职位搜索popupWindow弹框
     private void initmPopupWindowViews() {
         // // 获取自定义布局文件pop.xml的视图
         View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item_search, null);
@@ -214,6 +221,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         popupwindow.setBackgroundDrawable(dw);
         popupwindow.setWidth(RecyclerView.LayoutParams.MATCH_PARENT);
         popupwindow.setHeight(RecyclerView.LayoutParams.MATCH_PARENT);
+        popupwindow.setAnimationStyle(R.style.mypopwindow_anim_style);
 //                popupwindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 //                int popupWidth = popupwindow.getContentView().getMeasuredWidth();
 //                int popupHeight = popupwindow.getContentView().getMeasuredHeight();
@@ -240,6 +248,44 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
         /** 在这里可以实现自定义视图的功能 */
 
+    }
+
+    /**
+     * 设置状态栏颜色
+     * 也就是所谓沉浸式状态栏
+     */
+    public void setStatusBarColor(int color) {
+        /**
+         * Android4.4以上  但是抽屉有点冲突，目前就重写一个方法暂时解决4.4的问题
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(color);
+            titleMargin();
+        }
+    }
+    private void titleMargin() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, getStatusBarHeight(), 0, 0);
+        llChenjinshi.setLayoutParams(params);
+    }
+    private int getStatusBarHeight() {
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0, sbar = 70;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            sbar = getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return sbar;
     }
 
 //    public void backgroundAlpha(float bgAlpha) {
