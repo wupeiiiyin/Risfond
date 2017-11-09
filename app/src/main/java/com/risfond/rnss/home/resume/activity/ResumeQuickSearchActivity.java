@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +28,9 @@ import com.risfond.rnss.home.position.modelImpl.PositionSearchImpl;
 import com.risfond.rnss.home.position.modelInterface.IPositionSearch;
 import com.risfond.rnss.home.resume.adapter.ResumeQuickSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
+import com.risfond.rnss.widget.CustomDecoration;
+import com.risfond.rnss.widget.DividerItemDecoration;
+import com.risfond.rnss.widget.EmptyRecyclerView;
 import com.risfond.rnss.widget.RecycleViewDivider;
 
 import java.math.BigDecimal;
@@ -63,6 +67,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
     private boolean isCanLoadMore = true;
     private boolean isLoadingMore = false;
+    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<String> lists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +82,27 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
     @Override
     public void init(Bundle savedInstanceState) {
-
+//        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
+//        recruitmentQuick = (EmptyRecyclerView) findViewById(R.id.rv_quick_resume_list);
         context = ResumeQuickSearchActivity.this;
         iPositionSearch = new PositionSearchImpl();
 
         //模拟数据
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0;i<20;i++){
+
+        for (int i=0;i<2;i++){
             list.add("模拟经理/总监+"+i);
         }
 
         adapter = new ResumeQuickSearchAdapter(context, list);
 
         recruitmentQuick.setLayoutManager(new LinearLayoutManager(context));
-        recruitmentQuick.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
-        recruitmentQuick.setAdapter(adapter);
+        //控制分割线的宽度 参数1：上下文，参数2：方向，参数3：分割线高度，参数4：颜色
+        recruitmentQuick.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 1, ContextCompat.getColor(context, R.color.color_home_stoke_small)));
+//        recruitmentQuick.addItemDecoration(new CustomDecoration(this, CustomDecoration.VERTICAL_LIST, R.drawable.list_item_divider));
+//        recruitmentQuick.addItemDecoration(new DividerItemDecoration(R.color.color_home_stoke_small,1,LinearLayoutManager.HORIZONTAL,15f,15f));
 
+        recruitmentQuick.setAdapter(adapter);
+//        emptyRecyclerView.setEmptyView(ll_empty_quicksearch);
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -113,6 +124,11 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         });
         onItemClick();//监听
         positionRequest();
+        if(list.size()<0){
+
+            ll_empty_quicksearch.setVisibility(View.VISIBLE);
+            recruitmentQuick.setVisibility(View.GONE);
+        }
 
     }
 
@@ -122,7 +138,6 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
             @Override
             public void onItemClick(View view, int position) {
 //                ResumeDetailActivity.startAction(context, String.valueOf(searches.get(position).getId()));
-                ToastUtil.showImgMessage(context,"你点击了第"+position+"条数据");
             }
         });
     }
@@ -157,12 +172,47 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
                         tv_resume_quick_total.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
                     }
                 }
-                if (positionSearches.size() > 0) {
-                    ll_empty_quicksearch.setVisibility(View.GONE);
-//                    rvResumeList.setVisibility(View.VISIBLE);
+//                if (list.size() > 0) {
+//                    ll_empty_quicksearch.setVisibility(View.GONE);
+//                    recruitmentQuick.setVisibility(View.VISIBLE);
+//                } else {
+//                    ll_empty_quicksearch.setVisibility(View.VISIBLE);
+//                    recruitmentQuick.setVisibility(View.GONE);
+//                }
+//                if (list.size() == 2) {
+//                    pageindex++;
+//                    isCanLoadMore = true;
+//                    if (lists.size() > 0) {
+//                        list.removeAll(lists);
+//                        lists.clear();
+//                    }
+//                    list.addAll(lists);
+//                }else {
+//                    isCanLoadMore = false;
+//                    if (lists.size() > 0) {
+//                        searches.removeAll(lists);
+//                        lists.clear();
+//                    }
+//                    lists = list;
+//                    list.addAll(lists);
+//                }
+                adapter.updateData(list);
+//                adapter.notifyDataSetChanged();
+                if (list.size() > 0) {
+                    if (ll_empty_quicksearch != null) {
+                        ll_empty_quicksearch.setVisibility(View.GONE);
+                    }
+                    if (recruitmentQuick != null) {
+                        recruitmentQuick.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    ll_empty_quicksearch.setVisibility(View.VISIBLE);
-//                    rvResumeList.setVisibility(View.GONE);
+                    if (ll_empty_quicksearch != null) {
+                        ll_empty_quicksearch.setVisibility(View.VISIBLE);
+                    }
+                    if (recruitmentQuick != null) {
+                        recruitmentQuick.setVisibility(View.GONE);
+                    }
+
                 }
             }
         });
