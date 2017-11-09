@@ -35,6 +35,10 @@
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1sp"
+        android:background="#ffd0d0d0" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_resume_list"
         android:layout_width="match_parent"
