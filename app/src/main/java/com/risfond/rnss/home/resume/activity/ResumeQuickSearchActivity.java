@@ -153,7 +153,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
     private void initmPopupWindowViews() {
         // // 获取自定义布局文件pop.xml的视图
-        View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item, null);
+        View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item_search, null);
         // 创建PopupWindow实例,200,150分别是宽度和高度
         popupwindow = new PopupWindow(customView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
