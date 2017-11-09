@@ -174,7 +174,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         padapter = new PositionSearchAdapter(context, positionSearches);
         rvResumePop.setLayoutManager(new LinearLayoutManager(context));
         rvResumePop.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
-        rvResumePop.setAdapter(adapter);
+        rvResumePop.setAdapter(padapter);
 
         rvResumePop.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
