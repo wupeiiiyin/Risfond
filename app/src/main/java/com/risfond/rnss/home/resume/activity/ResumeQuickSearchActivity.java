@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
@@ -50,14 +54,16 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     LinearLayout ll_back;//返回按钮
     @BindView(R.id.ll_empty_quicksearch)
     LinearLayout ll_empty_quicksearch;//暂无职位
-    @BindView(R.id.tv_resume_quick_totals)
-    TextView tv_resume_quick_totals;//快捷搜索职位数量
+    @BindView(R.id.tv_resume_quick_total)
+    TextView tv_resume_quick_total;//快捷搜索职位数量
     @BindView(R.id.rv_quick_resume_list)
     RecyclerView recruitmentQuick;
     @BindView(R.id.ll_resume_quick)
-    LinearLayout llResumeQuick;
+    LinearLayout llResumeQuick;//按已有位置搜索控件
     @BindView(R.id.tv_resume_quick_num)
     TextView tvResumeQuickNum;//已有职位数量
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     private Context context;
     private List<ResumeSearch> searches = new ArrayList<>();
@@ -73,6 +79,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private boolean isLoadingMore = false;
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<String> lists = new ArrayList<>();
+    private PopupWindow popupwindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +114,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
         recruitmentQuick.setAdapter(adapter);
 //        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
-        tv_resume_quick_totals.setText(list.size()+"2");
+        tv_resume_quick_total.setText(list.size()+"2");
         tvResumeQuickNum.setText("2");
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
@@ -135,8 +142,54 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 //            ll_empty_quicksearch.setVisibility(View.VISIBLE);
 //            recruitmentQuick.setVisibility(View.GONE);
 //        }
+        llResumeQuick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initmPopupWindowViews();
+                popupwindow.showAsDropDown(tvTitle, 0, 5);
+            }
+        });
+    }
+
+    private void initmPopupWindowViews() {
+        // // 获取自定义布局文件pop.xml的视图
+        View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item_whole, null);
+        // 创建PopupWindow实例,200,150分别是宽度和高度
+        popupwindow = new PopupWindow(customView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
+        //        popupwindow.setAnimationStyle(R.style.AnimationFade);
+        // 自定义view添加触摸事件
+        //        popupwindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupwindow.setFocusable(false);
+        popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
+
+        //        popupwindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        //        int popupWidth = popupwindow.getContentView().getMeasuredWidth();
+        //        int popupHeight = popupwindow.getContentView().getMeasuredHeight();
+        //        // 设置好参数之后再show
+        //        int[] location = new int[2];
+        //        customView.getLocationOnScreen(location);
+        //        popupwindow.showAtLocation(customView,  Gravity.CENTER_HORIZONTAL, (location[0]+customView.getWidth()/2)-popupWidth/2 , location[1]-popupHeight);
+
+
+        customView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (popupwindow != null && popupwindow.isShowing()) {
+                    popupwindow.dismiss();
+                    popupwindow = null;
+                }
+
+                return false;
+            }
+        });
+
+        /** 在这里可以实现自定义视图的功能 */
 
     }
+
 
     private void onItemClick() {
         //简历列表点击

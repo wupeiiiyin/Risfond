@@ -55,5 +55,6 @@
     <color name="color_save_dialog">#333333</color>
     <color name="color_textview_save">#FFFFFF</color>
     <color name="color_popu">#DCDCDC</color>
+    <color name="color_position">#F5F5F5</color>
 
 </resources>
