@@ -50,14 +50,14 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     LinearLayout ll_back;//返回按钮
     @BindView(R.id.ll_empty_quicksearch)
     LinearLayout ll_empty_quicksearch;//暂无职位
-    @BindView(R.id.tv_resume_quick_total)
-    TextView tv_resume_quick_total;//快捷搜索职位数量
+    @BindView(R.id.tv_resume_quick_totals)
+    TextView tv_resume_quick_totals;//快捷搜索职位数量
     @BindView(R.id.rv_quick_resume_list)
     RecyclerView recruitmentQuick;
     @BindView(R.id.ll_resume_quick)
     LinearLayout llResumeQuick;
     @BindView(R.id.tv_resume_quick_num)
-    TextView tvResumeQuickNum;
+    TextView tvResumeQuickNum;//已有职位数量
 
     private Context context;
     private List<ResumeSearch> searches = new ArrayList<>();
@@ -108,6 +108,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         recruitmentQuick.setAdapter(adapter);
 //        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
         tv_resume_quick_total.setText(list.size()+"2");
+        tvResumeQuickNum.setText("2");
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -129,11 +130,11 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         });
         onItemClick();//监听
         positionRequest();
-        if(list.size()<0){
-
-            ll_empty_quicksearch.setVisibility(View.VISIBLE);
-            recruitmentQuick.setVisibility(View.GONE);
-        }
+//        if(list.size()<0){
+//
+//            ll_empty_quicksearch.setVisibility(View.VISIBLE);
+//            recruitmentQuick.setVisibility(View.GONE);
+//        }
 
     }
 
@@ -143,6 +144,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
             @Override
             public void onItemClick(View view, int position) {
 //                ResumeDetailActivity.startAction(context, String.valueOf(searches.get(position).getId()));
+                findViewById(R.id.tv_quick);
             }
         });
     }
