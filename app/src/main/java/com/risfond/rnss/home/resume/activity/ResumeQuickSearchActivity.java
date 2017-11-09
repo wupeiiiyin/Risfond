@@ -93,7 +93,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     //自定义的弹出框类
 //    SelectPicPopupWindow menuWindow;
     private PositionSearchAdapter padapter;
-    private LinearLayout llChenjinshi;
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +109,10 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 //        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
 //        recruitmentQuick = (EmptyRecyclerView) findViewById(R.id.rv_quick_resume_list);
 
-        llChenjinshi = (LinearLayout)findViewById(R.id.ll_chenjinshi);
+        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
         context = ResumeQuickSearchActivity.this;
         iPositionSearch = new PositionSearchImpl();
-        setStatusBarColor(R.color.transparent);//设置沉浸式
+        setStatusBarColor(R.color.transparent);
         //模拟数据
 
         for (int i=0;i<2;i++){
@@ -269,8 +269,9 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private void titleMargin() {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, getStatusBarHeight(), 0, 0);
-        llChenjinshi.setLayoutParams(params);
+        linearLayout.setLayoutParams(params);
     }
+
     private int getStatusBarHeight() {
         Class<?> c = null;
         Object obj = null;
