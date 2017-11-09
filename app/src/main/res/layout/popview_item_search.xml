@@ -4,45 +4,59 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
     <LinearLayout
-        android:id="@+id/ll_history"
+        android:id="@+id/ll_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_position"
-        android:orientation="horizontal"
-        >
-        <TextView
+        android:orientation="vertical"
+        android:layout_height="300dp">
+        <RelativeLayout
+            android:id="@+id/ll_history"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textColor="@color/color_home_black_text"
-            android:text="按已有位置搜索历史"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/color_position"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/color_home_black_text"
+                android:text="按已有位置搜索历史"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_search_quick"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="15sp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="17dp"
+                android:layout_marginRight="15sp"
+                android:layout_weight="1"
                 android:text="取消"
                 android:textColor="@color/color_resume_blue_txt"
                 android:textSize="14sp"/>
-        </LinearLayout>
 
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.1sp"
+            android:background="#ffd0d0d0" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_resume_pop_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
     </LinearLayout>
     <View
         android:layout_width="fill_parent"
         android:layout_height="0.1sp"
         android:background="#ffd0d0d0" />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_resume_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
-
 </LinearLayout>

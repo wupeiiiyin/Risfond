@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +38,7 @@ import com.risfond.rnss.widget.CustomDecoration;
 import com.risfond.rnss.widget.DividerItemDecoration;
 import com.risfond.rnss.widget.EmptyRecyclerView;
 import com.risfond.rnss.widget.RecycleViewDivider;
+import com.risfond.rnss.widget.SelectPicPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,6 +67,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     TextView tvResumeQuickNum;//已有职位数量
     @BindView(R.id.tv_title)
     TextView tvTitle;
+//    @BindView(R.id.rv_resume_pop_list)
+//    RecyclerView rvResumePopList;
 
     private Context context;
     private List<ResumeSearch> searches = new ArrayList<>();
@@ -80,7 +85,9 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<String> lists = new ArrayList<>();
     private PopupWindow popupwindow;
-
+    private RecyclerView rvResumePop;
+    //自定义的弹出框类
+    SelectPicPopupWindow menuWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +153,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
             @Override
             public void onClick(View v) {
                 initmPopupWindowViews();
-                popupwindow.showAsDropDown(tvTitle, 0, 5);
+                popupwindow.showAsDropDown(tvTitle);
             }
         });
     }
@@ -154,16 +161,25 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private void initmPopupWindowViews() {
         // // 获取自定义布局文件pop.xml的视图
         View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item_search, null);
+//        rvResumePop = (RecyclerView)customView.findViewById(R.id.rv_resume_pop_list);
+
+        //实例化SelectPicPopupWindow
+        menuWindow = new SelectPicPopupWindow(ResumeQuickSearchActivity.this);
+        //显示窗口
+        menuWindow.showAtLocation(ResumeQuickSearchActivity.this.findViewById(R.id.ll_resume_quick), Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+
         // 创建PopupWindow实例,200,150分别是宽度和高度
-        popupwindow = new PopupWindow(customView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//        popupwindow = new PopupWindow(customView,
+//                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
         //        popupwindow.setAnimationStyle(R.style.AnimationFade);
         // 自定义view添加触摸事件
         //        popupwindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        popupwindow.setFocusable(false);
-        popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
-
+//        popupwindow.setFocusable(false);
+//        popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
+//        backgroundAlpha(0.5f);//设置半透明
+//        popupwindow.setWidth(RecyclerView.LayoutParams.MATCH_PARENT);
+//        popupwindow.setHeight(RecyclerView.LayoutParams.MATCH_PARENT);
         //        popupwindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         //        int popupWidth = popupwindow.getContentView().getMeasuredWidth();
         //        int popupHeight = popupwindow.getContentView().getMeasuredHeight();
@@ -173,21 +189,28 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
         //        popupwindow.showAtLocation(customView,  Gravity.CENTER_HORIZONTAL, (location[0]+customView.getWidth()/2)-popupWidth/2 , location[1]-popupHeight);
 
 
-        customView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (popupwindow != null && popupwindow.isShowing()) {
-                    popupwindow.dismiss();
-                    popupwindow = null;
-                }
-
-                return false;
-            }
-        });
+//        customView.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (popupwindow != null && popupwindow.isShowing()) {
+//                    popupwindow.dismiss();
+//                    popupwindow = null;
+//                }
+//
+//                return false;
+//            }
+//        });
 
         /** 在这里可以实现自定义视图的功能 */
 
+    }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
     }
 
 
