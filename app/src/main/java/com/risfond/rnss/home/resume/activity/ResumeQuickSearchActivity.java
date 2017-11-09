@@ -107,7 +107,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
         recruitmentQuick.setAdapter(adapter);
 //        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
-        tv_resume_quick_total.setText(list.size()+"2");
+        tv_resume_quick_totals.setText(list.size()+"2");
         tvResumeQuickNum.setText("2");
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
