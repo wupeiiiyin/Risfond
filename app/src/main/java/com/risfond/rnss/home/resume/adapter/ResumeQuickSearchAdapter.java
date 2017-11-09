@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.R;
+import com.risfond.rnss.common.utils.DialogUtil;
+import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.entry.ResumeSearch;
 
 import java.util.List;
@@ -49,12 +52,31 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
             ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
 
             mholder.tvQuick.setText(data.get(position) + "运营经理/总监按已有的职位搜索dddddddddd运营经斤斤计较点");
+
+            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    DialogUtil.getInstance().showConfigDialog(context, "是否清除缓存？", "是", "否", new DialogUtil.PressCallBack() {
+                        @Override
+                        public void onPressButton(int buttonIndex) {
+                            if (buttonIndex == DialogUtil.BUTTON_OK) {
+
+                                data.remove(data.get(position));
+                                notifyDataSetChanged();
+                            }
+                        }
+                    });
+
+                }
+            });
+
 //            mholder.tvExperience.setText(search.getWorkExperience() + "年经验");
 //            mholder.tvResumeNumber.setText(search.getResumeCode());
 //            mholder.tvUpdateTime.setText(search.getUpdateDate());
@@ -86,15 +108,11 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     public static class ResumeQuickSearchViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_quick)
-        TextView tvQuick;
-//        @BindView(R.id.tv_q)
-//        TextView tvPosition;
-        @BindView(R.id.tv_education)
-        TextView tvEducation;
-        @BindView(R.id.tv_resume_number)
-        TextView tvResumeNumber;
-        @BindView(R.id.tv_update_time)
-        TextView tvUpdateTime;
+        TextView tvQuick;//主要内容
+        @BindView(R.id.tv_quick_time)
+        TextView tvTime;//时间
+        @BindView(R.id.image_quick_search_deletes)
+        ImageView imageDelete;//删除图片按钮
 
         public ResumeQuickSearchViewHolder(View itemView) {
             super(itemView);
