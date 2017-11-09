@@ -17,6 +17,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/ll_resume_quick"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="40dp">
@@ -49,7 +50,7 @@
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/tv_resume_quick"
+                    android:id="@+id/tv_resume_quick_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"

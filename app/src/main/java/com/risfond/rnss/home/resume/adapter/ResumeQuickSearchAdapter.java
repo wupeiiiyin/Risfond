@@ -63,7 +63,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
 
-                    DialogUtil.getInstance().showConfigDialog(context, "是否清除缓存？", "是", "否", new DialogUtil.PressCallBack() {
+                    DialogUtil.getInstance().showConfigDialog(context, "是否删除？", "是", "否", new DialogUtil.PressCallBack() {
                         @Override
                         public void onPressButton(int buttonIndex) {
                             if (buttonIndex == DialogUtil.BUTTON_OK) {

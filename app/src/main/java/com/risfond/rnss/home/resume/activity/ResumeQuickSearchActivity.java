@@ -51,9 +51,13 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     @BindView(R.id.ll_empty_quicksearch)
     LinearLayout ll_empty_quicksearch;//暂无职位
     @BindView(R.id.tv_resume_quick_total)
-    TextView tv_resume_quick_total;//职位数量
+    TextView tv_resume_quick_total;//快捷搜索职位数量
     @BindView(R.id.rv_quick_resume_list)
     RecyclerView recruitmentQuick;
+    @BindView(R.id.ll_resume_quick)
+    LinearLayout llResumeQuick;
+    @BindView(R.id.tv_resume_quick_num)
+    TextView tvResumeQuickNum;
 
     private Context context;
     private List<ResumeSearch> searches = new ArrayList<>();
@@ -102,7 +106,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 //        recruitmentQuick.addItemDecoration(new DividerItemDecoration(R.color.color_home_stoke_small,1,LinearLayoutManager.HORIZONTAL,15f,15f));
 
         recruitmentQuick.setAdapter(adapter);
-//        emptyRecyclerView.setEmptyView(ll_empty_quicksearch);
+//        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
+        tv_resume_quick_total.setText(list.size()+"2");
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
