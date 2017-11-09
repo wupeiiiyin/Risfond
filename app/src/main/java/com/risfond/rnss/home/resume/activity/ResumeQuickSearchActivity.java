@@ -93,7 +93,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     //自定义的弹出框类
 //    SelectPicPopupWindow menuWindow;
     private PositionSearchAdapter padapter;
-    private LinearLayout linearLayout;
+//    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +109,10 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 //        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
 //        recruitmentQuick = (EmptyRecyclerView) findViewById(R.id.rv_quick_resume_list);
 
-        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
+//        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
         context = ResumeQuickSearchActivity.this;
         iPositionSearch = new PositionSearchImpl();
-        setStatusBarColor(R.color.transparent);
+//        setStatusBarColor(R.color.transparent);
         //模拟数据
 
         for (int i=0;i<2;i++){
@@ -250,44 +250,6 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
     }
 
-    /**
-     * 设置状态栏颜色
-     * 也就是所谓沉浸式状态栏
-     */
-    public void setStatusBarColor(int color) {
-        /**
-         * Android4.4以上  但是抽屉有点冲突，目前就重写一个方法暂时解决4.4的问题
-         */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(color);
-            titleMargin();
-        }
-    }
-    private void titleMargin() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, getStatusBarHeight(), 0, 0);
-        linearLayout.setLayoutParams(params);
-    }
-
-    private int getStatusBarHeight() {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, sbar = 70;
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            sbar = getResources().getDimensionPixelSize(x);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return sbar;
-    }
 
 //    public void backgroundAlpha(float bgAlpha) {
 //        WindowManager.LayoutParams lp = getWindow().getAttributes();
