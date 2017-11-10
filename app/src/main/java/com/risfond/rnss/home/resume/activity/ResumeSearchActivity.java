@@ -139,6 +139,7 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
         }
     }
 
+    //提供一个方法供其他类调用
     public static void StartAction(Context context) {
         Intent intent = new Intent(context, ResumeSearchActivity.class);
         context.startActivity(intent);
@@ -152,15 +153,15 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
                 if (!isLoadMore) {
                     DialogUtil.getInstance().closeLoadingDialog();
                 }
-                if (obj instanceof ResumeSearchResponse) {
+                if (obj instanceof ResumeSearchResponse) {//实体类
                     response = (ResumeSearchResponse) obj;
                     if (tvResumeTotal != null) {
                         tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));//设置简历数量
                     }
-                    if (response.getData().size() == 15) {
+                    if (response.getData().size() == 15) {//设置数量等于15
                         pageindex++;
                         isCanLoadMore = true;
-                        if (temp.size() > 0) {
+                        if (temp.size() > 0) {//当2集合大小>0
                             searches.removeAll(temp);
                             temp.clear();
                         }
@@ -181,17 +182,17 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
                 }
                 if (searches.size() > 0) {
                     if (llEmptySearch != null) {
-                        llEmptySearch.setVisibility(View.GONE);
+                        llEmptySearch.setVisibility(View.GONE);//无数据时的布局隐藏
                     }
                     if (rvResumeList != null) {
-                        rvResumeList.setVisibility(View.VISIBLE);
+                        rvResumeList.setVisibility(View.VISIBLE);//显示RecyclerView控件
                     }
                 } else {
                     if (llEmptySearch != null) {
-                        llEmptySearch.setVisibility(View.VISIBLE);
+                        llEmptySearch.setVisibility(View.VISIBLE);//无数据时的布局显示
                     }
                     if (rvResumeList != null) {
-                        rvResumeList.setVisibility(View.GONE);
+                        rvResumeList.setVisibility(View.GONE);//隐藏RecyclerView控件
                     }
                 }
             }

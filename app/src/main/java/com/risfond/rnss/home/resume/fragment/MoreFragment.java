@@ -92,8 +92,10 @@ public class MoreFragment extends BaseFragment {
 
     private SelectCallBack callBack;
     private List<String> languages = new ArrayList<>();
+    private List<String> languages_texts = new ArrayList<>();//创建一个集合
     private List<String> recommends = new ArrayList<>();
     private List<String> sexs = new ArrayList<>();
+    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
     private String age_From;
     private String age_To;
     private String salary_From;
@@ -101,16 +103,18 @@ public class MoreFragment extends BaseFragment {
     private String page;
     private boolean isHasData;
 
-    public MoreFragment(List<String> recommend, String age_from, String age_to, List<String> sex,
-                        String salary_from, String salary_to, List<String> language, String page,
+    public MoreFragment(List<String> recommend, String age_from, String age_to, List<String> sex,List<String> sexs_text,
+                        String salary_from, String salary_to, List<String> language,List<String> languages_text, String page,
                         boolean isHasData, SelectCallBack callBack) {
         recommends.addAll(recommend);
         this.age_From = age_from;
         this.age_To = age_to;
         sexs.addAll(sex);
+        sexs_texts.addAll(sexs_text);//添加
         this.salary_From = salary_from;
         this.salary_To = salary_to;
         languages.addAll(language);
+        languages_texts.addAll(languages_text);//添加
         this.page = page;
         this.isHasData = isHasData;
         this.callBack = callBack;
@@ -238,11 +242,15 @@ public class MoreFragment extends BaseFragment {
                         break;
                     case R.id.rb_man:
                         sexs.clear();
+                        sexs_texts.clear();//清除
                         sexs.add("1");
+                        sexs_texts.add("男");//添加
                         break;
                     case R.id.rb_woman:
                         sexs.clear();
+                        sexs_texts.clear();//清除
                         sexs.add("2");
+                        sexs_texts.add("女");//添加
                         break;
                 }
             }
@@ -277,7 +285,7 @@ public class MoreFragment extends BaseFragment {
             page = "1";
         }
 
-        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, page);//回调
+        callBack.onMoreConfirm(recommends, age_From, age_To, sexs,sexs_texts, salary_From, salary_To, languages,languages_texts, page);//回调
     }
 
     @OnCheckedChanged({R.id.cb_0, R.id.cb_1, R.id.cb_2, R.id.cb_3, R.id.cb_4,
@@ -291,6 +299,7 @@ public class MoreFragment extends BaseFragment {
                         languages.add("00");
                     }*/
                     languages.clear();
+                    languages_texts.clear();//清除
                     clearOthers();
                 } /*else {
                     languages.remove("00");
@@ -300,110 +309,132 @@ public class MoreFragment extends BaseFragment {
                 if (isChecked) {
                     if (!languages.contains("01")) {
                         languages.add("01");
+                        languages_texts.add("汉语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("01");
+                    languages_texts.remove("汉语");
                 }
                 break;
             case R.id.cb_2:
                 if (isChecked) {
                     if (!languages.contains("02")) {
                         languages.add("02");
+                        languages_texts.add("英语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("02");
+                    languages_texts.remove("英语");
                 }
                 break;
             case R.id.cb_3:
                 if (isChecked) {
                     if (!languages.contains("03")) {
                         languages.add("03");
+                        languages_texts.add("日语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("03");
+                    languages_texts.remove("日语");
                 }
                 break;
             case R.id.cb_4:
                 if (isChecked) {
                     if (!languages.contains("04")) {
                         languages.add("04");
+                        languages_texts.add("法语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("04");
+                    languages_texts.remove("法语");
                 }
                 break;
             case R.id.cb_5:
                 if (isChecked) {
                     if (!languages.contains("05")) {
                         languages.add("05");
+                        languages_texts.add("德语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("05");
+                    languages_texts.remove("德语");
                 }
                 break;
             case R.id.cb_6:
                 if (isChecked) {
                     if (!languages.contains("06")) {
                         languages.add("06");
+                        languages_texts.add("韩语、朝鲜语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("06");
+                    languages_texts.remove("韩语、朝鲜语");
                 }
                 break;
             case R.id.cb_7:
                 if (isChecked) {
                     if (!languages.contains("07")) {
                         languages.add("07");
+                        languages_texts.add("俄语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("07");
+                    languages_texts.remove("俄语");
                 }
                 break;
             case R.id.cb_9:
                 if (isChecked) {
                     if (!languages.contains("09")) {
                         languages.add("09");
+                        languages_texts.add("西班牙语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("09");
+                    languages_texts.remove("西班牙语");
                 }
                 break;
             case R.id.cb_12:
                 if (isChecked) {
                     if (!languages.contains("12")) {
                         languages.add("12");
+                        languages_texts.add("阿拉伯语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("12");
+                    languages_texts.remove("阿拉伯语");
                 }
                 break;
             case R.id.cb_13:
                 if (isChecked) {
                     if (!languages.contains("13")) {
                         languages.add("13");
+                        languages_texts.add("意大利语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("13");
+                    languages_texts.remove("意大利语");
                 }
                 break;
             case R.id.cb_14:
                 if (isChecked) {
                     if (!languages.contains("14")) {
                         languages.add("14");
+                        languages_texts.add("葡萄牙语");
                     }
                     clearBuxian();
                 } else {
                     languages.remove("14");
+                    languages_texts.remove("葡萄牙语");
                 }
                 break;
         }

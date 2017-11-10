@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -130,8 +131,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private String experience_from = "";//经验from
     private String experience_to = "";//经验to
     private List<String> languages = new ArrayList<>();//语言ID
+    private List<String> languages_text = new ArrayList<>();//语言ID
     private List<String> recommends = new ArrayList<>();//推荐状态ID
     private List<String> sexs = new ArrayList<>();//性别ID
+    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
     private String age_From = "";//年龄from
     private String age_To = "";//年龄to
     private String salary_From = "";//薪资from
@@ -238,6 +241,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             onFinish();
         }
         if (v.getId() == R.id.tv_search_save) {
+
             //弹框对话
             CustomDialog.Builder builder = new CustomDialog.Builder(context);
             builder.setMessage("您已保存成功，可在快捷搜索查看");
@@ -245,11 +249,30 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     //设置你的操作事项
+
+                    if (isCanLoadMore) {
+
+                            if (!isLoadingMore) {
+                                isLoadMore = true;
+                                isLoadingMore = true;
+                                resumeRequest();
+                            }
+                    }
                 }
             });
 
             builder.create().show();//显示
         }
+    }
+
+    private void resumeRequest() {
+
+        request.put("keyword", "");
+        request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+        request.put("pageindex", String.valueOf(pageindex));
+        iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
+//        callBack.onMoreConfirm(recommends, age_From, age_To, sexs,sexs_texts, salary_From, salary_To, languages,languages_text, page);//回调
+        Log.i("TAG",request.toString()+"=============================");
     }
 
     private void checkSearchEditText() {
@@ -713,8 +736,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         } else {
             isHasData = false;
         }
-        moreFragment = new MoreFragment(recommends, age_From, age_To, sexs, salary_From,
-                salary_To, languages, String.valueOf(pageindex), isHasData, this);
+        moreFragment = new MoreFragment(recommends, age_From, age_To, sexs,sexs_texts, salary_From,
+                salary_To, languages,languages_text, String.valueOf(pageindex), isHasData, this);
         transaction.add(R.id.frame, moreFragment);
         transaction.commit();
 
@@ -935,8 +958,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     }
 
     @Override
-    public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,
-                              String from2, String to2, List<String> language, String page) {
+    public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,List<String> sexs_text,
+                              String from2, String to2, List<String> language,List<String> languages_text, String page) {
         recommends = recommend;
         age_From = from1;
         age_To = to1;

@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
- * Created by Abbott on 2017/11/8.
+ * Created by Abbott on 2017/11/8.快捷搜索适配器
  */
 
 public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
@@ -38,7 +38,12 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
+
+//    public interface OnClickListener {
+//        void onItemClick(View view, int position);
+//    }
     private OnItemClickListener mOnItemClickListener;
+//    private View.OnClickListener mOnClickListener;
 
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;

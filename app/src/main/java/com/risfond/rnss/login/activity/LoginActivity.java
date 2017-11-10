@@ -24,6 +24,7 @@ import com.hyphenate.chat.EMClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.callback.ResponseCallBack;
+import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.em.EMHelper;
 import com.risfond.rnss.common.utils.CountDownTextViewUtil;
 import com.risfond.rnss.common.utils.DialogUtil;
@@ -162,6 +163,7 @@ public class LoginActivity extends BaseActivity implements ResponseCallBack, Cou
         request.put("code", pwd);
         DialogUtil.getInstance().showLoadingDialog(context, "登录中...");
         iLogin.loginRequest(request, "", this);
+        Log.i("TAG", URLConstant.URL_LOGIN+"=======================");
     }
 
     /**

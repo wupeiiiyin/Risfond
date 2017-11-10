@@ -62,12 +62,13 @@ android {
         debug {
             buildConfigField "String", "buildTime", " \"${buildTime()}\" "
 //
-            buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#risfond\""
-            buildConfigField "String", "HOST", "\"http://rnssapi.risfond.com/\""
+//            buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#risfond\""正式环境
+//            buildConfigField "String", "HOST", "\"http://rnssapi.risfond.com/\""
             buildConfigField "String", "H5_HOST", "\"http://content.risfond.com/\""
 
-//            buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#test\""
+            buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#test\""//测试环境
 //            buildConfigField "String", "HOST", "\"http://192.168.30.250:8099/\""
+            buildConfigField "String", "HOST", "\"http://192.168.30.157:8006/\""
 //            buildConfigField "String", "H5_HOST", "\"http://192.168.30.195:1234/\""
 
 

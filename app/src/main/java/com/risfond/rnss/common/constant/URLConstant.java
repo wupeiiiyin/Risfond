@@ -161,4 +161,11 @@ public class URLConstant {
     public static final String URL_NEWS_LIST = URL_TOP + "news/list";
     /*新闻详情接口url*/
     public static final String URL_NEWS_DETAIL_H5 = H5_URL_TOP + "news/ltviewnew?";
+
+    /*保存查询条件接口url*/
+    public static final String URL_RESUME_ADDRESUMEQUERY = URL_TOP + "Resume/AddResumeQuery";
+    /*查询查询条件接口url*/
+    public static final String URL_RESUME_SELECTRESUMEQUERY = URL_TOP + "Resume/SelectResumeQuery";
+    /*删除查询条件接口url*/
+    public static final String URL_RESUME_DELETERESUMEQUERY = URL_TOP + "Resume/DeleteResumeQuery";
 }
