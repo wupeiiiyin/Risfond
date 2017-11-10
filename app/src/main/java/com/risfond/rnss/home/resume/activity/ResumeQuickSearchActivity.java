@@ -30,6 +30,7 @@ import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
+import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.PositionSearchResponse;
 import com.risfond.rnss.entry.ResumeSearch;
@@ -89,8 +90,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private boolean isLoadingMore = false;
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<String> lists = new ArrayList<>();
-    private List<ResumeSearch> quick = new ArrayList<>();
-    private List<ResumeSearch> quicks = new ArrayList<>();
+    private List<AppSelectQuery> quick = new ArrayList<>();
+    private List<AppSelectQuery> quicks = new ArrayList<>();
     private PopupWindow popupwindow;
     private RecyclerView rvResumePop;
     //自定义的弹出框类

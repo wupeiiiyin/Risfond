@@ -37,6 +37,7 @@ import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
@@ -112,6 +113,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private ResumeSearchResponse response;
     private List<ResumeSearch> searches = new ArrayList<>();
     private List<ResumeSearch> temp = new ArrayList<>();
+
+    private List<ResumeSearchAll> searcheall = new ArrayList<>();
     private boolean isLoadMore;
     private boolean isCanLoadMore = true;
     private boolean isLoadingMore = false;
@@ -250,14 +253,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     dialog.dismiss();
                     //设置你的操作事项
 
-                    if (isCanLoadMore) {
-
-                            if (!isLoadingMore) {
-                                isLoadMore = true;
-                                isLoadingMore = true;
-                                resumeRequest();
-                            }
-                    }
+//                    if (isCanLoadMore) {
+//
+//                            if (!isLoadingMore) {
+//                                isLoadMore = true;
+//                                isLoadingMore = true;
+//                                resumeRequest();
+//                            }
+//                    }
                 }
             });
 
@@ -266,13 +269,45 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     }
 
     private void resumeRequest() {
-
+        request = new HashMap<>();
         request.put("keyword", "");
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("pageindex", String.valueOf(pageindex));
+        for (int i = 0; i < selectedIds.size(); i++) {
+            String key = "worklocation[" + i + "]";
+            request.put(key, selectedIds.get(i));
+        }
+
+        request.put("yearfrom", yearfrom);
+        request.put("yearto", yearto);
+
+        for (int i = 0; i < educations.size(); i++) {
+            String key = "edu[" + i + "]";
+            request.put(key, educations.get(i));
+        }
+
+        request.put("agefrom", agefrom);
+        request.put("ageto", ageto);
+
+        if (sexs.size() > 0) {
+            request.put("gender[0]", sexs.get(0));
+        }
+
+        request.put("salaryfrom", salaryfrom);
+        request.put("salaryto", salaryto);
+
+        if (recommends.size() > 0) {
+            request.put("resumestatus[0]", recommends.get(0));
+        }
+
+        for (int i = 0; i < languages.size(); i++) {
+            String key = "lang[" + i + "]";
+            request.put(key, languages.get(i));
+        }
+
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
 //        callBack.onMoreConfirm(recommends, age_From, age_To, sexs,sexs_texts, salary_From, salary_To, languages,languages_text, page);//回调
-        Log.i("TAG",request.toString()+"=============================");
+//        Log.i("TAG",request.toString()+"=============================");
     }
 
     private void checkSearchEditText() {
@@ -638,6 +673,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
+
+                                                  request = new HashMap<>();
+                                                  request.put("keyword", "");
+                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+                                                  request.put("pageindex", String.valueOf(pageindex));
+                                                  request.put("keywordstype", String.valueOf(0));
+                                                  iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+
                                           }
                                       }
                                   }
