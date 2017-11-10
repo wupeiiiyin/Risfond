@@ -42,6 +42,7 @@ import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
+import com.risfond.rnss.home.resume.adapter.ResumeSearchWholeAdapter;
 import com.risfond.rnss.home.resume.fragment.EducationFragment;
 import com.risfond.rnss.home.resume.fragment.ExperienceFragment;
 import com.risfond.rnss.home.resume.fragment.MoreFragment;
@@ -154,6 +155,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private boolean isHasData;
 
     private PopupWindow popupwindow;
+    private ResumeSearchWholeAdapter resumeSearchWholeAdapter;
 
 
     @Override
@@ -167,6 +169,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         histories = new ArrayList<>();
         historiesAESC = new ArrayList<>();
         iResumeSearch = new ResumeSearchImpl();
+
         cbWhole.setText("全部");//初始值
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
@@ -176,6 +179,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
         adapter = new ResumeSearchAdapter(context, searches);
         historyAdapter = new ResumeSearchHistoryAdapter(context, historiesAESC);
+        resumeSearchWholeAdapter = new ResumeSearchWholeAdapter(context, searcheall);
+
 
         rvResumeList.setAdapter(adapter);
 
@@ -253,14 +258,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     dialog.dismiss();
                     //设置你的操作事项
 
-//                    if (isCanLoadMore) {
-//
-//                            if (!isLoadingMore) {
-//                                isLoadMore = true;
-//                                isLoadingMore = true;
-//                                resumeRequest();
-//                            }
-//                    }
+                    if (isCanLoadMore) {
+
+                            if (!isLoadingMore) {
+                                isLoadMore = true;
+                                isLoadingMore = true;
+                                resumeRequests(contact);
+                            }
+                    }
                 }
             });
 
@@ -268,7 +273,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
-    private void resumeRequest() {
+    private void resumeRequests(String contact) {
         request = new HashMap<>();
         request.put("keyword", "");
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
@@ -673,7 +678,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
-
+                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
                                                   request = new HashMap<>();
                                                   request.put("keyword", "");
                                                   request.put("staffid", String.valueOf(SPUtil.loadId(context)));
