@@ -63,8 +63,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     LinearLayout ll_back;//返回按钮
     @BindView(R.id.ll_empty_quicksearch)
     LinearLayout ll_empty_quicksearch;//暂无职位
-    @BindView(R.id.tv_resume_quick_total)
-    TextView tv_resume_quick_total;//快捷搜索职位数量
+    @BindView(R.id.tv_resume_quick_position)
+    TextView tv_ResumeQuickPosition;//快捷搜索职位数量
     @BindView(R.id.rv_quick_resume_list)
     RecyclerView recruitmentQuick;
     @BindView(R.id.ll_resume_quick)
@@ -129,8 +129,9 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
         recruitmentQuick.setAdapter(adapter);
 //        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
-        tv_resume_quick_total.setText(list.size()+"2");
-        tvResumeQuickNum.setText("2");
+        tv_ResumeQuickPosition.setText(list.size()+"2");//快捷搜索数量
+
+        tvResumeQuickNum.setText("2");//职位搜索数量
         recruitmentQuick.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

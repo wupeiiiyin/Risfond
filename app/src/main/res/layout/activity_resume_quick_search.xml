@@ -100,7 +100,7 @@
                     android:textSize="12sp"/>
 
                 <TextView
-                    android:id="@+id/tv_resume_quick_total"
+                    android:id="@+id/tv_resume_quick_position"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
