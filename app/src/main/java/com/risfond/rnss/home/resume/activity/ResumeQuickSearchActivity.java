@@ -296,8 +296,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
                 }
                 if (obj instanceof PositionSearchResponse) {
                     response = (PositionSearchResponse) obj;
-                    if (tv_resume_quick_total != null) {
-                        tv_resume_quick_total.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
+                    if (tv_ResumeQuickPosition != null) {
+                        tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
                     }
                 }
 //                if (list.size() > 0) {
