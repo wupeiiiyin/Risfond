@@ -170,6 +170,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         historiesAESC = new ArrayList<>();
         iResumeSearch = new ResumeSearchImpl();
 
+//        new ResumeSearchW
         cbWhole.setText("全部");//初始值
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
@@ -263,7 +264,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                             if (!isLoadingMore) {
                                 isLoadMore = true;
                                 isLoadingMore = true;
-                                resumeRequests(contact);
+                                resumeRequests();
                             }
                     }
                 }
@@ -273,7 +274,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
     }
 
-    private void resumeRequests(String contact) {
+    private void resumeRequests() {
         request = new HashMap<>();
         request.put("keyword", "");
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
