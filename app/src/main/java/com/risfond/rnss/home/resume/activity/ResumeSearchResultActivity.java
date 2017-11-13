@@ -39,6 +39,7 @@ import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchResponse;
+import com.risfond.rnss.entry.ResumeSearchWholeResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
@@ -113,6 +114,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private IResumeSearch iResumeSearch;
     private int pageindex = 1;
     private ResumeSearchResponse response;
+    private ResumeSearchWholeResponse wholeResponse;
     private List<ResumeSearch> searches = new ArrayList<>();
     private List<ResumeSearch> temp = new ArrayList<>();
 
@@ -359,6 +361,15 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         adapter.updateData(searches);
         hideResume();
     }
+    private void initResumeWholeData() {
+//        if (llHistory != null) {
+//            llHistory.setVisibility(View.GONE);
+//        }
+//        if (llResume != null) {
+//            llResume.setVisibility(View.VISIBLE);
+//        }
+        resumeSearchWholeAdapter.updateData(searcheall);
+    }
 
     /**
      * 获取并显示搜索历史
@@ -537,30 +548,30 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     adapter.updateData(searches);
                 }
 
-                if (obj instanceof ResumeSearchAll) {//你这个方法里面可以多层判断吧
-                    responseall = (ResumeSearchAll) obj;
+                if (obj instanceof ResumeSearchWholeResponse) {
+                    wholeResponse = (ResumeSearchWholeResponse) obj;
                     if (tvResumeTotal != null) {
-                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
+                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(wholeResponse.getTotal())));
                     }
-//                    if (response.getData().size() == 15) {
-//                        pageindex++;
-//                        isCanLoadMore = true;
-//                        if (searche_temp.size() > 0) {
-//                            searcheall.removeAll(searche_temp);
-//                            searche_temp.clear();
-//                        }
-//                        searches.addAll(response.getData());
-//                    } else {
-//                        isCanLoadMore = false;
-//                        if (searche_temp.size() > 0) {
-//                            searches.removeAll(searche_temp);
-//                            searche_temp.clear();
-//                        }
-//                        searche_temp = response.getData();
-//                        searcheall.addAll(searche_temp);
-//                    }
-//                    initResumeData();
-//                    adapter.updateData(searches);
+                    if (wholeResponse.getData().size() == 15) {
+                        pageindex++;
+                        isCanLoadMore = true;
+                        if (searche_temp.size() > 0) {
+                            searcheall.removeAll(searche_temp);
+                            searche_temp.clear();
+                        }
+                        searches.addAll(response.getData());
+                    } else {
+                        isCanLoadMore = false;
+                        if (searche_temp.size() > 0) {
+                            searches.removeAll(searche_temp);
+                            searche_temp.clear();
+                        }
+                        searche_temp = wholeResponse.getData();
+                        searcheall.addAll(searche_temp);
+                    }
+                    initResumeWholeData();
+                    resumeSearchWholeAdapter.updateData(searcheall);
                 }
                 if (isLoadMore) {
                     isLoadingMore = false;
