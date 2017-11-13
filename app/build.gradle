@@ -68,7 +68,7 @@ android {
 
 //            buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#test\""//测试环境
 //            buildConfigField "String", "HOST", "\"http://192.168.30.250:8099/\""
-            buildConfigField "String", "HOST", "\"http://192.168.30.157:8006/\""
+//            buildConfigField "String", "HOST", "\"http://192.168.30.157:8006/\""
 //            buildConfigField "String", "H5_HOST", "\"http://192.168.30.195:1234/\""
 
 
