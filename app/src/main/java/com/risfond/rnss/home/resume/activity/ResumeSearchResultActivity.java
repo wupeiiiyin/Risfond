@@ -102,7 +102,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     View line;
     @BindView(R.id.frame)
     View Frame;
-    @BindView(R.id.tv_search_save)
+    @BindView(R.id.tv_search_savetiaojian)
     TextView tvSave;//保存搜索简历
     @BindView(R.id.cb_whole)
     CheckBox cbWhole;//搜索分类按钮
@@ -250,13 +250,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
     }
 
-    @OnClick({R.id.tv_search_cancel,R.id.tv_search_save})//监听事件
+    @OnClick({R.id.tv_search_cancel,R.id.tv_search_savetiaojian})//监听事件
     public void onClick(View v) {
         if (v.getId() == R.id.tv_search_cancel) {
             ImeUtil.hideSoftKeyboard(etResumeSearch);
             onFinish();
         }
-        if (v.getId() == R.id.tv_search_save) {
+        if (v.getId() == R.id.tv_search_savetiaojian) {
             //弹框对话
             CustomDialog.Builder builder = new CustomDialog.Builder(context);
             builder.setMessage("您已保存成功，可在快捷搜索查看");

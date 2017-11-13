@@ -167,7 +167,7 @@
                         android:textSize="12sp"/>
                     </LinearLayout>
                     <TextView
-                        android:id="@+id/tv_search_save"
+                        android:id="@+id/tv_search_savetiaojian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="保存搜索条件"
