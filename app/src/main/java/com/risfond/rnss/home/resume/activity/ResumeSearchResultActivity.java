@@ -117,6 +117,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private List<ResumeSearch> temp = new ArrayList<>();
 
     private List<ResumeSearchAll> searcheall = new ArrayList<>();
+    private List<ResumeSearchAll> searche_temp = new ArrayList<>();
+    private ResumeSearchAll responseall;
     private boolean isLoadMore;
     private boolean isCanLoadMore = true;
     private boolean isLoadingMore = false;
@@ -534,6 +536,32 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     initResumeData();
                     adapter.updateData(searches);
                 }
+
+                if (obj instanceof ResumeSearchAll) {//你这个方法里面可以多层判断吧
+                    responseall = (ResumeSearchAll) obj;
+                    if (tvResumeTotal != null) {
+                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
+                    }
+//                    if (response.getData().size() == 15) {
+//                        pageindex++;
+//                        isCanLoadMore = true;
+//                        if (searche_temp.size() > 0) {
+//                            searcheall.removeAll(searche_temp);
+//                            searche_temp.clear();
+//                        }
+//                        searches.addAll(response.getData());
+//                    } else {
+//                        isCanLoadMore = false;
+//                        if (searche_temp.size() > 0) {
+//                            searches.removeAll(searche_temp);
+//                            searche_temp.clear();
+//                        }
+//                        searche_temp = response.getData();
+//                        searcheall.addAll(searche_temp);
+//                    }
+//                    initResumeData();
+//                    adapter.updateData(searches);
+                }
                 if (isLoadMore) {
                     isLoadingMore = false;
                 }
@@ -686,7 +714,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   request.put("keyword", "");
                                                   request.put("staffid", String.valueOf(SPUtil.loadId(context)));
                                                   request.put("pageindex", String.valueOf(pageindex));
-                                                  request.put("selecttype", String.valueOf(0));
+//                                                  request.put("selecttype", String.valueOf(0));
                                                   resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
 
                                           }
@@ -702,6 +730,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);//设置为默认状态
+
+                                                  request = new HashMap<>();
+                                                  request.put("keyword", "");
+                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+                                                  request.put("pageindex", String.valueOf(pageindex));
+                                                  request.put("keywordstype", String.valueOf(1));
+                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }
@@ -715,6 +750,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
+
+                                                  request = new HashMap<>();
+                                                  request.put("keyword", "");
+                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+                                                  request.put("pageindex", String.valueOf(pageindex));
+                                                  request.put("keywordstype", String.valueOf(2));
+                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }

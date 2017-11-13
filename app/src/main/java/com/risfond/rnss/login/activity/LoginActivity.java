@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity implements ResponseCallBack, Cou
         request.put("code", pwd);
         DialogUtil.getInstance().showLoadingDialog(context, "登录中...");
         iLogin.loginRequest(request, "", this);
-        Log.i("TAG", URLConstant.URL_LOGIN+"=======================");
+//        Log.i("TAG", URLConstant.URL_LOGIN+"=======================");
     }
 
     /**

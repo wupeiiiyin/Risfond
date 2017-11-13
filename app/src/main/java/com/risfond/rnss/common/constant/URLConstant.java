@@ -169,5 +169,5 @@ public class URLConstant {
     /*删除查询条件接口url*/
     public static final String URL_RESUME_DELETERESUMEQUERY = URL_TOP + "Resume/DeleteResumeQuery";
     /*所有查询条件接口url*/
-    public static final String URL_RESUME_SEARCHALL = URL_TOP + "ResumeSearchAll";
+    public static final String URL_RESUME_SEARCHALL = URL_TOP + "Resume/ResumeSearchAll";
 }

@@ -39,14 +39,17 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         void onItemClick(View view, int position);
     }
 
-//    public interface OnClickListener {
-//        void onItemClick(View view, int position);
-//    }
+    public interface OnClickListener {//add
+        void onClick(View view, int position);
+    }
     private OnItemClickListener mOnItemClickListener;
-//    private View.OnClickListener mOnClickListener;
+    private View.OnClickListener mOnClickListener;//add
 
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
+    }
+    public void setOnClickListener(OnClickListener mOnClickListener) {//add
+        this.mOnClickListener = (View.OnClickListener) mOnClickListener;
     }
 
     @Override
@@ -87,6 +90,18 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 //            mholder.tvUpdateTime.setText(search.getUpdateDate());
 
             OnItemClickListener(holder, position);
+            OnClickListener(holder, position);
+        }
+    }
+
+    private void OnClickListener(RecyclerView.ViewHolder holder, final int position) {//add
+        if (mOnClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(v, position);
+                }
+            });
         }
     }
 
