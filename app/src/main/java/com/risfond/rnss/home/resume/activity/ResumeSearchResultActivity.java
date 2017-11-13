@@ -136,10 +136,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private String experience_from = "";//经验from
     private String experience_to = "";//经验to
     private List<String> languages = new ArrayList<>();//语言ID
-    private List<String> languages_texts = new ArrayList<>();//语言ID
+//    private List<String> languages_texts = new ArrayList<>();//语言ID
     private List<String> recommends = new ArrayList<>();//推荐状态ID
     private List<String> sexs = new ArrayList<>();//性别ID
-    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
+//    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
     private String age_From = "";//年龄from
     private String age_To = "";//年龄to
     private String salary_From = "";//薪资from
@@ -231,10 +231,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put("gender[0]", sexs.get(0));
         }
 
-        if (sexs_texts.size() > 0) {//add
-            request.put("genders[0]", sexs_texts.get(0));
-        }
-
         request.put("salaryfrom", salaryfrom);
         request.put("salaryto", salaryto);
 
@@ -245,10 +241,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         for (int i = 0; i < languages.size(); i++) {
             String key = "lang[" + i + "]";
             request.put(key, languages.get(i));
-        }
-        for (int i = 0; i < languages_texts.size(); i++) {//add
-            String key = "langs[" + i + "]";
-            request.put(key, languages_texts.get(i));
         }
 
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
@@ -261,7 +253,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             onFinish();
         }
         if (v.getId() == R.id.tv_search_save) {
-
             //弹框对话
             CustomDialog.Builder builder = new CustomDialog.Builder(context);
             builder.setMessage("您已保存成功，可在快捷搜索查看");
@@ -309,9 +300,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         if (sexs.size() > 0) {
             request.put("gender[0]", sexs.get(0));
         }
-        if (sexs_texts.size() > 0) {//add
-            request.put("genders[0]", sexs_texts.get(0));
-        }
 
         request.put("salaryfrom", salaryfrom);
         request.put("salaryto", salaryto);
@@ -323,10 +311,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         for (int i = 0; i < languages.size(); i++) {
             String key = "lang[" + i + "]";
             request.put(key, languages.get(i));
-        }
-        for (int i = 0; i < languages_texts.size(); i++) {//add
-            String key = "langs[" + i + "]";
-            request.put(key, languages_texts.get(i));
         }
 
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
@@ -803,8 +787,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         } else {
             isHasData = false;
         }
-        moreFragment = new MoreFragment(recommends, age_From, age_To, sexs,sexs_texts, salary_From,
-                salary_To, languages,languages_texts, String.valueOf(pageindex), isHasData, this);
+        moreFragment = new MoreFragment(recommends, age_From, age_To, sexs, salary_From,
+                salary_To, languages, String.valueOf(pageindex), isHasData, this);
         transaction.add(R.id.frame, moreFragment);
         transaction.commit();
 
@@ -896,8 +880,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         languages.clear();
         recommends.clear();
         sexs.clear();
-        sexs_texts.clear();//add
-        languages_texts.clear();//add
+//        sexs_texts.clear();//add
+//        languages_texts.clear();//add
 
         setPositionValue();
         setExperienceValue();
@@ -1027,17 +1011,17 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     }
 
     @Override
-    public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,List<String> sexs_text,
-                              String from2, String to2, List<String> language,List<String> languages_t, String page) {
+    public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,
+                              String from2, String to2, List<String> language, String page) {
         recommends = recommend;
         age_From = from1;
         age_To = to1;
         sexs = sex;
-        sexs_texts = sexs_text;//add
+//        sexs_texts = sexs_text;//add
         salary_From = from2;
         salary_To = to2;
         languages = language;
-        languages_texts = languages_t;//add
+//        languages_texts = languages_t;//add
 
         setMoreValue();
         onFinish();
