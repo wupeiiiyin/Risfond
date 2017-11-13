@@ -47,6 +47,7 @@ import com.risfond.rnss.home.resume.fragment.EducationFragment;
 import com.risfond.rnss.home.resume.fragment.ExperienceFragment;
 import com.risfond.rnss.home.resume.fragment.MoreFragment;
 import com.risfond.rnss.home.resume.fragment.PositionFragment;
+import com.risfond.rnss.home.resume.modleImpl.ResumeSearchAllImpl;
 import com.risfond.rnss.home.resume.modleImpl.ResumeSearchImpl;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearch;
 import com.risfond.rnss.home.resume.modleInterface.SelectCallBack;
@@ -135,7 +136,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private String experience_from = "";//经验from
     private String experience_to = "";//经验to
     private List<String> languages = new ArrayList<>();//语言ID
-    private List<String> languages_text = new ArrayList<>();//语言ID
+    private List<String> languages_texts = new ArrayList<>();//语言ID
     private List<String> recommends = new ArrayList<>();//推荐状态ID
     private List<String> sexs = new ArrayList<>();//性别ID
     private List<String> sexs_texts = new ArrayList<>();//创建一个集合
@@ -156,6 +157,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
     private PopupWindow popupwindow;
     private ResumeSearchWholeAdapter resumeSearchWholeAdapter;
+    private ResumeSearchAllImpl resumeSearchAll;
 
 
     @Override
@@ -170,7 +172,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         historiesAESC = new ArrayList<>();
         iResumeSearch = new ResumeSearchImpl();
 
-//        new ResumeSearchW
+        resumeSearchAll = new ResumeSearchAllImpl();//搜索全部
+
         cbWhole.setText("全部");//初始值
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
@@ -228,6 +231,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put("gender[0]", sexs.get(0));
         }
 
+        if (sexs_texts.size() > 0) {//add
+            request.put("genders[0]", sexs_texts.get(0));
+        }
+
         request.put("salaryfrom", salaryfrom);
         request.put("salaryto", salaryto);
 
@@ -238,6 +245,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         for (int i = 0; i < languages.size(); i++) {
             String key = "lang[" + i + "]";
             request.put(key, languages.get(i));
+        }
+        for (int i = 0; i < languages_texts.size(); i++) {//add
+            String key = "langs[" + i + "]";
+            request.put(key, languages_texts.get(i));
         }
 
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
@@ -298,6 +309,9 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         if (sexs.size() > 0) {
             request.put("gender[0]", sexs.get(0));
         }
+        if (sexs_texts.size() > 0) {//add
+            request.put("genders[0]", sexs_texts.get(0));
+        }
 
         request.put("salaryfrom", salaryfrom);
         request.put("salaryto", salaryto);
@@ -310,9 +324,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             String key = "lang[" + i + "]";
             request.put(key, languages.get(i));
         }
+        for (int i = 0; i < languages_texts.size(); i++) {//add
+            String key = "langs[" + i + "]";
+            request.put(key, languages_texts.get(i));
+        }
 
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
-//        callBack.onMoreConfirm(recommends, age_From, age_To, sexs,sexs_texts, salary_From, salary_To, languages,languages_text, page);//回调
+//        callBack.onMoreConfirm(recommends, age_From, age_To, sexs,sexs_texts, salary_From, salary_To, languages,languages_t, page);//回调
 //        Log.i("TAG",request.toString()+"=============================");
     }
 
@@ -684,8 +702,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   request.put("keyword", "");
                                                   request.put("staffid", String.valueOf(SPUtil.loadId(context)));
                                                   request.put("pageindex", String.valueOf(pageindex));
-                                                  request.put("keywordstype", String.valueOf(0));
-                                                  iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+                                                  request.put("selecttype", String.valueOf(0));
+                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
 
                                           }
                                       }
@@ -786,7 +804,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             isHasData = false;
         }
         moreFragment = new MoreFragment(recommends, age_From, age_To, sexs,sexs_texts, salary_From,
-                salary_To, languages,languages_text, String.valueOf(pageindex), isHasData, this);
+                salary_To, languages,languages_texts, String.valueOf(pageindex), isHasData, this);
         transaction.add(R.id.frame, moreFragment);
         transaction.commit();
 
@@ -878,6 +896,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         languages.clear();
         recommends.clear();
         sexs.clear();
+        sexs_texts.clear();//add
+        languages_texts.clear();//add
 
         setPositionValue();
         setExperienceValue();
@@ -1008,14 +1028,16 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
     @Override
     public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,List<String> sexs_text,
-                              String from2, String to2, List<String> language,List<String> languages_text, String page) {
+                              String from2, String to2, List<String> language,List<String> languages_t, String page) {
         recommends = recommend;
         age_From = from1;
         age_To = to1;
         sexs = sex;
+        sexs_texts = sexs_text;//add
         salary_From = from2;
         salary_To = to2;
         languages = language;
+        languages_texts = languages_t;//add
 
         setMoreValue();
         onFinish();

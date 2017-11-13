@@ -104,7 +104,7 @@ public class MoreFragment extends BaseFragment {
     private boolean isHasData;
 
     public MoreFragment(List<String> recommend, String age_from, String age_to, List<String> sex,List<String> sexs_text,
-                        String salary_from, String salary_to, List<String> language,List<String> languages_text, String page,
+                        String salary_from, String salary_to, List<String> language,List<String> languages_t, String page,
                         boolean isHasData, SelectCallBack callBack) {
         recommends.addAll(recommend);
         this.age_From = age_from;
@@ -114,7 +114,7 @@ public class MoreFragment extends BaseFragment {
         this.salary_From = salary_from;
         this.salary_To = salary_to;
         languages.addAll(language);
-        languages_texts.addAll(languages_text);//添加
+        languages_texts.addAll(languages_t);//添加
         this.page = page;
         this.isHasData = isHasData;
         this.callBack = callBack;
