@@ -13,7 +13,7 @@ public interface SelectCallBack {
 
     void onEducationConfirm(List<String> educations, List<String> educationName);
 
-    void onMoreConfirm(List<String> recommends, String age_from, String age_to, List<String> sexs,
+    void onMoreConfirm(List<String> recommends, String age_from, String age_to, List<String> sex,
                        String salary_from, String salary_to, List<String> languages, String page);
 
     void onOutside();

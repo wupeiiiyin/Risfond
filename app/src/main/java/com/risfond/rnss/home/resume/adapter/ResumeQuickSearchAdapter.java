@@ -13,6 +13,7 @@ import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.R;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
+import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.ResumeSearch;
 
 import java.util.List;
@@ -28,9 +29,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     private Context context;
-    private List<String> data;
+    private List<AppSelectQuery> data;
 
-    public ResumeQuickSearchAdapter(Context context, List<String> data) {
+    public ResumeQuickSearchAdapter(Context context, List<AppSelectQuery> data) {
         this.context = context;
         this.data = data;
     }
@@ -110,7 +111,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         return data.size();
     }
 
-    public void updateData(List<String> data) {
+    public void updateData(List<AppSelectQuery> data) {
         this.data = data;
         notifyDataSetChanged();
     }
