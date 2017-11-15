@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 public class AppSelectQuery implements Parcelable {
 
-    private int resumequeryid;
+    private int resumequeryid;//返回的id,用于删除
     private int staffId;//用户id
     private int pageIndex ;//当前页数
     private int pageSize ;//每页条数

@@ -15,6 +15,7 @@ import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchAll;
 
 import java.util.List;
 
@@ -64,9 +65,19 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
-//            ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
+            ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
+            AppSelectQuery search = data.get(position);
+//            GlideUtil.loadResumeImage(context, search.getPhoto(), mholder.ivHead, new CropCircleTransformation(context));
 
-            ((ResumeQuickSearchViewHolder)holder).tvQuick.setText(data.get(position).getName()+data.get(position).getJobTitle());
+                mholder.tvQuick.setText(search.getJobTitle()+search.getCompanyFullName()+
+                        search.getLiveLocationTxt()+search.getEducationLevelTxt()+search.getAge() + "岁"+
+                        search.getWorkExperience() + "年经验"+search.getResumeCode()+search.getName());
+
+                mholder.tvTime.setText(search.getUpdateDate());//时间
+
+
+//            ((ResumeQuickSearchViewHolder)holder).tvQuick.setText(data.get(position).getName()+"king"+data.get(position).getJobTitle());
+//            ((ResumeQuickSearchViewHolder)holder).tvTime.setText(data.get(position).getUpdateDate());
 
 //            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
 //                @Override

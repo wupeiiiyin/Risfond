@@ -36,6 +36,7 @@ import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.PositionSearchResponse;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchDeleteResponse;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.entry.ResumeSearchSelectResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.Util.SystemBarTintManager;
@@ -72,7 +73,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     LinearLayout ll_back;//返回按钮
     @BindView(R.id.ll_empty_quicksearch)
     LinearLayout ll_empty_quicksearch;//暂无职位
-//    @BindView(R.id.tv_resume_quick_position)
+    @BindView(R.id.tv_resume_quick_position)
     TextView tv_ResumeQuickPosition;//快捷搜索职位数量
     @BindView(R.id.rv_quick_resume_list)
     RecyclerView recruitmentQuick;
@@ -89,6 +90,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private boolean isLoadMore;
     private PositionSearchResponse response;
     private ResumeSearchSelectResponse selectResponse;
+    private ResumeSearchDeleteResponse deleteResponse;
     private Map<String, String> request = new HashMap<>();
     private List<PositionSearch> positionSearches = new ArrayList<>();
     private int pageindex = 1;
@@ -111,7 +113,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private IResumeSearch iResumeSearchSelect;
 
 private List<PositionSearch> temp = new ArrayList<>();
-    private LinearLayout llEmptySearch;
+    private LinearLayout llEmptySearchPoP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +132,7 @@ private List<PositionSearch> temp = new ArrayList<>();
 
 //        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
 
-        tv_ResumeQuickPosition = (TextView) findViewById(R.id.tv_resume_quick_position);
+//        tv_ResumeQuickPosition = (TextView) findViewById(R.id.tv_resume_quick_position);
         context = ResumeQuickSearchActivity.this;
         iPositionSearch = new PositionSearchImpl();
         padapter = new PositionSearchAdapter(context, positionSearches);//弹框的适配器
@@ -139,9 +141,9 @@ private List<PositionSearch> temp = new ArrayList<>();
         iResumeSearchDelece = new ResumeSearchDeleteImpl();//删除
         iResumeSearchSelect = new ResumeSearchSelectImpl();//查询
 
-        for (int i=0;i<50;i++){
-            list.add("模拟经理/总监+"+i);
-        }
+//        for (int i=0;i<50;i++){
+//            list.add("模拟经理/总监+"+i);
+//        }
 
         adapter = new ResumeQuickSearchAdapter(context, quick);
 
@@ -178,7 +180,7 @@ private List<PositionSearch> temp = new ArrayList<>();
             }
         });
         onItemClick();//监听
-//        resumeRequest();
+        resumeRequest();
 
         llResumeQuick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +214,7 @@ private List<PositionSearch> temp = new ArrayList<>();
         // // 获取自定义布局文件pop.xml的视图
         View customView = LayoutInflater.from(ResumeQuickSearchActivity.this).inflate(R.layout.popview_item_search, null);
         rvResumePop = (RecyclerView)customView.findViewById(R.id.rv_resume_pop_list);
-        llEmptySearch = (LinearLayout)customView.findViewById(R.id.ll_empty_search);//暂无职位
+        llEmptySearchPoP = (LinearLayout)customView.findViewById(R.id.ll_empty_search_pop);//暂无职位
 
 
         rvResumePop.setLayoutManager(new LinearLayoutManager(context));
@@ -240,7 +242,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                 }
             }
         });
-        onItemClick();//两处使用此方法
+//        onItemClick();//两处使用此方法
         positionRequest();
 
 //        //实例化SelectPicPopupWindow
@@ -301,6 +303,33 @@ private List<PositionSearch> temp = new ArrayList<>();
                 ResumeSearchActivity.StartAction(context);//跳转到简历搜索界面
             }
         });
+        //删除
+        adapter.setOnDeClickListener(new ResumeQuickSearchAdapter.OnDeClickListener() {
+            @Override
+            public void onDeClick(View view, final int position) {
+                DialogUtil.getInstance().showConfigDialog(context, "是否删除？", "是", "否", new DialogUtil.PressCallBack() {
+                                            @Override
+                                            public void onPressButton(int buttonIndex) {
+                                                if (buttonIndex == DialogUtil.BUTTON_OK) {
+//                                                    quick.remove(quicks_temp.get(position));
+                                                    quick.remove(quick.get(position));
+                                                    adapter.notifyDataSetChanged();
+                                                    AppSelectQuery appSelectQuery = new AppSelectQuery();
+                                                    int resumequeryid = appSelectQuery.getResumequeryid();
+//                                                                                                        if (!isLoadMore) {
+//                                                        DialogUtil.getInstance().showLoadingDialog(context, "删除中...");
+//                                                    }
+                                                    request.put("keyword", "");
+                                                    request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+                                                    request.put("pageindex", String.valueOf(pageindex));
+                                                    request.put("staffId ", String.valueOf(resumequeryid));
+                                                    iResumeSearchDelece.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_DELETERESUMEQUERY, ResumeQuickSearchActivity.this);
+
+                                                }
+                                            }
+                                        });
+            }
+        });
     }
 
 
@@ -357,23 +386,33 @@ private List<PositionSearch> temp = new ArrayList<>();
                     isLoadingMore = false;
                 }
                 if (positionSearches.size() > 0) {
-                    llEmptySearch.setVisibility(View.GONE);
-                    rvResumePop.setVisibility(View.VISIBLE);
+                    if(llEmptySearchPoP!=null){
+                        llEmptySearchPoP.setVisibility(View.GONE);
+//                        rvResumePop.setVisibility(View.VISIBLE);
+                    }
+                    if (rvResumePop != null) {
+                        rvResumePop.setVisibility(View.VISIBLE);//显示RecyclerView控件
+                    }
+
                 } else {
-                    llEmptySearch.setVisibility(View.VISIBLE);
-                    rvResumePop.setVisibility(View.GONE);
+//                    llEmptySearchPoP.setVisibility(View.VISIBLE);
+//                    rvResumePop.setVisibility(View.GONE);
+                    if (llEmptySearchPoP != null) {
+                        llEmptySearchPoP.setVisibility(View.VISIBLE);//无数据时的布局显示
+                    }
+                    if (rvResumePop != null) {
+                        rvResumePop.setVisibility(View.GONE);//隐藏RecyclerView控件
+                    }
                 }
-                Log.i("TAGs","-1---------------");
 
 //                查询的操作
-                if (obj instanceof ResumeSearchSelectResponse) {//chaxun
-                    Log.i("TAGs","-2---------------");
+                if (obj instanceof ResumeSearchSelectResponse) {
                     selectResponse = (ResumeSearchSelectResponse) obj;
                     if(tv_ResumeQuickPosition != null){//查询数量
                         tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(selectResponse.getTotal())));
                     }
                     if (selectResponse.getData().size() == 15) {
-                        Log.i("TAGs","-3---------------");
+                        Log.i("TAGs",tv_ResumeQuickPosition+"-3---------------");
                         pageindex++;
                         isCanLoadMore = true;
                         if (quicks_temp.size() > 0) {
@@ -383,6 +422,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                         }
                         quick.addAll(selectResponse.getData());
                     } else {
+                        Log.i("TAGs",tv_ResumeQuickPosition+"-37---------------");
                         isCanLoadMore = false;
                         if (quicks_temp.size() > 0) {
                             quick.removeAll(quicks_temp);
@@ -390,6 +430,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                         }
                         quicks_temp = selectResponse.getData();
                         quick.addAll(quicks_temp);
+                        Log.i("TAGs","-8---------------"+quick.toString()+"ppppppppppp");
                     }
                     adapter.updateData(quick);
                 }
@@ -403,6 +444,13 @@ private List<PositionSearch> temp = new ArrayList<>();
                     ll_empty_quicksearch.setVisibility(View.VISIBLE);
                     recruitmentQuick.setVisibility(View.GONE);
                 }
+
+                //删除
+                if (obj instanceof ResumeSearchDeleteResponse) {
+                    deleteResponse = (ResumeSearchDeleteResponse) obj;
+                    Log.i("TAGs","-86---------------"+quick.toString()+"delete======");
+                }
+
             }
         });
 
