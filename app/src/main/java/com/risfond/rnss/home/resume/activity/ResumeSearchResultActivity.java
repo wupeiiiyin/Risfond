@@ -37,12 +37,14 @@ import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchAdd;
 import com.risfond.rnss.entry.ResumeSearchAddResponse;
 import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.entry.ResumeSearchWholeResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
+import com.risfond.rnss.home.resume.adapter.ResumeSearchAddAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchWholeAdapter;
 import com.risfond.rnss.home.resume.fragment.EducationFragment;
@@ -124,6 +126,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private ResumeSearchAddResponse responseAdd;
     private List<ResumeSearch> searches = new ArrayList<>();
     private List<ResumeSearch> temp = new ArrayList<>();
+    private List<ResumeSearchAdd> add = new ArrayList<>();
+    private List<ResumeSearchAdd> addd_temp = new ArrayList<>();
 
     private List<ResumeSearchAll> searcheall = new ArrayList<>();
     private List<ResumeSearchAll> searche_temp = new ArrayList<>();
@@ -170,6 +174,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private PopupWindow popupwindow;
     private ResumeSearchWholeAdapter resumeSearchWholeAdapter;
     private ResumeSearchAllImpl resumeSearchAll;
+    private ResumeSearchAddAdapter addAdapter;
 
 
     @Override
@@ -203,6 +208,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
         rvResumeList.setAdapter(adapter);
 //        rvResumeList.setAdapter(resumeSearchWholeAdapter);
+        addAdapter = new ResumeSearchAddAdapter(context, add);
 
         checkSearchEditText();
         etResumeSearch.setFocusable(false);
@@ -312,6 +318,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         }
 
         request.put("yearfrom", yearfrom);
+        Log.i("TAGs",yearfrom+"---------------------");
         request.put("yearto", yearto);
 
         for (int i = 0; i < educations.size(); i++) {
@@ -603,31 +610,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     initResumeWholeData();
                     resumeSearchWholeAdapter.updateData(searcheall);
                 }
-
+                Log.i("TAGs","-1---------------");
                 if (obj instanceof ResumeSearchAddResponse) {
                     responseAdd = (ResumeSearchAddResponse) obj;
-
-                    if (responseAdd.getData().size() == 15) {
-                        pageindex++;
-                        isCanLoadMore = true;
-                        if (temp.size() > 0) {
-                            searches.removeAll(temp);
-                            temp.clear();
-                        }
-                        searches.addAll(responseAdd.getData());
-
-                    } else {
-                        isCanLoadMore = false;
-                        if (temp.size() > 0) {
-                            searches.removeAll(temp);
-                            temp.clear();
-                        }
-                        temp = responseAdd.getData();
-                        searches.addAll(temp);
-                    }
-
-                    initResumeData();
-                    adapter.updateData(searches);
+                    Log.i("TAGs","---2-------------");
                                 //弹框对话
                                 CustomDialog.Builder builder = new CustomDialog.Builder(context);
                                 builder.setMessage("您已保存成功，可在快捷搜索查看");

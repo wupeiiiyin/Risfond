@@ -20,7 +20,7 @@ public class ResumeSearchAddResponse {
     private int Total;
     private boolean Status;
     private String Message;
-    private List<ResumeSearch> Data;
+    private List<ResumeSearchAdd> Data;
 
     public int getCode() {
         return Code;
@@ -54,11 +54,11 @@ public class ResumeSearchAddResponse {
         this.Message = Message;
     }
 
-    public List<ResumeSearch> getData() {
+    public List<ResumeSearchAdd> getData() {
         return Data;
     }
 
-    public void setData(List<ResumeSearch> data) {
+    public void setData(List<ResumeSearchAdd> data) {
         Data = data;
     }
 }
