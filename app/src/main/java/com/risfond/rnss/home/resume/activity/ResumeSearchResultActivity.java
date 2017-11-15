@@ -610,11 +610,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     initResumeWholeData();
                     resumeSearchWholeAdapter.updateData(searcheall);
                 }
-                Log.i("TAGs","-1---------------");
+
                 if (obj instanceof ResumeSearchAddResponse) {
                     responseAdd = (ResumeSearchAddResponse) obj;
-                    Log.i("TAGs","---2-------------");
-                                //弹框对话
+
+                    //弹框对话
                                 CustomDialog.Builder builder = new CustomDialog.Builder(context);
                                 builder.setMessage("您已保存成功，可在快捷搜索查看");
                                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {

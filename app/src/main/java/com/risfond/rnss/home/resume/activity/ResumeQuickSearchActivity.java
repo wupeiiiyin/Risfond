@@ -143,7 +143,7 @@ private List<PositionSearch> temp = new ArrayList<>();
             list.add("模拟经理/总监+"+i);
         }
 
-        adapter = new ResumeQuickSearchAdapter(context, list);
+        adapter = new ResumeQuickSearchAdapter(context, quick);
 
         recruitmentQuick.setLayoutManager(new LinearLayoutManager(context));
         //控制分割线的宽度 参数1：上下文，参数2：方向，参数3：分割线高度，参数4：颜色
@@ -171,15 +171,15 @@ private List<PositionSearch> temp = new ArrayList<>();
                         if (!isLoadingMore) {
                             isLoadMore = true;
                             isLoadingMore = true;
-//                            resumeRequest();
+                            resumeRequest();
                         }
                     }
                 }
             }
         });
         onItemClick();//监听
-//        positionRequest();
 //        resumeRequest();
+
         llResumeQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +196,7 @@ private List<PositionSearch> temp = new ArrayList<>();
         });
     }
 
-    private void resumeRequest() {
+    private void resumeRequest() {//快速搜索请求
         if (!isLoadMore) {
             DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
         }
@@ -205,6 +205,8 @@ private List<PositionSearch> temp = new ArrayList<>();
         request.put("pageindex", String.valueOf(pageindex));
         iResumeSearchSelect.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SELECTRESUMEQUERY, this);
     }
+
+
     //按已有职位搜索popupWindow弹框
     private void initmPopupWindowViews() {
         // // 获取自定义布局文件pop.xml的视图
@@ -325,6 +327,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                 if (!isLoadMore) {
                     DialogUtil.getInstance().closeLoadingDialog();
                 }
+                //popup弹框的操作
                 if (obj instanceof PositionSearchResponse) {
                     response = (PositionSearchResponse) obj;
                     if(tvResumeQuickNum != null){//查询数量
@@ -359,41 +362,46 @@ private List<PositionSearch> temp = new ArrayList<>();
                     llEmptySearch.setVisibility(View.VISIBLE);
                     rvResumePop.setVisibility(View.GONE);
                 }
+                Log.i("TAGs","-1---------------");
 
-//                if (obj instanceof ResumeSearchSelectResponse) {//chaxun
-//                    selectResponse = (ResumeSearchSelectResponse) obj;
-//                    if(tv_ResumeQuickPosition != null){//查询数量
-//                        tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(selectResponse.getTotal())));
-//                    }
-//                    if (selectResponse.getData().size() == 15) {
-//                        pageindex++;
-//                        isCanLoadMore = true;
-//                        if (quicks_temp.size() > 0) {
-//                            quick.removeAll(quicks_temp);
-//                            quicks_temp.clear();
-//                        }
-//                        quick.addAll(selectResponse.getData());
-//                    } else {
-//                        isCanLoadMore = false;
-//                        if (quicks_temp.size() > 0) {
-//                            quick.removeAll(quicks_temp);
-//                            quicks_temp.clear();
-//                        }
-//                        quicks_temp = selectResponse.getData();
-//                        quick.addAll(quicks_temp);
-//                    }
-//                    adapter.updateData(quick);
-//                }
-//                if (isLoadMore) {
-//                    isLoadingMore = false;
-//                }
-//                if (quick.size() > 0) {
-//                    ll_empty_quicksearch.setVisibility(View.GONE);
-//                    recruitmentQuick.setVisibility(View.VISIBLE);
-//                } else {
-//                    ll_empty_quicksearch.setVisibility(View.VISIBLE);
-//                    recruitmentQuick.setVisibility(View.GONE);
-//                }
+//                查询的操作
+                if (obj instanceof ResumeSearchSelectResponse) {//chaxun
+                    Log.i("TAGs","-2---------------");
+                    selectResponse = (ResumeSearchSelectResponse) obj;
+                    if(tv_ResumeQuickPosition != null){//查询数量
+                        tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(selectResponse.getTotal())));
+                    }
+                    if (selectResponse.getData().size() == 15) {
+                        Log.i("TAGs","-3---------------");
+                        pageindex++;
+                        isCanLoadMore = true;
+                        if (quicks_temp.size() > 0) {
+                            Log.i("TAGs",quicks_temp.size()+"-3333---------------");
+                            quick.removeAll(quicks_temp);
+                            quicks_temp.clear();
+                        }
+                        quick.addAll(selectResponse.getData());
+                    } else {
+                        isCanLoadMore = false;
+                        if (quicks_temp.size() > 0) {
+                            quick.removeAll(quicks_temp);
+                            quicks_temp.clear();
+                        }
+                        quicks_temp = selectResponse.getData();
+                        quick.addAll(quicks_temp);
+                    }
+                    adapter.updateData(quick);
+                }
+                if (isLoadMore) {
+                    isLoadingMore = false;
+                }
+                if (quick.size() > 0) {
+                    ll_empty_quicksearch.setVisibility(View.GONE);
+                    recruitmentQuick.setVisibility(View.VISIBLE);
+                } else {
+                    ll_empty_quicksearch.setVisibility(View.VISIBLE);
+                    recruitmentQuick.setVisibility(View.GONE);
+                }
             }
         });
 

@@ -29,9 +29,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     private Context context;
-    private List<String> data;
+    private List<AppSelectQuery> data;
 
-    public ResumeQuickSearchAdapter(Context context, List<String> data) {
+    public ResumeQuickSearchAdapter(Context context, List<AppSelectQuery> data) {
         this.context = context;
         this.data = data;
     }
@@ -40,18 +40,18 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         void onItemClick(View view, int position);
     }
 
-//    public interface OnClickListener {//add
-//        void onClick(View view, int position);
-//    }
+    public interface OnDeClickListener {//add
+        void onDeClick(View view, int position);
+    }
     private OnItemClickListener mOnItemClickListener;
-//    private View.OnClickListener mOnClickListener;//add
+    private OnDeClickListener mOnDeClickListener;//add
 
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
-//    public void setOnClickListener(OnClickListener mOnClickListener) {//add
-//        this.mOnClickListener = (View.OnClickListener) mOnClickListener;
-//    }
+    public void setOnDeClickListener(OnDeClickListener mOnDeClickListener) {//add
+        this.mOnDeClickListener =  mOnDeClickListener;
+    }
 
     @Override
     public ResumeQuickSearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,30 +61,38 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
             ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
 
-            mholder.tvQuick.setText(data.get(position) + "运营经理/总监按已有的职位搜索dddddddddd运营经斤斤计较点");
+            mholder.tvQuick.setText(data.get(position).getName()+data.get(position).getJobTitle());
 
-            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    DialogUtil.getInstance().showConfigDialog(context, "是否删除？", "是", "否", new DialogUtil.PressCallBack() {
-                        @Override
-                        public void onPressButton(int buttonIndex) {
-                            if (buttonIndex == DialogUtil.BUTTON_OK) {
-
-                                data.remove(data.get(position));
-                                notifyDataSetChanged();
-                            }
-                        }
-                    });
-
-                }
-            });
+//            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    DialogUtil.getInstance().showConfigDialog(context, "是否删除？", "是", "否", new DialogUtil.PressCallBack() {
+//                        @Override
+//                        public void onPressButton(int buttonIndex) {
+//                            if (buttonIndex == DialogUtil.BUTTON_OK) {
+//
+//                                data.remove(data.get(position));
+//                                notifyDataSetChanged();
+//                            }
+//                        }
+//                    });
+//
+//                }
+//            });
+            if (mOnDeClickListener != null) {//删除回调接口，供activity调用
+                ((ResumeQuickSearchAdapter.ResumeQuickSearchViewHolder) holder).imageDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnDeClickListener.onDeClick(holder.itemView, position);
+                    }
+                });
+            }
 
 //            mholder.tvExperience.setText(search.getWorkExperience() + "年经验");
 //            mholder.tvResumeNumber.setText(search.getResumeCode());
@@ -111,7 +119,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         return data.size();
     }
 
-    public void updateData(List<String> data) {
+    public void updateData(List<AppSelectQuery> data) {
         this.data = data;
         notifyDataSetChanged();
     }
