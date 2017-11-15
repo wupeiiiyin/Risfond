@@ -86,7 +86,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 //                }
 //            });
             if (mOnDeClickListener != null) {//删除回调接口，供activity调用
-                ((ResumeQuickSearchAdapter.ResumeQuickSearchViewHolder) holder).imageDelete.setOnClickListener(new View.OnClickListener() {
+                ((ResumeQuickSearchViewHolder)holder).imageDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mOnDeClickListener.onDeClick(holder.itemView, position);
