@@ -64,9 +64,9 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
-            ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
+//            ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
 
-            mholder.tvQuick.setText(data.get(position).getName()+data.get(position).getJobTitle());
+            ((ResumeQuickSearchViewHolder)holder).tvQuick.setText(data.get(position).getName()+data.get(position).getJobTitle());
 
 //            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
 //                @Override
