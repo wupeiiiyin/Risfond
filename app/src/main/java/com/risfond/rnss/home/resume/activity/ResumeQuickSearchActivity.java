@@ -37,6 +37,7 @@ import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.PositionSearchResponse;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchResponse;
+import com.risfond.rnss.entry.ResumeSearchSelectResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.Util.SystemBarTintManager;
 import com.risfond.rnss.home.position.adapter.PositionSearchAdapter;
 import com.risfond.rnss.home.position.modelImpl.PositionSearchImpl;
@@ -87,6 +88,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
     private boolean isLoadMore;
     private PositionSearchResponse response;
+    private ResumeSearchSelectResponse selectResponse;
     private Map<String, String> request = new HashMap<>();
     private List<PositionSearch> positionSearches = new ArrayList<>();
     private int pageindex = 1;
@@ -98,7 +100,7 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<String> lists = new ArrayList<>();
     private List<AppSelectQuery> quick = new ArrayList<>();//查询
-    private List<AppSelectQuery> quicks = new ArrayList<>();
+    private List<AppSelectQuery> quicks_temp = new ArrayList<>();
     private List<AppDeleteQuery> delete = new ArrayList<>();//删除
     private PopupWindow popupwindow;
     private RecyclerView rvResumePop;
@@ -137,11 +139,11 @@ private List<PositionSearch> temp = new ArrayList<>();
         iResumeSearchDelece = new ResumeSearchDeleteImpl();//删除
         iResumeSearchSelect = new ResumeSearchSelectImpl();//查询
 
-//        for (int i=0;i<2;i++){
-//            list.add("模拟经理/总监+"+i);
-//        }
+        for (int i=0;i<50;i++){
+            list.add("模拟经理/总监+"+i);
+        }
 
-        adapter = new ResumeQuickSearchAdapter(context, quick);
+        adapter = new ResumeQuickSearchAdapter(context, list);
 
         recruitmentQuick.setLayoutManager(new LinearLayoutManager(context));
         //控制分割线的宽度 参数1：上下文，参数2：方向，参数3：分割线高度，参数4：颜色
@@ -169,7 +171,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                         if (!isLoadingMore) {
                             isLoadMore = true;
                             isLoadingMore = true;
-                            resumeRequest();
+//                            resumeRequest();
                         }
                     }
                 }
@@ -177,7 +179,7 @@ private List<PositionSearch> temp = new ArrayList<>();
         });
         onItemClick();//监听
 //        positionRequest();
-        resumeRequest();
+//        resumeRequest();
         llResumeQuick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +253,7 @@ private List<PositionSearch> temp = new ArrayList<>();
         //        popupwindow.setAnimationStyle(R.style.AnimationFade);
         // 自定义view添加触摸事件
         //        popupwindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-//        popupwindow.setFocusable(false);
+        popupwindow.setFocusable(false);
         popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
 //        backgroundAlpha(0.5f);//设置半透明
         //实例化一个ColorDrawable颜色为半透明
@@ -358,39 +360,39 @@ private List<PositionSearch> temp = new ArrayList<>();
                     rvResumePop.setVisibility(View.GONE);
                 }
 
-//                if (obj instanceof PositionSearchResponse) {
-//                    response = (PositionSearchResponse) obj;
-//                    if(tvResumeQuickNum != null){//查询数量
-//                        tvResumeQuickNum.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
+//                if (obj instanceof ResumeSearchSelectResponse) {//chaxun
+//                    selectResponse = (ResumeSearchSelectResponse) obj;
+//                    if(tv_ResumeQuickPosition != null){//查询数量
+//                        tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(selectResponse.getTotal())));
 //                    }
-//                    if (response.getData().size() == 15) {
+//                    if (selectResponse.getData().size() == 15) {
 //                        pageindex++;
 //                        isCanLoadMore = true;
-//                        if (temp.size() > 0) {
-//                            positionSearches.removeAll(temp);
-//                            temp.clear();
+//                        if (quicks_temp.size() > 0) {
+//                            quick.removeAll(quicks_temp);
+//                            quicks_temp.clear();
 //                        }
-//                        positionSearches.addAll(response.getData());
+//                        quick.addAll(selectResponse.getData());
 //                    } else {
 //                        isCanLoadMore = false;
-//                        if (temp.size() > 0) {
-//                            positionSearches.removeAll(temp);
-//                            temp.clear();
+//                        if (quicks_temp.size() > 0) {
+//                            quick.removeAll(quicks_temp);
+//                            quicks_temp.clear();
 //                        }
-//                        temp = response.getData();
-//                        positionSearches.addAll(temp);
+//                        quicks_temp = selectResponse.getData();
+//                        quick.addAll(quicks_temp);
 //                    }
-//                    padapter.updateData(positionSearches);
+//                    adapter.updateData(quick);
 //                }
 //                if (isLoadMore) {
 //                    isLoadingMore = false;
 //                }
-//                if (positionSearches.size() > 0) {
-//                    llEmptySearch.setVisibility(View.GONE);
-//                    rvResumePop.setVisibility(View.VISIBLE);
+//                if (quick.size() > 0) {
+//                    ll_empty_quicksearch.setVisibility(View.GONE);
+//                    recruitmentQuick.setVisibility(View.VISIBLE);
 //                } else {
-//                    llEmptySearch.setVisibility(View.VISIBLE);
-//                    rvResumePop.setVisibility(View.GONE);
+//                    ll_empty_quicksearch.setVisibility(View.VISIBLE);
+//                    recruitmentQuick.setVisibility(View.GONE);
 //                }
             }
         });

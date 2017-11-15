@@ -29,9 +29,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     private Context context;
-    private List<AppSelectQuery> data;
+    private List<String> data;
 
-    public ResumeQuickSearchAdapter(Context context, List<AppSelectQuery> data) {
+    public ResumeQuickSearchAdapter(Context context, List<String> data) {
         this.context = context;
         this.data = data;
     }
@@ -111,7 +111,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
         return data.size();
     }
 
-    public void updateData(List<AppSelectQuery> data) {
+    public void updateData(List<String> data) {
         this.data = data;
         notifyDataSetChanged();
     }

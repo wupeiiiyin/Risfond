@@ -37,6 +37,7 @@ import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchAddResponse;
 import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.entry.ResumeSearchWholeResponse;
@@ -48,6 +49,7 @@ import com.risfond.rnss.home.resume.fragment.EducationFragment;
 import com.risfond.rnss.home.resume.fragment.ExperienceFragment;
 import com.risfond.rnss.home.resume.fragment.MoreFragment;
 import com.risfond.rnss.home.resume.fragment.PositionFragment;
+import com.risfond.rnss.home.resume.modleImpl.ResumeSearchAddImpl;
 import com.risfond.rnss.home.resume.modleImpl.ResumeSearchAllImpl;
 import com.risfond.rnss.home.resume.modleImpl.ResumeSearchImpl;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearch;
@@ -115,9 +117,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private Map<String, String> requestadd;
     private IResumeSearch iResumeSearch;
     private IResumeSearch iResumeSearchWhole;
+    private IResumeSearch iResumeSearchAdd;
     private int pageindex = 1;
     private ResumeSearchResponse response;
     private ResumeSearchWholeResponse wholeResponse;
+    private ResumeSearchAddResponse responseAdd;
     private List<ResumeSearch> searches = new ArrayList<>();
     private List<ResumeSearch> temp = new ArrayList<>();
 
@@ -129,6 +133,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private boolean isLoadingMore = false;
     private List<String> histories;
     private List<String> historiesAESC;
+    private int mRequestType=-1;
 
     private FragmentTransaction transaction;
     private ExperienceFragment experienceFragment;
@@ -181,6 +186,9 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
         iResumeSearchWhole = new ResumeSearchAllImpl();//搜索全部
 
+        iResumeSearchAdd = new ResumeSearchAddImpl();//保存
+
+
         cbWhole.setText("全部");//初始值
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
@@ -194,6 +202,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
 
         rvResumeList.setAdapter(adapter);
+//        rvResumeList.setAdapter(resumeSearchWholeAdapter);
 
         checkSearchEditText();
         etResumeSearch.setFocusable(false);
@@ -217,6 +226,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         request.put("keyword", contact);
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("pageindex", String.valueOf(pageindex));
+
+        //判断是否选择职位类型
+        if(mRequestType==-1){
+
+        }else{
+            request.put("keywordstype ",mRequestType+"");
+        }
 
         for (int i = 0; i < selectedIds.size(); i++) {
             String key = "worklocation[" + i + "]";
@@ -250,7 +266,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, languages.get(i));
         }
 
-        iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
+        if(mRequestType==-1){
+            iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
+
+        }else{
+            iResumeSearchWhole.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, this);
+        }
+//        iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
     }
 
     @OnClick({R.id.tv_search_cancel,R.id.tv_search_savetiaojian})//监听事件
@@ -260,32 +282,23 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             onFinish();
         }
         if (v.getId() == R.id.tv_search_savetiaojian) {
-            //弹框对话
-            CustomDialog.Builder builder = new CustomDialog.Builder(context);
-            builder.setMessage("您已保存成功，可在快捷搜索查看");
-            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    //设置你的操作事项
-                    if (!isLoadMore) {
-                        DialogUtil.getInstance().showLoadingDialog(context, "保存中...");
-                    }
-                    if (isCanLoadMore) {
-
-                            if (!isLoadingMore) {
-                                isLoadMore = true;
-                                isLoadingMore = true;
-                                resumeRequests();
-                            }
-                    }
-                }
-            });
-
-            builder.create().show();//显示
+//            //弹框对话
+//            CustomDialog.Builder builder = new CustomDialog.Builder(context);
+//            builder.setMessage("您已保存成功，可在快捷搜索查看");
+//            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    //设置你的操作事项
+//
+                                resumeRequestAdd();
+//                }
+//            });
+//
+//            builder.create().show();//显示
         }
     }
 
-    private void resumeRequests() {
+    private void resumeRequestAdd() {
         if (!isLoadMore) {
             DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
         }
@@ -325,7 +338,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, languages.get(i));
         }
 
-        iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
+        iResumeSearchAdd.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
 //        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, 1);//回调
 //        Log.i("TAG",request.toString()+"=============================");
     }
@@ -350,6 +363,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     ImeUtil.hideSoftKeyboard(etResumeSearch);
                     pageindex = 1;
                     searches.clear();
+//                    String eTSearch = etResumeSearch.getText().toString().trim();
+//                    resumeRequest(eTSearch);
                     resumeRequest(etResumeSearch.getText().toString().trim());
                     saveHistory(etResumeSearch.getText().toString().trim());
                 }
@@ -533,6 +548,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                 if (!isLoadMore) {
                     DialogUtil.getInstance().closeLoadingDialog();
                 }
+                //不带条件查询
                 if (obj instanceof ResumeSearchResponse) {
                     response = (ResumeSearchResponse) obj;
                     if (tvResumeTotal != null) {
@@ -560,33 +576,70 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     initResumeData();
                     adapter.updateData(searches);
                 }
+                //带条件查询
+                if (obj instanceof ResumeSearchWholeResponse) {//全部按钮
+                    wholeResponse = (ResumeSearchWholeResponse) obj;
 
-//                if (obj instanceof ResumeSearchWholeResponse) {//全部按钮
-//                    wholeResponse = (ResumeSearchWholeResponse) obj;
-//
-//                    if (tvResumeTotal != null) {
-//                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(wholeResponse.getTotal())));
-//                    }
-//                    if (wholeResponse.getData().size() !=0) {
-//                        pageindex++;
-//                        isCanLoadMore = true;
-//                        if (searche_temp.size() > 0) {
-//                            searcheall.removeAll(searche_temp);
-//                            searche_temp.clear();
-//                        }
-//                        searches.addAll(response.getData());
-//                    } else {
-//                        isCanLoadMore = false;
-//                        if (searche_temp.size() > 0) {
-//                            searches.removeAll(searche_temp);
-//                            searche_temp.clear();
-//                        }
-//                        searche_temp = wholeResponse.getData();
-//                        searcheall.addAll(searche_temp);
-//                    }
-//                    initResumeWholeData();
-//                    resumeSearchWholeAdapter.updateData(searcheall);
-//                }
+                    if (tvResumeTotal != null) {
+                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(wholeResponse.getTotal())));
+                    }
+                    if (wholeResponse.getData().size() == 15) {
+                        pageindex++;
+                        isCanLoadMore = true;
+                        if (searche_temp.size() > 0) {
+                            searcheall.removeAll(searche_temp);
+                            searche_temp.clear();
+                        }
+                        searches.addAll(response.getData());
+                    } else {
+                        isCanLoadMore = false;
+                        if (searche_temp.size() > 0) {
+                            searches.removeAll(searche_temp);
+                            searche_temp.clear();
+                        }
+                        searche_temp = wholeResponse.getData();
+                        searcheall.addAll(searche_temp);
+                    }
+                    initResumeWholeData();
+                    resumeSearchWholeAdapter.updateData(searcheall);
+                }
+
+                if (obj instanceof ResumeSearchAddResponse) {
+                    responseAdd = (ResumeSearchAddResponse) obj;
+
+                    if (responseAdd.getData().size() == 15) {
+                        pageindex++;
+                        isCanLoadMore = true;
+                        if (temp.size() > 0) {
+                            searches.removeAll(temp);
+                            temp.clear();
+                        }
+                        searches.addAll(responseAdd.getData());
+
+                    } else {
+                        isCanLoadMore = false;
+                        if (temp.size() > 0) {
+                            searches.removeAll(temp);
+                            temp.clear();
+                        }
+                        temp = responseAdd.getData();
+                        searches.addAll(temp);
+                    }
+
+                    initResumeData();
+                    adapter.updateData(searches);
+                                //弹框对话
+                                CustomDialog.Builder builder = new CustomDialog.Builder(context);
+                                builder.setMessage("您已保存成功，可在快捷搜索查看");
+                                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        //设置你的操作事项
+                                    }
+                                });
+
+                                builder.create().show();//显示
+                }
                 if (isLoadMore) {
                     isLoadingMore = false;
                 }
@@ -735,14 +788,15 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
-                                                  hideHistory();//隐藏搜索历史
-                                                  if (!isLoadMore) {
-                                                      DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
-                                                  }
-//                                                request.put("keyword", "");
-                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-                                                  request.put("pageindex", String.valueOf(pageindex));
-                                                  iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, ResumeSearchResultActivity.this);
+                                                  mRequestType=0;
+//                                                  hideHistory();//隐藏搜索历史
+//                                                  if (!isLoadMore) {
+//                                                      DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
+//                                                  }
+////                                                request.put("keyword", "");
+//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+//                                                  request.put("pageindex", String.valueOf(pageindex));
+//                                                  iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }
@@ -756,14 +810,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);//设置为默认状态
-
-                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
-//                                                  request = new HashMap<>();
-                                                  request.put("keyword", "");
-                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-                                                  request.put("pageindex", String.valueOf(pageindex));
-                                                  request.put("keywordstype", String.valueOf(1));
-                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+                                                  mRequestType=1;
+//                                                  resumeRequest(etResumeSearch.getText().toString().trim());
+////                                                  request = new HashMap<>();
+//                                                  request.put("keyword", "");
+//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+//                                                  request.put("pageindex", String.valueOf(pageindex));
+//                                                  request.put("keywordstype", String.valueOf(1));
+//                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }
@@ -777,13 +831,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow.dismiss();
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
-                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
-//                                                  request = new HashMap<>();
-                                                  request.put("keyword", "");
-                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-                                                  request.put("pageindex", String.valueOf(pageindex));
-                                                  request.put("keywordstype", String.valueOf(2));
-                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+                                                  mRequestType=2;
+//                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
+////                                                  request = new HashMap<>();
+//                                                  request.put("keyword", "");
+//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+//                                                  request.put("pageindex", String.valueOf(pageindex));
+//                                                  request.put("keywordstype", String.valueOf(2));
+//                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }
