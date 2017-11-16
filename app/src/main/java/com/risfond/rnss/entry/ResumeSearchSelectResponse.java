@@ -20,7 +20,7 @@ public class ResumeSearchSelectResponse {
     private int Total;
     private boolean Status;
     private String Message;
-    private List<AppSelectQuery> Data;
+    private List<ResumeSearchHight> Data;
 
     public int getCode() {
         return Code;
@@ -54,11 +54,11 @@ public class ResumeSearchSelectResponse {
         this.Message = Message;
     }
 
-    public List<AppSelectQuery> getData() {
+    public List<ResumeSearchHight> getData() {
         return Data;
     }
 
-    public void setData(List<AppSelectQuery> data) {
+    public void setData(List<ResumeSearchHight> data) {
         Data = data;
     }
 }

@@ -2,9 +2,11 @@ package com.risfond.rnss.home.resume.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,6 +51,7 @@ public class PositionFragment extends BaseFragment {
     private List<City> cities = new ArrayList<>();
     private List<String> selectedIds = new ArrayList<>();
     private List<String> selectedNames = new ArrayList<>();
+    private SharedPreferences mySharedPreferences;
 
     public PositionFragment(List<String> selectedId, List<String> selectedName, SelectCallBack callBack) {
         selectedIds.addAll(selectedId);
@@ -65,7 +68,7 @@ public class PositionFragment extends BaseFragment {
     public void init(Bundle savedInstanceState) {
         context = getActivity();
 
-
+        mySharedPreferences = context.getSharedPreferences("test", context.MODE_PRIVATE);
         provinces = CommonUtil.createProvince(context);
         province = provinces.get(0);
         province.setSelect(true);

@@ -2,6 +2,7 @@ package com.risfond.rnss.home.resume.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,13 @@ import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.R;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
+import com.risfond.rnss.entry.AppDeleteQuery;
 import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchAll;
+import com.risfond.rnss.entry.ResumeSearchHight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,9 +34,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     private Context context;
-    private List<AppSelectQuery> data;
+    private List<ResumeSearchHight> data;
 
-    public ResumeQuickSearchAdapter(Context context, List<AppSelectQuery> data) {
+    public ResumeQuickSearchAdapter(Context context, List<ResumeSearchHight> data) {
         this.context = context;
         this.data = data;
     }
@@ -66,36 +70,18 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
             ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
-            AppSelectQuery search = data.get(position);
+//            AppSelectQuery search = data.get(position);
 //            GlideUtil.loadResumeImage(context, search.getPhoto(), mholder.ivHead, new CropCircleTransformation(context));
 
-                mholder.tvQuick.setText(search.getJobTitle()+search.getCompanyFullName()+
-                        search.getLiveLocationTxt()+search.getEducationLevelTxt()+search.getAge() + "岁"+
-                        search.getWorkExperience() + "年经验"+search.getResumeCode()+search.getName());
+            List<ResumeSearchHight> o =new ArrayList<>();
+            ResumeSearchHight h = data.get(position);
+                Log.i("TAGf",data.size()+"--kkkkkkkkkkkkk------");
+//                mholder.tvQuick.setText(search.getJobTitle() + "+"+search.getCompanyFullName() +"+"+
+//                                search.getLiveLocationTxt() +"+"+ search.getEducationLevelTxt() + search.getAge() + "岁+" +
+//                                search.getWorkExperience() +"+"+ "年经验+" + search.getResumeCode() +"+"+ search.getName()+"滑动就是的海景房打不开返回键使和防水砂浆的vjds111");
+            mholder.tvQuick.setText(h.getYearfrom()+"-"+h.getYearto()+"oo");//h.getAgeto()+"+"+h.getAgefrom()+
+//                mholder.tvTime.setText(search.getUpdateDate());//时间
 
-                mholder.tvTime.setText(search.getUpdateDate());//时间
-
-
-//            ((ResumeQuickSearchViewHolder)holder).tvQuick.setText(data.get(position).getName()+"king"+data.get(position).getJobTitle());
-//            ((ResumeQuickSearchViewHolder)holder).tvTime.setText(data.get(position).getUpdateDate());
-
-//            mholder.imageDelete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    DialogUtil.getInstance().showConfigDialog(context, "是否删除？", "是", "否", new DialogUtil.PressCallBack() {
-//                        @Override
-//                        public void onPressButton(int buttonIndex) {
-//                            if (buttonIndex == DialogUtil.BUTTON_OK) {
-//
-//                                data.remove(data.get(position));
-//                                notifyDataSetChanged();
-//                            }
-//                        }
-//                    });
-//
-//                }
-//            });
             if (mOnDeClickListener != null) {//删除回调接口，供activity调用
                 ((ResumeQuickSearchViewHolder)holder).imageDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -110,27 +96,16 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 //            mholder.tvUpdateTime.setText(search.getUpdateDate());
 
             OnItemClickListener(holder, position);
-//            OnClickListener(holder, position);
         }
     }
 
-//    private void OnClickListener(RecyclerView.ViewHolder holder, final int position) {//add
-//        if (mOnClickListener != null) {
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mOnItemClickListener.onItemClick(v, position);
-//                }
-//            });
-//        }
-//    }
 
     @Override
     public int getItemCount() {
         return data.size();
     }
 
-    public void updateData(List<AppSelectQuery> data) {
+    public void updateData(List<ResumeSearchHight> data) {
         this.data = data;
         notifyDataSetChanged();
     }

@@ -37,6 +37,7 @@ import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.PositionSearchResponse;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchDeleteResponse;
+import com.risfond.rnss.entry.ResumeSearchHight;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.entry.ResumeSearchSelectResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.Util.SystemBarTintManager;
@@ -103,6 +104,12 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
     private ArrayList<String> lists = new ArrayList<>();
     private List<AppSelectQuery> quick = new ArrayList<>();//查询
     private List<AppSelectQuery> quicks_temp = new ArrayList<>();
+
+    private List<ResumeSearchHight> quicks = new ArrayList<>();//查询
+    private List<ResumeSearchHight> quicks_temps = new ArrayList<>();//查询
+
+//    private List<AppSelectQuery> quicks = new ArrayList<>();//查询
+//    private List<AppSelectQuery> quicks_temps = new ArrayList<>();
     private List<AppDeleteQuery> delete = new ArrayList<>();//删除
     private PopupWindow popupwindow;
     private RecyclerView rvResumePop;
@@ -141,11 +148,7 @@ private List<PositionSearch> temp = new ArrayList<>();
         iResumeSearchDelece = new ResumeSearchDeleteImpl();//删除
         iResumeSearchSelect = new ResumeSearchSelectImpl();//查询
 
-//        for (int i=0;i<50;i++){
-//            list.add("模拟经理/总监+"+i);
-//        }
-
-        adapter = new ResumeQuickSearchAdapter(context, quick);
+        adapter = new ResumeQuickSearchAdapter(context, quicks);
 
         recruitmentQuick.setLayoutManager(new LinearLayoutManager(context));
         //控制分割线的宽度 参数1：上下文，参数2：方向，参数3：分割线高度，参数4：颜色
@@ -154,7 +157,7 @@ private List<PositionSearch> temp = new ArrayList<>();
 //        recruitmentQuick.addItemDecoration(new DividerItemDecoration(R.color.color_home_stoke_small,1,LinearLayoutManager.HORIZONTAL,15f,15f));
 
         recruitmentQuick.setAdapter(adapter);
-//        recruitmentQuick.setEmptyView(ll_empty_quicksearch);
+
         if(temp.size()==0){
             tvResumeQuickNum.setText("加载中...");//职位搜索数量
         }
@@ -204,7 +207,8 @@ private List<PositionSearch> temp = new ArrayList<>();
         }
         request.put("keyword", "");
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-        request.put("pageindex", String.valueOf(pageindex));
+        request.put("pageindex", String.valueOf(pageindex));//当前页数
+        request.put("pageSize", String.valueOf(100));//每页条数
         iResumeSearchSelect.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SELECTRESUMEQUERY, this);
     }
 
@@ -218,8 +222,10 @@ private List<PositionSearch> temp = new ArrayList<>();
 
 
         rvResumePop.setLayoutManager(new LinearLayoutManager(context));
-        rvResumePop.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
-        rvResumePop.setAdapter(padapter);//sgf--padapter
+//        rvResumePop.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
+        //控制分割线的宽度 参数1：上下文，参数2：方向，参数3：分割线高度，参数4：颜色
+        rvResumePop.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 2, ContextCompat.getColor(context, R.color.color_home_stoke_small)));
+        rvResumePop.setAdapter(padapter);
 
         rvResumePop.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -311,18 +317,25 @@ private List<PositionSearch> temp = new ArrayList<>();
                                             @Override
                                             public void onPressButton(int buttonIndex) {
                                                 if (buttonIndex == DialogUtil.BUTTON_OK) {
-//                                                    quick.remove(quicks_temp.get(position));
-                                                    quick.remove(quick.get(position));
+                                                    quicks.remove(quicks.get(position));
                                                     adapter.notifyDataSetChanged();
+                                                    tv_ResumeQuickPosition.setText(quicks.size()+"");
+
+                                                    if(quicks.size()==0){
+                                                        ll_empty_quicksearch.setVisibility(View.VISIBLE);
+                                                        recruitmentQuick.setVisibility(View.GONE);
+                                                    }
                                                     AppSelectQuery appSelectQuery = new AppSelectQuery();
                                                     int resumequeryid = appSelectQuery.getResumequeryid();
-//                                                                                                        if (!isLoadMore) {
-//                                                        DialogUtil.getInstance().showLoadingDialog(context, "删除中...");
-//                                                    }
-                                                    request.put("keyword", "");
-                                                    request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-                                                    request.put("pageindex", String.valueOf(pageindex));
-                                                    request.put("staffId ", String.valueOf(resumequeryid));
+                                                    int staffid = appSelectQuery.getStaffId();
+                                                    AppDeleteQuery appDeleteQuery = new AppDeleteQuery();
+                                                    int id = appDeleteQuery.getId();
+                                                    int staffId = appDeleteQuery.getStaffId();
+                                                    //request.put("keyword", "");
+//                                                    request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+//                                                    request.put("pageindex", String.valueOf(pageindex));
+                                                    request.put("id", String.valueOf(id));
+                                                    request.put("staffId", String.valueOf(staffId));
                                                     iResumeSearchDelece.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_DELETERESUMEQUERY, ResumeQuickSearchActivity.this);
 
                                                 }
@@ -408,36 +421,35 @@ private List<PositionSearch> temp = new ArrayList<>();
 //                查询的操作
                 if (obj instanceof ResumeSearchSelectResponse) {
                     selectResponse = (ResumeSearchSelectResponse) obj;
+                    tv_ResumeQuickPosition.setText(quicks.size()+"");
                     if(tv_ResumeQuickPosition != null){//查询数量
                         tv_ResumeQuickPosition.setText(NumberUtil.formatString(new BigDecimal(selectResponse.getTotal())));
                     }
                     if (selectResponse.getData().size() == 15) {
-                        Log.i("TAGs",tv_ResumeQuickPosition+"-3---------------");
                         pageindex++;
                         isCanLoadMore = true;
-                        if (quicks_temp.size() > 0) {
-                            Log.i("TAGs",quicks_temp.size()+"-3333---------------");
-                            quick.removeAll(quicks_temp);
-                            quicks_temp.clear();
+                        if (quicks_temps.size() > 0) {
+                            quicks.removeAll(quicks_temps);
+                            quicks_temps.clear();
                         }
-                        quick.addAll(selectResponse.getData());
+                        quicks.addAll(selectResponse.getData());
                     } else {
-                        Log.i("TAGs",tv_ResumeQuickPosition+"-37---------------");
                         isCanLoadMore = false;
-                        if (quicks_temp.size() > 0) {
-                            quick.removeAll(quicks_temp);
-                            quicks_temp.clear();
+                        if (quicks_temps.size() > 0) {
+                            quicks.removeAll(quicks_temps);
+                            quicks_temps.clear();
                         }
-                        quicks_temp = selectResponse.getData();
-                        quick.addAll(quicks_temp);
-                        Log.i("TAGs","-8---------------"+quick.toString()+"ppppppppppp");
+                        quicks_temps = selectResponse.getData();
+                        quicks.addAll(quicks_temps);
                     }
-                    adapter.updateData(quick);
+
+                    adapter.updateData(quicks);
+                    tv_ResumeQuickPosition.setText(quicks.size()+"");
                 }
                 if (isLoadMore) {
                     isLoadingMore = false;
                 }
-                if (quick.size() > 0) {
+                if (quicks.size() > 0) {
                     ll_empty_quicksearch.setVisibility(View.GONE);
                     recruitmentQuick.setVisibility(View.VISIBLE);
                 } else {

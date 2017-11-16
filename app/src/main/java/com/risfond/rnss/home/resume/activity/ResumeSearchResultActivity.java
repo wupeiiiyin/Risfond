@@ -3,6 +3,7 @@ package com.risfond.rnss.home.resume.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -73,7 +74,7 @@ import butterknife.OnClick;
 /**
  * 简历搜索结果页面
  */
-public class ResumeSearchResultActivity extends BaseActivity implements ResponseCallBack, SelectCallBack {
+public class ResumeSearchResultActivity extends BaseActivity implements ResponseCallBack, SelectCallBack{
 
     @BindView(R.id.et_resume_search)
     EditText etResumeSearch;
@@ -175,7 +176,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private ResumeSearchWholeAdapter resumeSearchWholeAdapter;
     private ResumeSearchAllImpl resumeSearchAll;
     private ResumeSearchAddAdapter addAdapter;
-
+    private String eTResumeSearch;//获取搜索的内容
 
     @Override
     public int getContentViewResId() {
@@ -207,6 +208,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
 
         rvResumeList.setAdapter(adapter);
+
 //        rvResumeList.setAdapter(resumeSearchWholeAdapter);
         addAdapter = new ResumeSearchAddAdapter(context, add);
 
@@ -237,7 +239,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         if(mRequestType==-1){
 
         }else{
-            request.put("keywordstype ",mRequestType+"");
+            request.put("keywordstype ",mRequestType+"");//根据传入的值来执行搜索
         }
 
         for (int i = 0; i < selectedIds.size(); i++) {
@@ -288,23 +290,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             onFinish();
         }
         if (v.getId() == R.id.tv_search_savetiaojian) {
-//            //弹框对话
-//            CustomDialog.Builder builder = new CustomDialog.Builder(context);
-//            builder.setMessage("您已保存成功，可在快捷搜索查看");
-//            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.dismiss();
-//                    //设置你的操作事项
-//
-                                resumeRequestAdd();
-//                }
-//            });
-//
-//            builder.create().show();//显示
+
+            resumeRequestAdd();//请求保存
+
         }
     }
 
-    private void resumeRequestAdd() {
+    private void resumeRequestAdd() {//请求保存
         if (!isLoadMore) {
             DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
         }
@@ -314,11 +306,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         request.put("pageindex", String.valueOf(pageindex));
         for (int i = 0; i < selectedIds.size(); i++) {
             String key = "worklocation[" + i + "]";
+//            String s = selectedIds.get(i);
             request.put(key, selectedIds.get(i));
+            Log.i("TAGs",selectedIds+"------selectedIds---------------");
         }
-
         request.put("yearfrom", yearfrom);
-        Log.i("TAGs",yearfrom+"---------------------");
         request.put("yearto", yearto);
 
         for (int i = 0; i < educations.size(); i++) {
@@ -326,8 +318,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, educations.get(i));
         }
 
-        request.put("agefrom", agefrom);
-        request.put("ageto", ageto);
+        request.put("agefrom", age_From);//agefrom
+        request.put("ageto", age_To);//ageto
 
         if (sexs.size() > 0) {
             request.put("gender[0]", sexs.get(0));
@@ -345,9 +337,16 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, languages.get(i));
         }
 
+
+
+        request.put("experience_from",experience_from);//经验
+        request.put("experience_to",experience_to);//经验
+        request.put("etresumeSearch",eTResumeSearch);
+
+
+        Log.i("TAG",experience_from+"ooooo"+experience_to+eTResumeSearch+"===123==========================");
         iResumeSearchAdd.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
 //        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, 1);//回调
-//        Log.i("TAG",request.toString()+"=============================");
     }
 
     private void checkSearchEditText() {
@@ -370,10 +369,12 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     ImeUtil.hideSoftKeyboard(etResumeSearch);
                     pageindex = 1;
                     searches.clear();
-//                    String eTSearch = etResumeSearch.getText().toString().trim();
+                    eTResumeSearch = etResumeSearch.getText().toString().trim();
 //                    resumeRequest(eTSearch);
-                    resumeRequest(etResumeSearch.getText().toString().trim());
-                    saveHistory(etResumeSearch.getText().toString().trim());
+//                    resumeRequest(etResumeSearch.getText().toString().trim());
+//                    saveHistory(etResumeSearch.getText().toString().trim());
+                    resumeRequest(eTResumeSearch);
+                    saveHistory(eTResumeSearch);
                 }
                 return false;
             }
@@ -483,7 +484,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                         if (!isLoadingMore) {
                             isLoadMore = true;
                             isLoadingMore = true;
-                            resumeRequest(etResumeSearch.getText().toString().trim());
+//                            resumeRequest(etResumeSearch.getText().toString().trim());
+                            resumeRequest(eTResumeSearch);
                         }
                     }
                 }
@@ -597,11 +599,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                             searcheall.removeAll(searche_temp);
                             searche_temp.clear();
                         }
-                        searches.addAll(response.getData());
+                        searcheall.addAll(wholeResponse.getData());
                     } else {
                         isCanLoadMore = false;
                         if (searche_temp.size() > 0) {
-                            searches.removeAll(searche_temp);
+                            searcheall.removeAll(searche_temp);
                             searche_temp.clear();
                         }
                         searche_temp = wholeResponse.getData();
@@ -775,14 +777,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
                                                   mRequestType=0;
-//                                                  hideHistory();//隐藏搜索历史
-//                                                  if (!isLoadMore) {
-//                                                      DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
-//                                                  }
-////                                                request.put("keyword", "");
-//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-//                                                  request.put("pageindex", String.valueOf(pageindex));
-//                                                  iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, ResumeSearchResultActivity.this);
                                           }
                                       }
                                   }
@@ -797,13 +791,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);//设置为默认状态
                                                   mRequestType=1;
-//                                                  resumeRequest(etResumeSearch.getText().toString().trim());
-////                                                  request = new HashMap<>();
-//                                                  request.put("keyword", "");
-//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-//                                                  request.put("pageindex", String.valueOf(pageindex));
-//                                                  request.put("keywordstype", String.valueOf(1));
-//                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
                                           }
                                       }
                                   }
@@ -818,13 +806,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                                   popupwindow = null;
                                                   cbWhole.setChecked(false);
                                                   mRequestType=2;
-//                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
-////                                                  request = new HashMap<>();
-//                                                  request.put("keyword", "");
-//                                                  request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-//                                                  request.put("pageindex", String.valueOf(pageindex));
-//                                                  request.put("keywordstype", String.valueOf(2));
-//                                                  resumeSearchAll.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, ResumeSearchResultActivity.this);
+                                                  rvResumeList.setAdapter(resumeSearchWholeAdapter);
                                           }
                                       }
                                   }
@@ -1095,18 +1077,21 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         onFinish();
         searches.clear();
         pageindex = 1;
-        resumeRequest(etResumeSearch.getText().toString().trim());
+//        resumeRequest(etResumeSearch.getText().toString().trim());
+        resumeRequest(eTResumeSearch);
     }
 
     @Override
     public void onExperienceConfirm(String from, String to) {
         experience_from = from;
+        Log.i("TAGs",experience_from+"experience_from--------------");
         experience_to = to;
         setExperienceValue();
         onFinish();
         searches.clear();
         pageindex = 1;
-        resumeRequest(etResumeSearch.getText().toString().trim());
+//        resumeRequest(etResumeSearch.getText().toString().trim());
+        resumeRequest(eTResumeSearch);
     }
 
     @Override
@@ -1117,7 +1102,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         onFinish();
         searches.clear();
         pageindex = 1;
-        resumeRequest(etResumeSearch.getText().toString().trim());
+//        resumeRequest(etResumeSearch.getText().toString().trim());
+        resumeRequest(eTResumeSearch);
     }
 
     @Override
@@ -1127,6 +1113,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         age_From = from1;
         age_To = to1;
         sexs = sex;
+        Log.i("TAGs",sexs+"sexs--------------");
 //        sexs_texts = sexs_text;//add
         salary_From = from2;
         salary_To = to2;
@@ -1137,7 +1124,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         onFinish();
         searches.clear();
         pageindex = Integer.parseInt(page);
-        resumeRequest(etResumeSearch.getText().toString().trim());
+//        resumeRequest(etResumeSearch.getText().toString().trim());
+        resumeRequest(eTResumeSearch);
     }
 
     @Override
