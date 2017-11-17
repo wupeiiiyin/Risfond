@@ -162,8 +162,8 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private String salary_From = "";//薪资from
     private String salary_To = "";//薪资to
 
-    private String yearfrom = "";
-    private String yearto = "";
+    private String yearfrom = "";//工作经验开始  0 不限
+    private String yearto = "";//工作经验结束  0 不限
     private String edufrom = "";
     private String eduto = "";
     private String agefrom = "";
@@ -177,6 +177,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private ResumeSearchAllImpl resumeSearchAll;
     private ResumeSearchAddAdapter addAdapter;
     private String eTResumeSearch;//获取搜索的内容
+    private SharedPreferences king;
 
     @Override
     public int getContentViewResId() {
@@ -185,9 +186,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
     @Override
     public void init(Bundle savedInstanceState) {
+        king = getSharedPreferences("KING", MODE_PRIVATE);
         context = ResumeSearchResultActivity.this;
         histories = new ArrayList<>();
         historiesAESC = new ArrayList<>();
+
         iResumeSearch = new ResumeSearchImpl();//创建impl
 
         iResumeSearchWhole = new ResumeSearchAllImpl();//搜索全部
@@ -318,11 +321,22 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, educations.get(i));
         }
 
-        request.put("agefrom", age_From);//agefrom
+        request.put("agefrom", age_From);//agefrom  年龄
         request.put("ageto", age_To);//ageto
 
         if (sexs.size() > 0) {
-            request.put("gender[0]", sexs.get(0));
+            String s = sexs.get(0);
+//            if (s.equals(0)) {
+//                request.put("gender[0]", "不限");
+//            }else if(s.equals(1)){
+//                request.put("gender[0]", "男");
+//            }else if(s.equals(2)){
+//                request.put("gender[0]", "女");
+//            }
+//            request.put("gender[0]", sexs.get(0));
+              request.put("gender[0]", s);
+            Log.i("TAGs",s+"--------s---------------");
+
         }
 
         request.put("salaryfrom", salaryfrom);
@@ -337,14 +351,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             request.put(key, languages.get(i));
         }
 
-
-
         request.put("experience_from",experience_from);//经验
         request.put("experience_to",experience_to);//经验
-        request.put("etresumeSearch",eTResumeSearch);
 
-
-        Log.i("TAG",experience_from+"ooooo"+experience_to+eTResumeSearch+"===123==========================");
+        Log.i("TAG",experience_from+"ooooo"+experience_to+eTResumeSearch+"name===123==========================");
         iResumeSearchAdd.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_ADDRESUMEQUERY, this);
 //        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, 1);//回调
     }
@@ -375,6 +385,11 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 //                    saveHistory(etResumeSearch.getText().toString().trim());
                     resumeRequest(eTResumeSearch);
                     saveHistory(eTResumeSearch);
+                    Log.i("TAG",eTResumeSearch+"-----eTResumeSearch--------");
+//                    SharedPreferences.Editor edit = king.edit();
+//                    edit.putString("etresumeSearch",eTResumeSearch);
+//                    edit.commit();
+
                 }
                 return false;
             }
@@ -623,6 +638,14 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                         //设置你的操作事项
+//
+//                                        List<ResumeSearchAdd> data = responseAdd.getData();
+//                                        ResumeSearchAdd resumeSearchAdd = data.get(0);
+//                                        int id = resumeSearchAdd.getId();
+//                                        SharedPreferences king = getSharedPreferences("KING", MODE_PRIVATE);
+//                                        SharedPreferences.Editor edit = king.edit();
+//                                        edit.putInt("Id",id);
+//                                        edit.commit();
                                     }
                                 });
 
@@ -1113,7 +1136,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         age_From = from1;
         age_To = to1;
         sexs = sex;
-        Log.i("TAGs",sexs+"sexs--------------");
 //        sexs_texts = sexs_text;//add
         salary_From = from2;
         salary_To = to2;

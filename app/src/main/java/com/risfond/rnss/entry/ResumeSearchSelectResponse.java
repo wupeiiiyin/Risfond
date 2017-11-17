@@ -20,6 +20,16 @@ public class ResumeSearchSelectResponse {
     private int Total;
     private boolean Status;
     private String Message;
+    private String creatTime;
+
+    public String getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(String creatTime) {
+        this.creatTime = creatTime;
+    }
+
     private List<ResumeSearchHight> Data;
 
     public int getCode() {

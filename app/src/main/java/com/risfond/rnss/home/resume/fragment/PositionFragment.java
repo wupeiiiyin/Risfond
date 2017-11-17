@@ -135,6 +135,9 @@ public class PositionFragment extends BaseFragment {
                 if (city.isChecked()) {
                     selectedIds.add(city.getId());
                     selectedNames.add(city.getName());
+
+//                    String name = city.getName();
+//                    Log.i("TAGs",name+selectedNames+"---------name---------------");
                 } else {
                     selectedIds.remove(city.getId());
                     selectedNames.remove(city.getName());

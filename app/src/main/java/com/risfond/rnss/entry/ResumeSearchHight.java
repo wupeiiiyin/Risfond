@@ -7,6 +7,16 @@ import java.util.List;
  */
 
 public class ResumeSearchHight {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private int keyword;
     private int pageindex;
     private int staffid;
@@ -17,6 +27,25 @@ public class ResumeSearchHight {
     private int agefrom;
     private int ageto;
     private List<String> gender;
+    private String JobTitle;
+
+    public String getJobTitle() {
+        return JobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        JobTitle = jobTitle;
+    }
+    //    private String genders [];
+//
+//    public String[] getGenders() {
+//        return genders;
+//    }
+//
+//    public void setGenders(String[] genders) {
+//        this.genders = genders;
+//    }
+
     private int salaryfrom;
     private int salaryto;
     private List<String> resumestatus;

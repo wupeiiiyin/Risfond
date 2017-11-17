@@ -38,6 +38,46 @@ public class ResumeSearchAdd implements Parcelable {
     private String EducationLevelTxt;
     private String StatusTxt;
 
+    //
+    private int resumequeryid;//返回的id,用于删除
+    private int staffId;//用户id
+    private int pageIndex ;//当前页数
+
+    public int getResumequeryid() {
+        return resumequeryid;
+    }
+
+    public void setResumequeryid(int resumequeryid) {
+        this.resumequeryid = resumequeryid;
+    }
+
+    public int getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
+    }
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    private int pageSize ;//每页条数
+
+
     public int getId() {
         return Id;
     }

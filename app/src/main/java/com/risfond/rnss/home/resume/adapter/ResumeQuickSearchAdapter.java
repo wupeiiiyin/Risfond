@@ -1,6 +1,7 @@
 package com.risfond.rnss.home.resume.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.entry.AppDeleteQuery;
 import com.risfond.rnss.entry.AppSelectQuery;
 import com.risfond.rnss.entry.ResumeSearch;
+import com.risfond.rnss.entry.ResumeSearchAddResponse;
 import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchHight;
+import com.risfond.rnss.entry.ResumeSearchSelectResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     private Context context;
     private List<ResumeSearchHight> data;
+    private List<ResumeSearch> searchdata;
 
     public ResumeQuickSearchAdapter(Context context, List<ResumeSearchHight> data) {
         this.context = context;
@@ -67,6 +71,8 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        SharedPreferences king = context.getSharedPreferences("KING", context.MODE_PRIVATE);
+        String etresumeSearch = king.getString("etresumeSearch", null);
 
         if (holder instanceof ResumeQuickSearchViewHolder) {
             ResumeQuickSearchViewHolder mholder = (ResumeQuickSearchViewHolder) holder;
@@ -75,12 +81,22 @@ public class ResumeQuickSearchAdapter extends RecyclerView.Adapter{
 
             List<ResumeSearchHight> o =new ArrayList<>();
             ResumeSearchHight h = data.get(position);
-                Log.i("TAGf",data.size()+"--kkkkkkkkkkkkk------");
-//                mholder.tvQuick.setText(search.getJobTitle() + "+"+search.getCompanyFullName() +"+"+
+//            ResumeSearch resumeSearch = searchdata.get(position);
+            ResumeSearchSelectResponse selectResponse = new ResumeSearchSelectResponse();
+            //                mholder.tvQuick.setText(search.getJobTitle() + "+"+search.getCompanyFullName() +"+"+
 //                                search.getLiveLocationTxt() +"+"+ search.getEducationLevelTxt() + search.getAge() + "岁+" +
 //                                search.getWorkExperience() +"+"+ "年经验+" + search.getResumeCode() +"+"+ search.getName()+"滑动就是的海景房打不开返回键使和防水砂浆的vjds111");
-            mholder.tvQuick.setText(h.getYearfrom()+"-"+h.getYearto()+"oo");//h.getAgeto()+"+"+h.getAgefrom()+
-//                mholder.tvTime.setText(search.getUpdateDate());//时间
+//            List<String> gender = h.getGender();
+//            String s = gender.get(0);
+//            if(s.equals(1)){
+//                Log.i("TAGf",s+"--s1------");
+//            }else{
+//                Log.i("TAGf",s+"--s2------");
+//            }
+            mholder.tvQuick.setText(h.getYearfrom()+"-"+h.getYearto()+"年经验+"+h.getAgefrom()+"-"+h.getAgeto()+"岁");
+
+//            Log.i("TAGf",gender+"--gender------");
+            mholder.tvTime.setText(selectResponse.getCreatTime());//时间
 
             if (mOnDeClickListener != null) {//删除回调接口，供activity调用
                 ((ResumeQuickSearchViewHolder)holder).imageDelete.setOnClickListener(new View.OnClickListener() {

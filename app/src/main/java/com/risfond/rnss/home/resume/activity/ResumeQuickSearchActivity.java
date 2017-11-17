@@ -2,6 +2,7 @@ package com.risfond.rnss.home.resume.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -121,6 +122,8 @@ public class ResumeQuickSearchActivity extends BaseActivity implements ResponseC
 
 private List<PositionSearch> temp = new ArrayList<>();
     private LinearLayout llEmptySearchPoP;
+    private SharedPreferences king;
+    private String etresumeSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +137,9 @@ private List<PositionSearch> temp = new ArrayList<>();
 
     @Override
     public void init(Bundle savedInstanceState) {
-//        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
+        king = getSharedPreferences("KING", MODE_PRIVATE);
+        etresumeSearch = king.getString("etresumeSearch", null);
+        //        EmptyRecyclerView emptyRecyclerView = new EmptyRecyclerView(context);
 //        recruitmentQuick = (EmptyRecyclerView) findViewById(R.id.rv_quick_resume_list);
 
 //        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
@@ -317,7 +322,8 @@ private List<PositionSearch> temp = new ArrayList<>();
                                             @Override
                                             public void onPressButton(int buttonIndex) {
                                                 if (buttonIndex == DialogUtil.BUTTON_OK) {
-                                                    quicks.remove(quicks.get(position));
+                                                    quicks_temp.remove(quicks.get(position));
+                                                    quicks.remove(position);
                                                     adapter.notifyDataSetChanged();
                                                     tv_ResumeQuickPosition.setText(quicks.size()+"");
 
@@ -325,17 +331,22 @@ private List<PositionSearch> temp = new ArrayList<>();
                                                         ll_empty_quicksearch.setVisibility(View.VISIBLE);
                                                         recruitmentQuick.setVisibility(View.GONE);
                                                     }
-                                                    AppSelectQuery appSelectQuery = new AppSelectQuery();
-                                                    int resumequeryid = appSelectQuery.getResumequeryid();
-                                                    int staffid = appSelectQuery.getStaffId();
-                                                    AppDeleteQuery appDeleteQuery = new AppDeleteQuery();
-                                                    int id = appDeleteQuery.getId();
-                                                    int staffId = appDeleteQuery.getStaffId();
+                                                    int id = quicks.get(position).getId();
+                                                    AppDeleteQuery resumeSearchHight = new AppDeleteQuery();
+                                                    int resumeSearchHightId = resumeSearchHight.getId();
+
+
+                                                    //AppDeleteQuery appDeleteQuery1 = deleteResponse.getData().get(position);
+//                                                    int id = appDeleteQuery1.getId();
+//                                                    Log.i("TAGs",id+"-----------id---------");
+//                                                    int staffId = appDeleteQuery.getStaffId();
+                                                    request.put("Id", String.valueOf(124));//125
+
                                                     //request.put("keyword", "");
-//                                                    request.put("staffid", String.valueOf(SPUtil.loadId(context)));
+                                                    request.put("staffid", String.valueOf(SPUtil.loadId(context)));
 //                                                    request.put("pageindex", String.valueOf(pageindex));
-                                                    request.put("id", String.valueOf(id));
-                                                    request.put("staffId", String.valueOf(staffId));
+
+//                                                    request.put("staffId", String.valueOf(staffId));
                                                     iResumeSearchDelece.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_DELETERESUMEQUERY, ResumeQuickSearchActivity.this);
 
                                                 }
@@ -460,7 +471,7 @@ private List<PositionSearch> temp = new ArrayList<>();
                 //删除
                 if (obj instanceof ResumeSearchDeleteResponse) {
                     deleteResponse = (ResumeSearchDeleteResponse) obj;
-                    Log.i("TAGs","-86---------------"+quick.toString()+"delete======");
+
                 }
 
             }
