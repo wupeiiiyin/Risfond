@@ -16,7 +16,7 @@ import java.util.Map;
  */
 
 public class ResumeSearchAllImpl implements IResumeSearch {
-    ResumeSearchWholeResponse wholeResponse;
+    ResumeSearchResponse wholeResponse;
 
     @Override
     public void resumeRequest(String token, Map<String, String> request, String url, final ResponseCallBack callBack) {
@@ -26,7 +26,7 @@ public class ResumeSearchAllImpl implements IResumeSearch {
             @Override
             public void onSuccess(String str) {
                 if (JsonUtil.isJson(str)) {
-                    wholeResponse = JsonUtil.fromJson(str, ResumeSearchWholeResponse.class);
+                    wholeResponse = JsonUtil.fromJson(str, ResumeSearchResponse.class);
                     if (wholeResponse != null) {
                         if (wholeResponse.isStatus()) {//请求成功
                             callBack.onSuccess(wholeResponse);

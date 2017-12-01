@@ -16,4 +16,6 @@ public interface IResumeSearch {
      * @param callBack
      */
     void resumeRequest(String token, Map<String, String> request, String url, ResponseCallBack callBack);
+
+
 }

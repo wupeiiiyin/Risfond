@@ -18,6 +18,16 @@ public class ResumeSearchHight {
     }
 
     private int keyword;
+    private String creatTime;
+
+    public String getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(String creatTime) {
+        this.creatTime = creatTime;
+    }
+
     private int pageindex;
     private int staffid;
     private List<String> worklocation;
@@ -28,6 +38,34 @@ public class ResumeSearchHight {
     private int ageto;
     private List<String> gender;
     private String JobTitle;
+
+    private List<String> worklocations;
+    private List<String> edus;
+    private List<String> langs;
+
+    public List<String> getWorklocations() {
+        return worklocations;
+    }
+
+    public void setWorklocations(List<String> worklocations) {
+        this.worklocations = worklocations;
+    }
+
+    public List<String> getEdus() {
+        return edus;
+    }
+
+    public void setEdus(List<String> edus) {
+        this.edus = edus;
+    }
+
+    public List<String> getLangs() {
+        return langs;
+    }
+
+    public void setLangs(List<String> langs) {
+        this.langs = langs;
+    }
 
     public String getJobTitle() {
         return JobTitle;

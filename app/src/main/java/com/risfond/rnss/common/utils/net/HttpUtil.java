@@ -3,6 +3,8 @@ package com.risfond.rnss.common.utils.net;
 import android.os.Environment;
 
 
+import com.risfond.rnss.common.utils.JsonUtil;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -11,10 +13,14 @@ import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static android.R.attr.key;
 
 /**
  * Created by Abbott on 2017/3/24.
@@ -22,17 +28,33 @@ import okhttp3.Response;
  */
 
 public class HttpUtil {
+    private static final String TAG = HttpUtil.class.getSimpleName();
     private static HttpUtil mInstance;
     //声明OkHttpClient对象
     private OkHttpClient okHttpClient;
     final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
-
+    /**
+     * Reqeust日志打印
+     */
+    private static final Interceptor mLoggingInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            long t1 = System.nanoTime();
+            UtilHelper.outLog("TAG", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+            Response response = chain.proceed(request);
+            long t2 = System.nanoTime();
+            UtilHelper.outLog("TAG", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+            return response;
+        }
+    };
     private HttpUtil() {
         //第一步:初始化OkHttpClient对象 并对其设置一些属性
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .cache(new Cache(Environment.getExternalStorageDirectory(), 10 * 1024 * 1024))
                 .retryOnConnectionFailure(true)
+                .addInterceptor(mLoggingInterceptor)
                 .build();
     }
 
@@ -64,11 +86,11 @@ public class HttpUtil {
                 formBody.add(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
             }
         }
+
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody.build())
                 .addHeader("Token",token)
-                .tag(url)
                 .build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override

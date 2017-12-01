@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
+        android:visibility="gone"
         android:textColor="@color/color_home_black_text"
         android:textSize="15sp"
         tools:text="锐仕方达西南区总裁受邀出席"/>
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:lineSpacingMultiplier="1.2"
+        android:visibility="gone"
         android:textColor="@color/color_customer_black"
         android:textSize="12sp"
         app:etv_EnableToggle="false"
@@ -39,6 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -63,5 +66,41 @@
             tools:text="公司新闻"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/id_news_icon"
+            android:paddingRight="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/id_news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/color_quick_black_text"/>
+            <TextView
+                android:id="@+id/id_news_type_and_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公司新闻  2017.02.29"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/color_news_text"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/id_news_icon"
+            android:layout_width="112dp"
+            android:layout_height="75dp"
+            android:src="@mipmap/course_default"
+            android:background="@color/color_popu"
+            android:scaleType="centerCrop"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

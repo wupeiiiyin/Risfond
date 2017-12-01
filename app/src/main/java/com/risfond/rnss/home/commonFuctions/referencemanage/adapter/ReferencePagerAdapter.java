@@ -22,7 +22,7 @@ public class ReferencePagerAdapter extends FragmentPagerAdapter {
         return (fragments == null || fragments.size() == 0) ? null : fragments.get(arg0);
     }
 
-    public void updateData(List<Fragment> fragments, List<String> tabNames){
+    public void updateData(List<Fragment> fragments, List<String> tabNames) {
         this.fragments = fragments;
         this.tabNames = tabNames;
         notifyDataSetChanged();
@@ -35,6 +35,10 @@ public class ReferencePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabNames.get(position).split(" ")[1];
+        if (tabNames.get(position).split(" ").length > 1) {
+            return tabNames.get(position).split(" ")[1];
+        } else {
+            return tabNames.get(position);
+        }
     }
 }

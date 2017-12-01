@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_mine_text_click"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="14dp">
 
 
@@ -175,5 +175,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

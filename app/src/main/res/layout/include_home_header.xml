@@ -10,97 +10,97 @@
         android:id="@+id/ll_resume_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="23dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@mipmap/resume_search"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="简历搜索"
+            android:layout_marginTop="18dp"
+            android:text="简历"
             android:textColor="@color/color_white"
-            android:textSize="13dp"/>
+            android:textSize="14dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_my_custom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="23dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@mipmap/my_custom"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="我的客户"
+            android:layout_marginTop="18dp"
+            android:text="客户"
             android:textColor="@color/color_white"
-            android:textSize="13sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_my_position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="23dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@mipmap/my_position"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="我的职位"
+            android:layout_marginTop="18dp"
+            android:text="职位"
             android:textColor="@color/color_white"
-            android:textSize="13sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_call_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="23dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@mipmap/call_phone"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="拨打电话"
+            android:layout_marginTop="18dp"
+            android:text="电话"
             android:textColor="@color/color_white"
-            android:textSize="13sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
 </LinearLayout>

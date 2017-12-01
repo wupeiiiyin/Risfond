@@ -16,7 +16,6 @@ import java.util.Map;
  * Created by Abbott on 2017/4/12.
  * 登录接口实现
  */
-
 public class LoginImpl implements ILogin {
     private LoginResponse response;
 

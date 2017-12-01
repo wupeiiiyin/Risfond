@@ -1,5 +1,6 @@
 package com.hyphenate.easeui.utils;
 
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hyphenate.easeui.R;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 /**

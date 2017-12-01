@@ -5,8 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.R;
 import com.risfond.rnss.entry.News;
 import com.risfond.rnss.widget.ExpandableTextView;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by Abbott on 2017/5/15.
@@ -52,12 +57,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public void onBindViewHolder(final NewsViewHolder holder, int position) {
         final News news = data.get(position);
 
-        holder.tvTime.setText(news.getCreatedTime());
+        /*holder.tvTime.setText(news.getCreatedTime());
         holder.tvTitle.setText(news.getTitle());
         holder.tvType.setText(news.getCategory());
 
         //第一次getview时肯定为etvWidth为0
-        holder.tvContent.updateForRecyclerView(news.getContent().replaceAll("\n","").replaceAll("\r","").replaceAll("\t",""), etvWidth);
+        holder.tvContent.updateForRecyclerView(news.getContent().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""), etvWidth);
         if (etvWidth == 0) {
             holder.tvContent.post(new Runnable() {
                 @Override
@@ -65,8 +70,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     etvWidth = holder.tvContent.getWidth();
                 }
             });
-        }
+        }*/
         OnItemClickListener(holder, position);
+
+        holder.mNewsTitle.setText(news.getTitle());
+        holder.mNewsTypeAndTime.setText(news.getCategory() + "  " + news.getCreatedTime());
+        Glide.with(context.getApplicationContext())
+                .load(news.getImg())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .into(holder.mNewsIcon);
     }
 
     private void OnItemClickListener(final NewsViewHolder holder, final int position) {
@@ -99,6 +112,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         TextView tvTime;
         @BindView(R.id.tv_type)
         TextView tvType;
+        @BindView(R.id.id_news_title)
+        TextView mNewsTitle;
+        @BindView(R.id.id_news_type_and_time)
+        TextView mNewsTypeAndTime;
+        @BindView(R.id.id_news_icon)
+        ImageView mNewsIcon;
 
         public NewsViewHolder(View itemView) {
             super(itemView);

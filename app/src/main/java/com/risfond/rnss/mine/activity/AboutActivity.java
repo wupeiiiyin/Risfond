@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.BuildConfig;
 import com.risfond.rnss.R;
+import com.risfond.rnss.application.MyApplication;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.update.UpdateManager;
@@ -37,6 +38,8 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         context = AboutActivity.this;
+        MyApplication myInstance = MyApplication.getMyInstance();
+
         tvTitle.setText("关于锐仕方达");
         tvVersionName.setText(BuildConfig.VERSION_NAME);
         updateManager = new UpdateManager(context, true);

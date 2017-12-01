@@ -99,7 +99,7 @@ public class NewsFragment extends BaseFragment implements ResponseCallBack, Pull
         request.put("PageSize", "15");
         request.put("Category", Category);
         request.put("keyword", content);
-        iNews.requestService(SPUtil.loadToken(context), request, URLConstant.URL_NEWS_LIST, this);
+        iNews.requestService(SPUtil.loadToken(context), request, URLConstant.URL_NEWS_LIST2, this);
     }
 
     private void onItemClick() {

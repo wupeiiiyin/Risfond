@@ -148,7 +148,7 @@ public class HomeFragment extends BaseFragment implements OperationPlatformCallb
         mProjectImg = new int[]{R.mipmap.iconclien, R.mipmap.iconmanag, R.mipmap.icontacke,
                 R.mipmap.iconperformanc, R.mipmap.iconlesson, R.mipmap.iconcheckingin,
                 R.mipmap.iconsuccessfulcase, R.mipmap.icondynamic, R.mipmap.icongongdan, R.mipmap.iconnews};
-        mProjectName = new String[]{"公共客户", "推荐管理", "发票管理", "绩效审核", "课程培训", "我的考勤", "成功案例", "动态", "工单", "新闻"};
+        mProjectName = new String[]{"公共客户", "推荐管理", "发票管理", "绩效审核", "课程培训", "我的考勤", "成功案例", "信息互动", "工我的单", "公司新闻"};
         mProjectItemId = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         for (int i = 0; i < mProjectImg.length; i++) {
             HomeProjectInfo picture = new HomeProjectInfo(mProjectName[i], mProjectImg[i], mProjectItemId[i], 0);

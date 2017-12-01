@@ -3,6 +3,7 @@ package com.risfond.rnss.home.resume.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +16,13 @@ import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.callback.ResponseCallBack;
 import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.utils.DialogUtil;
+import com.risfond.rnss.common.utils.JsonUtil;
 import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
+import com.risfond.rnss.entry.PositionSearch;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchResponse;
+import com.risfond.rnss.entry.ResumeSearchSelectResponse;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.modleImpl.ResumeSearchImpl;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearch;
@@ -33,8 +37,11 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.R.attr.key;
+import static com.xiaomi.network.HostManager.join;
+
 /**
- * 简历搜索主页
+ * 简历搜索首页
  */
 public class ResumeSearchActivity extends BaseActivity implements ResponseCallBack {
 
@@ -64,6 +71,8 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
     private boolean isLoadMore;
     private boolean isCanLoadMore = true;
     private boolean isLoadingMore = false;
+    private ResumeSearchSelectResponse.DataBean mDataBean;
+    private PositionSearch mPositionSearch;
 
     @Override
     public int getContentViewResId() {
@@ -76,7 +85,7 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
         iResumeSearch = new ResumeSearchImpl();
         //        activityResumeSearch.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
 
-        adapter = new ResumeSearchAdapter(context, searches);
+        adapter = new ResumeSearchAdapter(context);
 
         rvResumeList.setLayoutManager(new LinearLayoutManager(context));
         rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
@@ -112,10 +121,70 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
         if (!isLoadMore) {
             DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
         }
-        request.put("keyword", "");
+        request.clear();
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("pageindex", String.valueOf(pageindex));
+        if (mDataBean != null) {
+            request.put("keyword", mDataBean.getKeyword());
+            if (mDataBean.getYearfrom() > 0) {
+                request.put("yearfrom", String.valueOf(mDataBean.getYearfrom()));
+            }
+
+            if (mDataBean.getYearto() > 0) {
+                request.put("yearto", String.valueOf(mDataBean.getYearto()));
+            }
+
+            if (mDataBean.getAgefrom() > 0) {
+                request.put("agefrom", String.valueOf(mDataBean.getAgefrom()));
+            }
+
+            if (mDataBean.getAgeto() > 0) {
+                request.put("ageto", String.valueOf(mDataBean.getAgeto()));
+            }
+
+            if (mDataBean.getSalaryfrom() > 0) {
+                request.put("salaryfrom", String.valueOf(mDataBean.getSalaryfrom()));
+            }
+
+            if (mDataBean.getSalaryto() > 0) {
+                request.put("salaryto", String.valueOf(mDataBean.getSalaryto()));
+            }
+
+            join(mDataBean.getEdu(), "edu");
+            join(mDataBean.getResumestatus(), "resumestatus");
+            join(mDataBean.getGender(), "gender");
+            join(mDataBean.getLang(), "lang");
+            join(mDataBean.getWorklocation(), "worklocation");
+
+            /**
+             * 0 > 关键字搜索
+             * 1 > 职位搜索
+             * 2 > 公司搜索
+             */
+            request.put("keywordstype", "0");
+            /**
+             * 0 > 简历搜索
+             * 1 > 职位搜索
+             */
+            request.put("selecttype", "0");
+        }
+
+        if (mPositionSearch != null) {
+            request.put("keywordstype", "1");
+            request.put("selecttype", "1");
+            request.put("jobid", String.valueOf(mPositionSearch.getID()));
+        }
+
         iResumeSearch.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCH, this);
+    }
+
+    private void join(List<String> infos, String key) {
+        if (infos == null) {
+            return;
+        }
+        for (int i = 0; i < infos.size(); i++) {
+            request.put(key + "[" + i + "]", infos.get(i));
+        }
     }
 
     private void onItemClick() {
@@ -128,14 +197,46 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
         });
     }
 
-    //监听事件
-    @OnClick({R.id.tv_resume_search,R.id.tv_search_quick})
+    /**
+     * 1、点击搜索框进入简历搜索界面
+     * 2、点击快捷搜索 进入简历快速搜索
+     *
+     * @param v
+     */
+    @OnClick({R.id.tv_resume_search, R.id.tv_search_quick})
     public void onClick(View v) {
         if (v.getId() == R.id.tv_resume_search) {
             ResumeSearchResultActivity.StartAction(context);
         }
-        if(v.getId() == R.id.tv_search_quick){
-            ResumeQuickSearchActivity.StartAction(context);//跳转到快捷搜索界面
+        /**
+         * 跳转到快捷搜索界面
+         */
+        if (v.getId() == R.id.tv_search_quick) {
+            Intent intent = new Intent(this, ResumeQuickSearchActivity.class);
+            startActivityForResult(intent, 0x1010);
+        }
+    }
+
+    /**
+     * 接收来自其他页面的检索条件
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x1010 && resultCode == RESULT_OK) {
+            mDataBean = data.getParcelableExtra("ResumeSearchSelectResponse.DataBean");
+            mPositionSearch = data.getParcelableExtra("PositionSearch");
+            ///////////////////////////////////////////////////////////////////////////
+            // 重新刷新数据
+            ///////////////////////////////////////////////////////////////////////////
+            pageindex = 1;
+            searches.clear();
+            isLoadMore = false;
+            resumeRequest();
         }
     }
 
@@ -152,6 +253,9 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
             public void run() {
                 if (!isLoadMore) {
                     DialogUtil.getInstance().closeLoadingDialog();
+                }
+                if (mDataBean != null && !isLoadingMore) {
+                    searches.clear();
                 }
                 if (obj instanceof ResumeSearchResponse) {//实体类
                     response = (ResumeSearchResponse) obj;
@@ -175,6 +279,7 @@ public class ResumeSearchActivity extends BaseActivity implements ResponseCallBa
                         temp = response.getData();
                         searches.addAll(temp);
                     }
+
                     adapter.updateData(searches);
                 }
                 if (isLoadMore) {

@@ -9,6 +9,8 @@ import java.util.List;
 public interface SelectCallBack {
     void onPositionConfirm(List<String> positions, List<String> names);
 
+    void onSelected(List<String> positions, List<String> names);
+
     void onExperienceConfirm(String from, String to);
 
     void onEducationConfirm(List<String> educations, List<String> educationName);

@@ -13,6 +13,7 @@ import com.hyphenate.easeui.utils.GlideUtil;
 import com.risfond.rnss.R;
 import com.risfond.rnss.entry.ResumeSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,9 +30,9 @@ public class ResumeSearchAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<ResumeSearch> data;
 
-    public ResumeSearchAdapter(Context context, List<ResumeSearch> data) {
+    public ResumeSearchAdapter(Context context) {
         this.context = context;
-        this.data = data;
+        data = new ArrayList<>();
     }
 
     public interface OnItemClickListener {

@@ -51,7 +51,7 @@ public class NewsMainActivity extends BaseActivity {
         fragments = new ArrayList<>();
         tabNames = new ArrayList<>();
 
-        tvTitle.setText("新闻");
+        tvTitle.setText("公司新闻");
         llTitleSearch.setVisibility(View.VISIBLE);
         initlayout();
     }
@@ -67,7 +67,7 @@ public class NewsMainActivity extends BaseActivity {
         tabNames.add("2 公司新闻");
         tabNames.add("1 媒体报道");
         tabNames.add("5 员工活动");
-        tabNames.add("3 企业公告");
+        //tabNames.add("3 企业公告");
 
         for (int i = 0; i < tabNames.size(); i++) {
             newsFragment = new NewsFragment();

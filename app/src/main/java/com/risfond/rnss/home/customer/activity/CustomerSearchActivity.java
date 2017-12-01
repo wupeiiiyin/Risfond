@@ -3,7 +3,10 @@ package com.risfond.rnss.home.customer.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,7 +22,11 @@ import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.entry.CustomerSearch;
 import com.risfond.rnss.entry.CustomerSearchResponse;
+import com.risfond.rnss.home.commonFuctions.news.activity.NewsSearchActivity;
+import com.risfond.rnss.home.commonFuctions.news.fragment.NewsFragment;
+import com.risfond.rnss.home.commonFuctions.referencemanage.adapter.ReferencePagerAdapter;
 import com.risfond.rnss.home.customer.adapter.CustomerSearchAdapter;
+import com.risfond.rnss.home.customer.fragment.CustomerFragment;
 import com.risfond.rnss.home.customer.modelImpl.CustomerSearchImpl;
 import com.risfond.rnss.home.customer.modelInterface.ICustomerSearch;
 import com.risfond.rnss.widget.RecycleViewDivider;
@@ -36,33 +43,18 @@ import butterknife.OnClick;
 /**
  * 客户首页
  */
-public class CustomerSearchActivity extends BaseActivity implements ResponseCallBack {
-
-    @BindView(R.id.ll_back)
-    LinearLayout llBack;
-    @BindView(R.id.tv_resume_search)
-    TextView tvResumeSearch;
-    @BindView(R.id.tv_resume_total)
-    TextView tvResumeTotal;
-    @BindView(R.id.rv_resume_list)
-    RecyclerView rvResumeList;
-    @BindView(R.id.ll_empty_search)
-    LinearLayout llEmptySearch;
-    @BindView(R.id.activity_customer)
-    LinearLayout activityCustomer;
-
-    private Context context;
-    private CustomerSearchAdapter adapter;
-    private Map<String, String> request = new HashMap<>();
-    private ICustomerSearch iCustomerSearch;
-    private int pageindex = 1;
-    private CustomerSearchResponse response;
-    private List<CustomerSearch> customerSearches = new ArrayList<>();
-    private List<CustomerSearch> temp = new ArrayList<>();
-    private boolean isLoadMore;
-    private boolean isCanLoadMore = true;
-    private boolean isLoadingMore = false;
-
+public class CustomerSearchActivity extends BaseActivity{
+    private ReferencePagerAdapter pagerAdapter;
+    private List<Fragment> fragments;
+    private List<String> tabNames;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.ll_title_search)
+    LinearLayout llTitleSearch;
+    @BindView(R.id.id_tab_customer)
+    TabLayout mTab;
+    @BindView(R.id.id_viewpager_customer)
+    ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,149 +67,44 @@ public class CustomerSearchActivity extends BaseActivity implements ResponseCall
 
     @Override
     public void init(Bundle savedInstanceState) {
-        context = CustomerSearchActivity.this;
-        iCustomerSearch = new CustomerSearchImpl();
-        //        activityResumeSearch.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+        fragments = new ArrayList<>();
+        tabNames = new ArrayList<>();
+        initTitle();
+        initlayout();
+    }
 
-        adapter = new CustomerSearchAdapter(context, customerSearches);
+    private void initTitle() {
+        tvTitle.setText("客户");
+        llTitleSearch.setVisibility(View.VISIBLE);
+    }
 
-        rvResumeList.setLayoutManager(new LinearLayoutManager(context));
-        rvResumeList.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.HORIZONTAL, 20, ContextCompat.getColor(context, R.color.color_home_back)));
-        rvResumeList.setAdapter(adapter);
+    private void initlayout() {
+        tabNames.add("我的客户");
+        tabNames.add("合作客户");
+        tabNames.add("其他客户");
 
-        rvResumeList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        fragments.add(CustomerFragment.getInstance(CustomerFragment.GUISHU_TYPE_MY_CUSTOM));
+        fragments.add(CustomerFragment.getInstance(CustomerFragment.GUISHU_TYPE_COOP_CUSTOM));
+        fragments.add(CustomerFragment.getInstance(CustomerFragment.GUISHU_TYPE_OTHER_CUSTOM));
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int last = manager.findLastCompletelyVisibleItemPosition();
-                int totalCount = manager.getItemCount();
-                // last >= totalCount - x表示剩余x个item是自动加载，可自己设置
-                // dy>0表示向下滑动
-                if (isCanLoadMore) {
-                    if (last >= totalCount - 5 && dy > 0) {
-                        if (!isLoadingMore) {
-                            isLoadMore = true;
-                            isLoadingMore = true;
-                            customerRequest();
-                        }
-                    }
-                }
-            }
-        });
-        onItemClick();
-        customerRequest();
+        pagerAdapter = new ReferencePagerAdapter(getSupportFragmentManager(), fragments, tabNames);
+        mViewPager.setAdapter(pagerAdapter);
+        mTab.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(0);
 
     }
 
-    private void customerRequest() {
-        if (!isLoadMore) {
-            DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
-        }
-        request.put("keyword", "");
-        request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-        request.put("pageindex", String.valueOf(pageindex));
-        iCustomerSearch.customerSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_CUSTOMER_SEARCH, this);
-    }
-
-    private void onItemClick() {
-        //简历列表点击
-        adapter.setOnItemClickListener(new CustomerSearchAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                CustomDetailActivity2.startAction(context, String.valueOf(customerSearches.get(position).getClientId()), URLConstant.URL_CUSTOMER_DETAIL);
-            }
-        });
-    }
-
-    @OnClick({R.id.tv_resume_search})
-    public void onClick(View v) {
-        if (v.getId() == R.id.tv_resume_search) {
-            CustomerSearchResultActivity.StartAction(context);
+    @OnClick({R.id.ll_title_search})
+    public void onSearch(View v) {
+        if (v.getId() == R.id.ll_title_search) {
+            CustomerSearchResultActivity.StartAction(this);
         }
     }
-
     public static void StartAction(Context context) {
         Intent intent = new Intent(context, CustomerSearchActivity.class);
         context.startActivity(intent);
     }
 
-    @Override
-    public void onSuccess(final Object obj) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!isLoadMore) {
-                    DialogUtil.getInstance().closeLoadingDialog();
-                }
-                if (obj instanceof CustomerSearchResponse) {
-                    response = (CustomerSearchResponse) obj;
-                    if(tvResumeTotal != null){
-                        tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
-                    }
-                    if (response.getData().size() == 15) {
-                        pageindex++;
-                        isCanLoadMore = true;
-                        if (temp.size() > 0) {
-                            customerSearches.removeAll(temp);
-                            temp.clear();
-                        }
-                        customerSearches.addAll(response.getData());
-                    } else {
-                        isCanLoadMore = false;
-                        if (temp.size() > 0) {
-                            customerSearches.removeAll(temp);
-                            temp.clear();
-                        }
-                        temp = response.getData();
-                        customerSearches.addAll(temp);
-                    }
-                    adapter.updateData(customerSearches);
-                }
-                if (isLoadMore) {
-                    isLoadingMore = false;
-                }
-                if (customerSearches.size() > 0) {
-                    if(llEmptySearch != null){
-                        llEmptySearch.setVisibility(View.GONE);
-                    }
-                    if(rvResumeList != null){
-                        rvResumeList.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    if(llEmptySearch != null){
-                        llEmptySearch.setVisibility(View.VISIBLE);
-                    }
-                    if(rvResumeList != null){
-                        rvResumeList.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
-    }
 
-    @Override
-    public void onFailed(String str) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!isLoadMore) {
-                    DialogUtil.getInstance().closeLoadingDialog();
-                }
-            }
-        });
-    }
 
-    @Override
-    public void onError(String str) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!isLoadMore) {
-                    DialogUtil.getInstance().closeLoadingDialog();
-                }
-            }
-        });
-    }
 }

@@ -20,6 +20,12 @@ public class MyApplication extends Application {
     public static Properties properties = null;
     private Context applicationContext;
 
+    public static MyApplication instance;
+
+    public static MyApplication getMyInstance(){
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

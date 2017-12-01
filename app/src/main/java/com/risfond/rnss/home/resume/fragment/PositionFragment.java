@@ -127,6 +127,9 @@ public class PositionFragment extends BaseFragment {
         });
 
 
+        /**
+         * 将选中的城市添加到集合中
+         */
         cityAdapter.setOnItemClickListener(new CityAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -135,9 +138,6 @@ public class PositionFragment extends BaseFragment {
                 if (city.isChecked()) {
                     selectedIds.add(city.getId());
                     selectedNames.add(city.getName());
-
-//                    String name = city.getName();
-//                    Log.i("TAGs",name+selectedNames+"---------name---------------");
                 } else {
                     selectedIds.remove(city.getId());
                     selectedNames.remove(city.getName());
@@ -146,6 +146,8 @@ public class PositionFragment extends BaseFragment {
                 cityAdapter.update(cities, selectedIds, position, province.getId());
                 updateProvinceList();
                 updateProvinceView();
+
+
             }
         });
     }

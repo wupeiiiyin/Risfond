@@ -18,6 +18,7 @@ public class News {
     private String CreatedTime;
     private String Category;
     private String Content;
+    private String Img;
 
     public String getID() {
         return ID;
@@ -57,5 +58,13 @@ public class News {
 
     public void setContent(String Content) {
         this.Content = Content;
+    }
+
+    public String getImg() {
+        return Img;
+    }
+
+    public void setImg(String img) {
+        Img = img;
     }
 }

@@ -62,7 +62,10 @@ public class URLConstant {
     /* 搜索详情H5接口URL*/
     public static final String URL_RESUME_DETAIL_H5 = H5_URL_TOP + "resume/ltviewresume?";
     /* 客户接口URL*/
+    @Deprecated
     public static final String URL_CUSTOMER_SEARCH = URL_TOP + "client/list";
+    /* 客户接口URL_V2*/
+    public static final String URL_CUSTOMER_SEARCH2 = URL_TOP + "client/list2";
     /* 客户详情接口URL*/
     public static final String URL_CUSTOMER_DETAIL = URL_TOP + "client/detail";
     /* 客户基本信息H5*/
@@ -158,7 +161,10 @@ public class URLConstant {
     /*工单接收接口url*/
     public static final String URL_WORK_ORDER_ACCEPT = URL_TOP + "WorkOrder/WorkOrderAccept";
     /*新闻列表接口url*/
+    @Deprecated
     public static final String URL_NEWS_LIST = URL_TOP + "news/list";
+    /*新闻列表接口V2url*/
+    public static final String URL_NEWS_LIST2 = URL_TOP + "news/list2";
     /*新闻详情接口url*/
     public static final String URL_NEWS_DETAIL_H5 = H5_URL_TOP + "news/ltviewnew?";
 

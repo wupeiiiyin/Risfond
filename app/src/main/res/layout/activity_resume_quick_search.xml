@@ -53,7 +53,7 @@
                     android:id="@+id/tv_resume_quick_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="加载中..."
                     android:textColor="@color/color_quick_resume_blue_txt"
                     android:textSize="14sp"/>
 

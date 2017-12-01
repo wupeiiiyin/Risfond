@@ -14,6 +14,9 @@ import java.util.Map;
  * Created by Abbott on 2017/6/23.
  */
 
+/**
+ * 简历搜索首页 搜索列表
+ */
 public class ResumeSearchImpl implements IResumeSearch {
     ResumeSearchResponse response;
 

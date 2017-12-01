@@ -119,7 +119,7 @@ public class NewsSearchActivity extends BaseActivity implements ResponseCallBack
         request.put("PageSize", "15");
         request.put("Category", "0");
         request.put("Keyword", content);
-        iNews.requestService(SPUtil.loadToken(context), request, URLConstant.URL_NEWS_LIST, this);
+        iNews.requestService(SPUtil.loadToken(context), request, URLConstant.URL_NEWS_LIST2, this);
     }
 
     @OnClick({R.id.tv_search_cancel})

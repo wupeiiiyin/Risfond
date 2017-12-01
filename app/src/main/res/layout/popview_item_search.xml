@@ -2,12 +2,14 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/transparent"
               android:orientation="vertical">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="50dp"
+        android:background="@color/color_position"
         android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/ll_history"
@@ -23,7 +25,11 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textColor="@color/color_home_black_text"
-                android:text="按已有职位搜索"/>
+                android:text="按已有职位搜索"
+                android:layout_alignBaseline="@+id/tv_search_quick"
+                android:layout_alignBottom="@+id/tv_search_quick"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:orientation="vertical"

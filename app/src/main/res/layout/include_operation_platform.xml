@@ -16,12 +16,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:drawableLeft="@mipmap/operation_platform"
             android:drawablePadding="5dp"
             android:text="运营平台"
-            android:textColor="@color/color_mine_black_text"
-            android:textSize="13sp"/>
+            android:textColor="@color/color_home_black_text"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_today"
@@ -30,8 +30,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:drawablePadding="5dp"
-            android:textColor="@color/color_mine_gray_text"
-            android:textSize="14sp"/>
+            android:textColor="@color/color_home_gray_text"
+            android:textSize="12sp"/>
 
     </RelativeLayout>
 
