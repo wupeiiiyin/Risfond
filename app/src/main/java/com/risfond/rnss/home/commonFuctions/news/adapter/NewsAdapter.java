@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+import static com.risfond.rnss.R.mipmap.course_default;
+
 /**
  * Created by Abbott on 2017/5/15.
  */
@@ -78,6 +80,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         Glide.with(context.getApplicationContext())
                 .load(news.getImg())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.mipmap.course_default)
                 .dontAnimate()
                 .into(holder.mNewsIcon);
     }

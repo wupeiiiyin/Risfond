@@ -6,13 +6,20 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
@@ -36,6 +43,7 @@ import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
 import com.risfond.rnss.home.resume.modleImpl.ResumeSearchImpl;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearch;
+import com.risfond.rnss.home.window.MultiSelectPopupWindow;
 import com.risfond.rnss.widget.RecycleViewDivider;
 
 import java.math.BigDecimal;
@@ -45,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -72,6 +81,11 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
     LinearLayout llResume;
     @BindView(R.id.activity_resume_search_result)
     LinearLayout activityResumeSearchResult;
+    @BindView(R.id.cb_whole)
+    CheckBox cbWhole;//搜索分类按钮
+
+    @BindView(R.id.quick_search_close)
+    ImageView mCloseView;
 
     private Context context;
     private CustomerSearchAdapter adapter;
@@ -87,6 +101,8 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
     private boolean isLoadingMore = false;
     private List<String> histories;
     private List<String> historiesAESC;
+    private MultiSelectPopupWindow mMultiSelectPopupWindow;
+    private String mCurrentType = "1";
 
     @Override
     public int getContentViewResId() {
@@ -117,6 +133,8 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
         initHistoryData();
         itemClick();
         scroll();
+
+        cbWhole.setText("我的");
     }
 
     /**
@@ -131,7 +149,8 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
         request.put("keyword", content);
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("pageindex", String.valueOf(pageindex));
-        iCustomerSearch.customerSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_CUSTOMER_SEARCH, this);
+        request.put("guishu", mCurrentType);
+        iCustomerSearch.customerSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_CUSTOMER_SEARCH2, this);
     }
 
     @OnClick({R.id.tv_search_cancel})
@@ -167,14 +186,30 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
                 return false;
             }
         });
+        etResumeSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCloseView.setVisibility(s.length()>0?View.GONE:View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
     private void initResumeData() {
-        if(llHistory != null){
+        if (llHistory != null) {
             llHistory.setVisibility(View.GONE);
         }
-        if(llResume != null){
+        if (llResume != null) {
             llResume.setVisibility(View.VISIBLE);
         }
         adapter.updateData(customerSearches);
@@ -303,17 +338,17 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
 
     private void hideResume() {
         if (customerSearches.size() > 0) {
-            if(rvResumeList != null){
+            if (rvResumeList != null) {
                 rvResumeList.setVisibility(View.VISIBLE);
             }
-            if(llEmptySearch != null){
+            if (llEmptySearch != null) {
                 llEmptySearch.setVisibility(View.GONE);
             }
         } else {
-            if(rvResumeList != null){
+            if (rvResumeList != null) {
                 rvResumeList.setVisibility(View.GONE);
             }
-            if(llEmptySearch != null){
+            if (llEmptySearch != null) {
                 llEmptySearch.setVisibility(View.VISIBLE);
             }
         }
@@ -324,6 +359,61 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
         context.startActivity(intent);
     }
 
+    @OnCheckedChanged({R.id.cb_whole})
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        ImeUtil.hideSoftKeyboard(etResumeSearch);
+
+        switch (buttonView.getId()) {
+            case R.id.cb_whole://搜索分类
+                if (isChecked) {
+                    if (mMultiSelectPopupWindow == null) {
+                        initmPopupWindowView();
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
+                    } else {
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
+                    }
+                } else {
+                    if (mMultiSelectPopupWindow != null) {
+                        mMultiSelectPopupWindow.hide();
+                    }
+
+                }
+                break;
+        }
+    }
+
+    private void initmPopupWindowView() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("1", "我的");
+        map.put("2", "合作");
+        map.put("3", "其他");
+        mMultiSelectPopupWindow = new MultiSelectPopupWindow(this, this, map, new MultiSelectPopupWindow.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View v) {
+                saveHistory(((TextView) v).getText().toString());
+                String type = String.valueOf(v.getId());
+                if (type.equals(mCurrentType)) {
+                    return;
+                }
+                mCurrentType = type;
+                cbWhole.setText(((TextView) v).getText());
+                String content = etResumeSearch.getText().toString();
+                if (content.length() > 0) {
+                    pageindex = 1;
+                    isLoadMore = false;
+                    customerSearches.clear();
+                    customerRequest(content);
+                }
+                mMultiSelectPopupWindow.hide();
+            }
+        });
+        mMultiSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                cbWhole.setChecked(false);
+            }
+        });
+    }
 
     @Override
     public void onSuccess(final Object obj) {
@@ -335,7 +425,7 @@ public class CustomerSearchResultActivity extends BaseActivity implements Respon
                 }
                 if (obj instanceof CustomerSearchResponse) {
                     response = (CustomerSearchResponse) obj;
-                    if(tvResumeTotal != null){
+                    if (tvResumeTotal != null) {
                         tvResumeTotal.setText(NumberUtil.formatString(new BigDecimal(response.getTotal())));
                     }
                     if (response.getData().size() == 15) {

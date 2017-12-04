@@ -10,8 +10,12 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
@@ -34,6 +38,7 @@ import com.risfond.rnss.home.position.adapter.PositionSearchAdapter;
 import com.risfond.rnss.home.position.modelImpl.PositionSearchImpl;
 import com.risfond.rnss.home.position.modelInterface.IPositionSearch;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchHistoryAdapter;
+import com.risfond.rnss.home.window.MultiSelectPopupWindow;
 import com.risfond.rnss.widget.RecycleViewDivider;
 
 import java.math.BigDecimal;
@@ -43,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -70,7 +76,11 @@ public class PositionSearchResultActivity extends BaseActivity implements Respon
     LinearLayout llResume;
     @BindView(R.id.activity_resume_search_result)
     LinearLayout activityResumeSearchResult;
-
+    @BindView(R.id.quick_search_close)
+    ImageView mCloseView;
+    @BindView(R.id.cb_whole)
+    CheckBox cbWhole;//搜索分类按钮
+    private String mCurrentType = "1";
     private Context context;
     private PositionSearchAdapter adapter;
     private ResumeSearchHistoryAdapter historyAdapter;
@@ -85,6 +95,7 @@ public class PositionSearchResultActivity extends BaseActivity implements Respon
     private boolean isLoadingMore = false;
     private List<String> histories;
     private List<String> historiesAESC;
+    private MultiSelectPopupWindow mMultiSelectPopupWindow;
 
     @Override
     public int getContentViewResId() {
@@ -115,6 +126,8 @@ public class PositionSearchResultActivity extends BaseActivity implements Respon
         initHistoryData();
         itemClick();
         scroll();
+
+        cbWhole.setText("我的");
     }
 
     /**
@@ -129,7 +142,8 @@ public class PositionSearchResultActivity extends BaseActivity implements Respon
         request.put("keyword", content);
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("pageindex", String.valueOf(pageindex));
-        iPositionSearch.positionSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_JOB_SEARCH, this);
+        request.put("guishu", mCurrentType);
+        iPositionSearch.positionSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_JOB_SEARCH2, this);
     }
 
     @OnClick({R.id.tv_search_cancel})
@@ -309,7 +323,61 @@ public class PositionSearchResultActivity extends BaseActivity implements Respon
         Intent intent = new Intent(context, PositionSearchResultActivity.class);
         context.startActivity(intent);
     }
+    @OnCheckedChanged({R.id.cb_whole})
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        ImeUtil.hideSoftKeyboard(etResumeSearch);
 
+        switch (buttonView.getId()) {
+            case R.id.cb_whole://搜索分类
+                if (isChecked) {
+                    if (mMultiSelectPopupWindow == null) {
+                        initmPopupWindowView();
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
+                    } else {
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
+                    }
+                } else {
+                    if (mMultiSelectPopupWindow != null) {
+                        mMultiSelectPopupWindow.hide();
+                    }
+
+                }
+                break;
+        }
+    }
+
+    private void initmPopupWindowView() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("1", "我的");
+        map.put("2", "合作");
+        map.put("3", "其他");
+        mMultiSelectPopupWindow = new MultiSelectPopupWindow(this, this, map, new MultiSelectPopupWindow.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View v) {
+                String type = String.valueOf(v.getId());
+                if (type.equals(mCurrentType)) {
+                    return;
+                }
+                mCurrentType = type;
+                cbWhole.setText(((TextView) v).getText());
+                String content = etResumeSearch.getText().toString();
+                if (content.length() > 0) {
+                    pageindex = 1;
+                    isLoadMore = false;
+                    positionSearches.clear();
+                    saveHistory(content);
+                    positionRequest(content);
+                }
+                mMultiSelectPopupWindow.hide();
+            }
+        });
+        mMultiSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                cbWhole.setChecked(false);
+            }
+        });
+    }
 
     @Override
     public void onSuccess(final Object obj) {

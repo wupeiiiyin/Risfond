@@ -73,7 +73,10 @@ public class URLConstant {
     /* 职位详情H5接口URL*/
     public static final String URL_JOB_DETAIL_H5 = H5_URL_TOP + "job/ltviewjob";
     /* 职位列表接口URL*/
+    @Deprecated
     public static final String URL_JOB_SEARCH = URL_TOP + "job/list";
+    /* 职位列表接口URLV2*/
+    public static final String URL_JOB_SEARCH2 = URL_TOP + "job/list2";
     /* 推荐管理接口URL*/
     public static final String URL_JOB_RECOMMEND = URL_TOP + "job/recommend";
     /* 推荐管理列表接口URL*/
@@ -115,7 +118,10 @@ public class URLConstant {
     /* 请假申请 */
     public static final String URL_QUSTLEAVE = URL_TOP + "Attendance/AddApproval";
     /* 成功案例 */
+    @Deprecated
     public static final String URL_SUCCESS_CASE = URL_TOP + "SuccessfulCase/SuccessArticle";
+    /* 成功案例 V2*/
+    public static final String URL_SUCCESS_CASE2 = URL_TOP + "SuccessfulCase/SuccessArticle2";
     /* 案例详情H5接口URL*/
     public static final String URL_CASE_DETAIL_H5 = H5_URL_TOP + "successfulcase/ltdetail?";
     /* 推荐人选列表接口URL*/

@@ -14,6 +14,8 @@
         android:orientation="vertical"
         android:layout_marginTop="-4sp"
         android:background="@drawable/bg_recommend_management_whole"
+        android:divider="@drawable/divider"
+        android:showDividers="middle"
         android:layout_height="wrap_content">
 
         <TextView
@@ -27,10 +29,7 @@
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/color_popu"
-            android:layout_height="1sp"></View>
+
 
         <TextView
             android:id="@+id/tv_two"
@@ -44,10 +43,7 @@
             android:paddingRight="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/color_popu"
-            android:layout_height="1sp"></View>
+
         <TextView
             android:id="@+id/tv_three"
             android:textColor="@color/black_deep"

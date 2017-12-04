@@ -60,6 +60,7 @@ import com.risfond.rnss.home.resume.modleImpl.ResumeSearchImpl;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearch;
 import com.risfond.rnss.home.resume.modleInterface.IResumeSearchWhole;
 import com.risfond.rnss.home.resume.modleInterface.SelectCallBack;
+import com.risfond.rnss.home.window.MultiSelectPopupWindow;
 import com.risfond.rnss.widget.RecycleViewDivider;
 
 
@@ -183,6 +184,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private ResumeSearchAddAdapter addAdapter;
     private String eTResumeSearch;//获取搜索的内容
     private SharedPreferences king;
+    private MultiSelectPopupWindow mMultiSelectPopupWindow;
 
     @Override
     public int getContentViewResId() {
@@ -689,114 +691,50 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                 break;
             case R.id.cb_whole://搜索分类
                 if (isChecked) {
-
-                    if (popupwindow != null && popupwindow.isShowing()) {
-                        popupwindow.dismiss();
-                        cbWhole.setChecked(false);
-                        return;
-                    } else {
+                    if (mMultiSelectPopupWindow == null) {
                         initmPopupWindowView();
-                        popupwindow.showAsDropDown(buttonView, 0, 5);
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
+                    } else {
+                        mMultiSelectPopupWindow.showView(buttonView, 0, 5);
                     }
-                } else if (!isChecked) {
-                    cbWhole.setChecked(false);
+                } else {
+                    if (mMultiSelectPopupWindow != null) {
+                        mMultiSelectPopupWindow.hide();
+                    }
+
                 }
                 break;
         }
     }
-
-    /**
-     * popupwindow分类方法
-     */
-    public void initmPopupWindowView() {
-
-        // // 获取自定义布局文件pop.xml的视图
-        View customView = LayoutInflater.from(ResumeSearchResultActivity.this).inflate(R.layout.popview_item_whole, null);
-        // 创建PopupWindow实例,200,150分别是宽度和高度
-        popupwindow = new PopupWindow(customView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
-        //        popupwindow.setAnimationStyle(R.style.AnimationFade);
-        // 自定义view添加触摸事件
-        //        popupwindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        popupwindow.setFocusable(false);
-        popupwindow.setOutsideTouchable(false); // 设置是否允许在外点击使其消失，到底有用没？
-
-        //        popupwindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        //        int popupWidth = popupwindow.getContentView().getMeasuredWidth();
-        //        int popupHeight = popupwindow.getContentView().getMeasuredHeight();
-        //        // 设置好参数之后再show
-        //        int[] location = new int[2];
-        //        customView.getLocationOnScreen(location);
-        //        popupwindow.showAtLocation(customView,  Gravity.CENTER_HORIZONTAL, (location[0]+customView.getWidth()/2)-popupWidth/2 , location[1]-popupHeight);
-
-
-        customView.setOnTouchListener(new View.OnTouchListener() {
-
+    private void initmPopupWindowView() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("0", "全部");
+        map.put("1", "职位");
+        map.put("2", "公司");
+        mMultiSelectPopupWindow = new MultiSelectPopupWindow(this, this, map, new MultiSelectPopupWindow.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (popupwindow != null && popupwindow.isShowing()) {
-                    popupwindow.dismiss();
-                    popupwindow = null;
-                    cbWhole.setChecked(false);
-                    hideHistory();//隐藏搜索历史
+            public void onItemClickListener(View v) {
+                String type = String.valueOf(v.getId());
+                if (type.equals(String.valueOf(mRequestType))) {
+                    return;
                 }
-
-                return false;
+                mRequestType = Integer.parseInt(type);
+                cbWhole.setText(((TextView) v).getText());
+                String content = etResumeSearch.getText().toString().trim();
+                if (content.length() > 0) {
+                    isLoadMore = false;
+                    saveHistory(content);
+                    onChangeKeywordtypes();
+                }
+                mMultiSelectPopupWindow.hide();
             }
         });
-
-        /** 在这里可以实现自定义视图的功能 */
-        final TextView whole = (TextView) customView.findViewById(R.id.tv_one);//全部
-        final TextView positions = (TextView) customView.findViewById(R.id.tv_two);//职位
-        final TextView company = (TextView) customView.findViewById(R.id.tv_three);//公司
-        //监听事件
-        whole.setOnClickListener(new View.OnClickListener() {
-                                     @Override
-                                     public void onClick(View view) {
-                                         cbWhole.setText("全部");
-                                         if (popupwindow != null && popupwindow.isShowing()) {
-                                             popupwindow.dismiss();
-                                             popupwindow = null;
-                                             cbWhole.setChecked(false);
-                                             mRequestType = 0;
-                                             onChangeKeywordtypes();
-                                         }
-                                     }
-                                 }
-
-        );
-        positions.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
-                                             cbWhole.setText("职位");
-                                             if (popupwindow != null && popupwindow.isShowing()) {
-                                                 popupwindow.dismiss();
-                                                 popupwindow = null;
-                                                 cbWhole.setChecked(false);//设置为默认状态
-                                                 mRequestType = 1;
-                                                 onChangeKeywordtypes();
-                                             }
-                                         }
-                                     }
-
-        );
-        company.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View view) {
-                                           cbWhole.setText("公司");
-                                           if (popupwindow != null && popupwindow.isShowing()) {
-                                               popupwindow.dismiss();
-                                               popupwindow = null;
-                                               cbWhole.setChecked(false);
-                                               mRequestType = 2;
-                                               onChangeKeywordtypes();
-                                           }
-                                       }
-                                   }
-
-        );
-
+        mMultiSelectPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                cbWhole.setChecked(false);
+            }
+        });
     }
 
     /**

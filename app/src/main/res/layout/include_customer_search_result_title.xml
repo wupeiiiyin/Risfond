@@ -49,49 +49,63 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/bg_home_search"
-                android:layout_height="wrap_content">
-                <CheckBox
-                    android:id="@+id/cb_whole"
-                    style="@style/rb_search_title_all"
-                    android:text="全部"/>
-
-                <View
-                    android:layout_width="1sp"
-                    android:layout_gravity="center"
-                    android:background="@color/color_white"
-                    android:layout_height="15sp"></View>
-                <com.risfond.rnss.widget.ClearEditText
-                    android:id="@+id/et_resume_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
                     android:background="@drawable/bg_home_search"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="输入关键字"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:textColor="@color/color_white_real"
-                    android:textColorHint="@color/color_resume_input_bg"
-                    android:textSize="12sp"/>
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/id_whole_action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical">
+                        <CheckBox
+                            android:id="@+id/cb_whole"
+                            style="@style/rb_search_title_all"
+                            android:text="全部"/>
 
+                        <View
+                            android:layout_width="1sp"
+                            android:layout_gravity="center"
+                            android:background="@color/color_white"
+                            android:layout_height="15sp"></View>
+                    </LinearLayout>
+                    <com.risfond.rnss.widget.ClearEditText
+                        android:id="@+id/et_resume_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_weight="@integer/animation_default_duration"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_home_search"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="输入关键字"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/color_white_real"
+                        android:textColorHint="@color/color_resume_input_bg"
+                        android:textSize="12sp"/>
+
+
+                </LinearLayout>
                 <ImageView
                     android:id="@+id/quick_search_close"
-                    android:layout_width="10sp"
-                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_height="10sp"
+                    android:layout_height="wrap_content"
                     android:paddingRight="10sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:src="@mipmap/hiconclose"/>
-            </LinearLayout>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tv_search_cancel"

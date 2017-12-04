@@ -9,68 +9,141 @@
     tools:context="com.risfond.rnss.home.resume.activity.ResumeSearchActivity">
 
     <include layout="@layout/include_title"/>
-
     <LinearLayout
+        android:id="@+id/id_cb_conetnt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="40dp"
+        android:background="#FFFFFF">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/color_home_back"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="共 "
-                android:textColor="@color/color_home_gray_text"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/tv_resume_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/color_resume_blue_txt"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 条案例"
-                android:textColor="@color/color_home_gray_text"
-                android:textSize="12sp"/>
+            <CheckBox
+                android:id="@+id/cb_order"
+                style="@style/rb_search_title"
+                android:tag="0"
+                android:text="排序"/>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_resume_list"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/cb_jobtitle"
+                style="@style/rb_search_title"
+                android:tag="1"
+                android:text="行业"/>
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_empty_search"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="暂无简历"
-                android:textColor="@color/color_home_gray_text"
-                android:textSize="16sp"/>
+            <CheckBox
+                android:id="@+id/cb_worklocation"
+                style="@style/rb_search_title"
+                android:tag="2"
+                android:text="地点"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/cb_more"
+                style="@style/rb_search_title"
+                android:tag="3"
+                android:text="其他"/>
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dcdcdc"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/color_home_back"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="共 "
+                    android:textColor="@color/color_home_gray_text"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_resume_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 条案例"
+                    android:textColor="@color/color_home_gray_text"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_resume_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
+            <LinearLayout
+                android:id="@+id/ll_empty_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="暂无简历"
+                    android:textColor="@color/color_home_gray_text"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/id_successcase_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

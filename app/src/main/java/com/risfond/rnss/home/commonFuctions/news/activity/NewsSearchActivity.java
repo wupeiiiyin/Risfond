@@ -60,6 +60,9 @@ public class NewsSearchActivity extends BaseActivity implements ResponseCallBack
     @BindView(R.id.tv_total_number)
     TextView tvTotalNumber;
 
+    @BindView(R.id.id_whole_action)
+    LinearLayout mWholeActionView;
+
     private Context context;
     private NewsAdapter adapter;
     private List<String> histories;
@@ -83,6 +86,7 @@ public class NewsSearchActivity extends BaseActivity implements ResponseCallBack
         context = NewsSearchActivity.this;
         iNews = new NewsImpl();
         etResumeSearch.setHint("公司新闻（请输入关键字）");
+        mWholeActionView.setVisibility(View.GONE);
 
         histories = new ArrayList<>();
         historiesAESC = new ArrayList<>();
