@@ -11,7 +11,7 @@ import static android.R.attr.type;
  * @create 2017/12/4
  * @desc
  */
-public class SuccessCaseWhole implements Serializable {
+public class SuccessCaseWhole extends BaseWhole implements Serializable {
     public String type = "";//类型  默认不用传值
     public String keyWords = "";//搜索关键字
     public int pageIndex = 1;//页数

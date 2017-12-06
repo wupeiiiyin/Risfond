@@ -2,8 +2,10 @@ package com.risfond.rnss.common.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Xml;
 
 import com.risfond.rnss.entry.City;
+import com.risfond.rnss.entry.PositionInfo;
 import com.risfond.rnss.entry.Province;
 import com.risfond.rnss.home.call.activity.CallActivity;
 
@@ -11,6 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,5 +171,63 @@ public class CommonUtil {
         return provinces;
     }
 
+
+    /**
+     * 职位解析
+     *
+     * @param context
+     * @return
+     */
+    public static List<PositionInfo> createPositions(Context context) {
+        List<PositionInfo> positionInfos = null;
+        PositionInfo positionInfo = null;
+        try {
+            XmlPullParser pullParser = Xml.newPullParser();
+            pullParser.setInput(context.getAssets().open("position.plist"), "UTF-8");
+            int event = pullParser.getEventType();
+            // 若为解析到末尾
+            while (event != XmlPullParser.END_DOCUMENT) // 文档结束
+            {
+                String nodeName = pullParser.getName();
+                switch (event) {
+                    case XmlPullParser.START_DOCUMENT: // 文档开始
+                        positionInfos =  new ArrayList<>();
+                        break;
+                    case XmlPullParser.START_TAG: // 标签开始
+                        if ("dict".equals(nodeName)) {
+                            positionInfo = new PositionInfo();
+                        }
+                        if ("string".equals(nodeName)) {
+                            String name = pullParser.nextText();
+                            String[] split = name.split("@");
+                            if (positionInfo.getTitle() == null) {
+                                positionInfo.setCode(split[0]);
+                                positionInfo.setTitle(split[1]);
+                            }else{
+                                PositionInfo.Data data = new PositionInfo.Data();
+                                data.setCode(split[0]);
+                                data.setContent(split[1]);
+                                positionInfo.getDatas().add(data);
+                            }
+                        }
+                        if ("array".equals(nodeName)) {
+
+                        }
+                        break;
+                    case XmlPullParser.END_TAG: // 标签结束
+                        if ("dict".equals(nodeName)) {
+                            positionInfos.add(positionInfo);
+                            positionInfo = null;
+                        }
+                        break;
+                }
+                event = pullParser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return positionInfos;
+    }
 
 }

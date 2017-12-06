@@ -310,6 +310,10 @@
         </activity>
         <activity android:name=".home.resume.activity.ResumeQuickSearchActivity">
         </activity>
+        <activity android:name=".home.resume.activity.ResumeOhterWholeActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseMainActivity">
+        </activity>
     </application>
 
 </manifest>

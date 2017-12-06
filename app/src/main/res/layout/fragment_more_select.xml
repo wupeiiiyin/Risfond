@@ -19,351 +19,651 @@
             android:orientation="vertical"
             android:paddingBottom="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="15dp"
-                android:text="推荐状态"
-                android:textColor="#323232"
-                android:textSize="14sp"/>
-
-            <RadioGroup
-                android:id="@+id/rg_recommend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <RadioButton
-                    android:id="@+id/rb_r_all"
-                    style="@style/rb_education"
-                    android:checked="true"
-                    android:text="不限"/>
-
-                <RadioButton
-                    android:id="@+id/rb_r_ketui"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="可推"/>
-
-                <RadioButton
-                    android:id="@+id/rb_r_wurao"
-                    style="@style/rb_education"
-                    android:text="勿扰"/>
-
-            </RadioGroup>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="bottom"
-                android:paddingLeft="14dp">
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年龄"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="单位:岁"
+                        android:textColor="#969696"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <EditText
+                        android:id="@+id/age_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/ebg1"
+                        android:hint="不限"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:background="#969696"/>
+
+                    <EditText
+                        android:id="@+id/age_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/ebg1"
+                        android:hint="不限"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="年龄"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="性别"
                     android:textColor="#323232"
                     android:textSize="14sp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/rg_sex"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="单位:岁"
-                    android:textColor="#969696"
-                    android:textSize="12sp"/>
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <RadioButton
+                        android:id="@+id/rb_buxian"
+                        style="@style/rb_education"
+                        android:checked="true"
+                        android:tag="0"
+                        android:text="不限"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_man"
+                        style="@style/rb_education"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:tag="1"
+                        android:text="男"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_woman"
+                        style="@style/rb_education"
+                        android:tag="2"
+                        android:text="女"/>
+
+                </RadioGroup>
+
+                <!--学校名称 Start-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="学校名称"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <EditText
+                        android:id="@+id/id_schoolname"
+                        android:layout_width="298dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ebg1"
+                        android:hint="请输入学校名称"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+
+
+                </LinearLayout>
+                <!--学校名称 End-->
+
+                <!--专业名称 Start-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="专业名称"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <EditText
+                        android:id="@+id/id_major"
+                        android:layout_width="298dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ebg1"
+                        android:hint="请输入专业名称"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+
+
+                </LinearLayout>
+                <!--专业名称 End-->
+
+                <!--语言能力 Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_toLeftOf="@+id/id_language"
+                        android:text="语言能力"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/id_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/rs_right_more"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="100dp"
+                        android:text="请选择"
+                        android:textColor="@color/color_quick_resume_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                <!--语言能力 End-->
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#F8F8FA"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <!--当前行业 Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
 
-                <EditText
-                    android:id="@+id/age_from"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_toLeftOf="@+id/id_industrie"
+                        android:text="当前行业"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/id_industrie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/rs_right_more"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="100dp"
+                        android:text="请选择"
+                        android:textColor="@color/color_quick_resume_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                <!--当前行业 End-->
+
+                <!--期望行业 Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_toLeftOf="@+id/id_desired_industries"
+                        android:text="期望行业"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/id_desired_industries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/rs_right_more"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="100dp"
+                        android:text="请选择"
+                        android:textColor="@color/color_quick_resume_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                <!--期望行业 End-->
+
+                <!--期望地点 Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_toLeftOf="@+id/id_desired_locations"
+                        android:text="期望地点"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/id_desired_locations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/rs_right_more"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="100dp"
+                        android:text="请选择"
+                        android:textColor="@color/color_quick_resume_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                <!--期望地点 End-->
+
+                <!--期望职位 Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_toLeftOf="@+id/id_desiredoccupations"
+                        android:text="期望职位"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/id_desiredoccupations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/rs_right_more"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="100dp"
+                        android:text="请选择"
+                        android:textColor="@color/color_quick_resume_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                <!--期望职位 End-->
+
+                <!--期望年薪 Start-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="期望年薪"
+                        android:textColor="#323232"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="单位:万"
+                        android:textColor="#969696"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <EditText
+                        android:id="@+id/salary_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/ebg1"
+                        android:hint="不限"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:background="#969696"/>
+
+                    <EditText
+                        android:id="@+id/salary_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/ebg1"
+                        android:hint="不限"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="8dp"
+                        android:textColor="#323232"
+                        android:textColorHint="#969696"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+                <!--期望年薪 End-->
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#F8F8FA"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <!--推荐状态 Start-->
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@mipmap/ebg1"
-                    android:hint="不限"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:paddingLeft="8dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="推荐状态"
                     android:textColor="#323232"
-                    android:textColorHint="#969696"
                     android:textSize="14sp"/>
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="#969696"/>
-
-                <EditText
-                    android:id="@+id/age_to"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/rg_recommend"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@mipmap/ebg1"
-                    android:hint="不限"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:paddingLeft="8dp"
-                    android:textColor="#323232"
-                    android:textColorHint="#969696"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="15dp"
-                android:text="性别"
-                android:textColor="#323232"
-                android:textSize="14sp"/>
+                    <RadioButton
+                        android:id="@+id/rb_r_all"
+                        style="@style/rb_education"
+                        android:checked="true"
+                        android:tag="0"
+                        android:text="不限"/>
 
-            <RadioGroup
-                android:id="@+id/rg_sex"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                    <RadioButton
+                        android:id="@+id/rb_r_ketui"
+                        style="@style/rb_education"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:tag="1"
+                        android:text="可推"/>
 
-                <RadioButton
-                    android:id="@+id/rb_buxian"
-                    style="@style/rb_education"
-                    android:checked="true"
-                    android:text="不限"/>
+                    <RadioButton
+                        android:id="@+id/rb_r_wurao"
+                        style="@style/rb_education"
+                        android:tag="2"
+                        android:text="勿扰"/>
 
-                <RadioButton
-                    android:id="@+id/rb_man"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="男"/>
+                </RadioGroup>
+                <!--推荐状态 End-->
 
-                <RadioButton
-                    android:id="@+id/rb_woman"
-                    style="@style/rb_education"
-                    android:text="女"/>
-
-            </RadioGroup>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="bottom"
-                android:paddingLeft="14dp">
-
+                <!--推荐历史 Start-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="期望年薪"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="推荐历史"
                     android:textColor="#323232"
                     android:textSize="14sp"/>
 
+                <RadioGroup
+                    android:id="@+id/id_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <RadioButton
+                        android:id="@+id/id_history_all"
+                        style="@style/rb_education"
+                        android:checked="true"
+                        android:tag="0"
+                        android:text="不限"/>
+
+                    <RadioButton
+                        android:id="@+id/id_history_have"
+                        style="@style/rb_education"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:tag="1"
+                        android:text="有"/>
+
+                    <RadioButton
+                        android:id="@+id/id_history_nhave"
+                        style="@style/rb_education"
+                        android:tag="2"
+                        android:text="无"/>
+
+                </RadioGroup>
+                <!--推荐历史 End-->
+
+                <!--更新时间 Start-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="单位:万"
-                    android:textColor="#969696"
-                    android:textSize="12sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <EditText
-                    android:id="@+id/salary_from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@mipmap/ebg1"
-                    android:hint="不限"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:paddingLeft="8dp"
-                    android:textColor="#323232"
-                    android:textColorHint="#969696"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="#969696"/>
-
-                <EditText
-                    android:id="@+id/salary_to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@mipmap/ebg1"
-                    android:hint="不限"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:paddingLeft="8dp"
-                    android:textColor="#323232"
-                    android:textColorHint="#969696"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="bottom"
-                android:paddingLeft="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="语言"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="更新时间"
                     android:textColor="#323232"
                     android:textSize="14sp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/id_updatetime"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="可多选"
-                    android:textColor="#969696"
-                    android:textSize="12sp"/>
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_all"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="0"
+                                android:text="不限"/>
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_3"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:tag="3"
+                                android:text="最近三天"/>
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_7"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="7"
+                                android:text="最近1周"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_14"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="14"
+                                android:text="最近2周"/>
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_31"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:tag="31"
+                                android:text="最近1个月"/>
+
+                            <RadioButton
+                                android:id="@+id/id_updatetime_up"
+                                style="@style/rb_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="32"
+                                android:text="1个月以上"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RadioGroup>
+                <!--更新时间 End-->
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <CheckBox
-                    android:id="@+id/cb_0"
-                    style="@style/rb_education"
-                    android:checked="true"
-                    android:text="不限"/>
-
-                <CheckBox
-                    android:id="@+id/cb_1"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="汉语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_2"
-                    style="@style/rb_education"
-                    android:text="英语"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <CheckBox
-                    android:id="@+id/cb_3"
-                    style="@style/rb_education"
-                    android:text="日语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_4"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="法语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_5"
-                    style="@style/rb_education"
-                    android:text="德语"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <CheckBox
-                    android:id="@+id/cb_6"
-                    style="@style/rb_education"
-                    android:text="韩语、朝鲜语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_7"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="俄语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_9"
-                    style="@style/rb_education"
-                    android:text="西班牙语"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <CheckBox
-                    android:id="@+id/cb_12"
-                    style="@style/rb_education"
-                    android:text="阿拉伯语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_13"
-                    style="@style/rb_education"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="意大利语"/>
-
-                <CheckBox
-                    android:id="@+id/cb_14"
-                    style="@style/rb_education"
-                    android:text="葡萄牙语"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -393,7 +693,7 @@
                     android:id="@+id/et_page"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/ebg1"
+                    android:background="@drawable/ebg1"
                     android:hint="页数"
                     android:imeOptions="actionNext"
                     android:inputType="number"

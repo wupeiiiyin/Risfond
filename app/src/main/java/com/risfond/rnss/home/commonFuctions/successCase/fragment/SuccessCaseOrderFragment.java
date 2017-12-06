@@ -1,8 +1,6 @@
 package com.risfond.rnss.home.commonFuctions.successCase.fragment;
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,12 +9,9 @@ import android.widget.TextView;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.common.utils.net.UtilHelper;
+import com.risfond.rnss.entry.BaseWhole;
+import com.risfond.rnss.entry.ResumeWhole;
 import com.risfond.rnss.entry.SuccessCaseWhole;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -42,7 +37,7 @@ public class SuccessCaseOrderFragment extends BaseSuccessCaseWholeFragment imple
     }
 
     @Override
-    void initView(ViewGroup rootView) {
+    protected void initView(ViewGroup rootView) {
         //隐藏按钮
         hideButton();
         View view = getLayoutInflater().inflate(R.layout.item_successcase_order_layout, rootView, false);
@@ -52,7 +47,7 @@ public class SuccessCaseOrderFragment extends BaseSuccessCaseWholeFragment imple
         mSuccesscaseOrderSalary.setOnClickListener(this);
         mSuccesscaseOrderTime.setOnClickListener(this);
         rootView.addView(view);
-        UtilHelper.outLog(TAG,getSuccessCaseWhole().toString());
+        UtilHelper.outLog(TAG, getBaseWhole().toString());
         //开始解析
         parseWhole();
     }
@@ -61,17 +56,17 @@ public class SuccessCaseOrderFragment extends BaseSuccessCaseWholeFragment imple
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_successcase_order_salary:
-                getSuccessCaseWhole().setOrderType(1);
+                ((SuccessCaseWhole) getBaseWhole()).setOrderType(1);
                 break;
             case R.id.id_successcase_order_time:
-                getSuccessCaseWhole().setOrderType(2);
+                ((SuccessCaseWhole) getBaseWhole()).setOrderType(2);
                 break;
         }
         parseWhole();
 
         //关闭窗口 模拟点击确定按钮
         if (getOnSelectListener() != null) {
-            getOnSelectListener().onConfirm(getSuccessCaseWhole());
+            getOnSelectListener().onConfirm(getBaseWhole());
         }
     }
 
@@ -79,7 +74,7 @@ public class SuccessCaseOrderFragment extends BaseSuccessCaseWholeFragment imple
      * 解析
      */
     private void parseWhole() {
-        SuccessCaseWhole successCaseWhole = getSuccessCaseWhole();
+        SuccessCaseWhole successCaseWhole = (SuccessCaseWhole) getBaseWhole();
         if (successCaseWhole.getOrderType() == 1) {
             changeSelectStatus(mSuccesscaseOrderSalary);
         }
@@ -125,14 +120,14 @@ public class SuccessCaseOrderFragment extends BaseSuccessCaseWholeFragment imple
     }
 
     @Override
-    SuccessCaseWhole onResetClick(View view, SuccessCaseWhole successCaseWhole) {
-        return null;
+    protected  void onResetClick(View view) {
+
     }
 
     @Override
-    SuccessCaseWhole onConfirmClick(View view, SuccessCaseWhole successCaseWhole) {
+    protected BaseWhole onConfirmClick(View view, BaseWhole successCaseWhole) {
         UtilHelper.outLog(TAG,successCaseWhole.toString());
-        return successCaseWhole;
+        return (SuccessCaseWhole) successCaseWhole;
     }
 
 }

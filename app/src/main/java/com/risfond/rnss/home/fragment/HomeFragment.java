@@ -45,6 +45,7 @@ import com.risfond.rnss.home.commonFuctions.dynamics.activity.DynamicsActivity;
 import com.risfond.rnss.home.commonFuctions.publicCustomer.activity.PublicCustomerActivity;
 import com.risfond.rnss.home.commonFuctions.referencemanage.activity.ReferenceManageActivity;
 import com.risfond.rnss.home.commonFuctions.successCase.activity.SuccessCaseActivity;
+import com.risfond.rnss.home.commonFuctions.successCase.activity.SuccessCaseMainActivity;
 import com.risfond.rnss.home.commonFuctions.workorder.activity.WorkOrderActivity;
 import com.risfond.rnss.home.customer.activity.CustomerSearchActivity;
 import com.risfond.rnss.home.modleImpl.ColleagueImpl;
@@ -273,7 +274,7 @@ public class HomeFragment extends BaseFragment implements OperationPlatformCallb
                         MyAttendanceActivity.StartAction(context);
                         break;
                     case 7://成功案例
-                        SuccessCaseActivity.StartAction(context);
+                        SuccessCaseMainActivity.startAction(context);
                         break;
                     case 8://我的绩效
                         DynamicsActivity.StartAction(context, false);

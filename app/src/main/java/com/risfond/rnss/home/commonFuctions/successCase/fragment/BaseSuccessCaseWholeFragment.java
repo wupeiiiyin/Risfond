@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseFragment;
+import com.risfond.rnss.entry.BaseWhole;
 import com.risfond.rnss.entry.SuccessCaseWhole;
 
 import butterknife.BindView;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
  * @create 2017/12/4
  * @desc 成功案例 BaseFragment
  */
-public abstract class BaseSuccessCaseWholeFragment extends BaseFragment {
+public abstract class BaseSuccessCaseWholeFragment<T extends BaseWhole> extends BaseFragment {
     @BindView(R.id.id_select_rootview)
     FrameLayout mSelectRootview;
     @BindView(R.id.id_select_button_rootview)
@@ -30,11 +31,11 @@ public abstract class BaseSuccessCaseWholeFragment extends BaseFragment {
     TextView mDismissView;
     protected String TAG = this.getClass().getSimpleName();
 
-    private SuccessCaseWhole mSuccessCaseWhole;
+    private T mBaseWhole;
     private OnSelectListener mOnSelectListener;
 
-    public BaseSuccessCaseWholeFragment(SuccessCaseWhole successCaseWhole, OnSelectListener onSelectListener) {
-        mSuccessCaseWhole = successCaseWhole;
+    public BaseSuccessCaseWholeFragment(T baseWhole, OnSelectListener onSelectListener) {
+        mBaseWhole = baseWhole;
         mOnSelectListener = onSelectListener;
     }
 
@@ -57,12 +58,12 @@ public abstract class BaseSuccessCaseWholeFragment extends BaseFragment {
     public void onButtonClick(View v) {
         switch (v.getId()) {
             case R.id.tv_reset:
-                mSuccessCaseWhole = onResetClick(v, mSuccessCaseWhole);
+               onResetClick(v);
                 break;
             case R.id.tv_confirm:
-                mSuccessCaseWhole = onConfirmClick(v, mSuccessCaseWhole);
+                mBaseWhole = onConfirmClick(v, mBaseWhole);
                 if (mOnSelectListener != null) {
-                    mOnSelectListener.onConfirm(mSuccessCaseWhole);
+                    mOnSelectListener.onConfirm(mBaseWhole);
                 }
                 break;
             case R.id.dismiss:
@@ -75,8 +76,8 @@ public abstract class BaseSuccessCaseWholeFragment extends BaseFragment {
     public LayoutInflater getLayoutInflater() {
         return getActivity().getLayoutInflater();
     }
-    public SuccessCaseWhole getSuccessCaseWhole() {
-        return mSuccessCaseWhole;
+    public BaseWhole getBaseWhole() {
+        return mBaseWhole;
     }
 
     public OnSelectListener getOnSelectListener() {
@@ -91,16 +92,16 @@ public abstract class BaseSuccessCaseWholeFragment extends BaseFragment {
     }
 
 
-    abstract void initView(ViewGroup rootView);
+    protected abstract void initView(ViewGroup rootView);
 
-    abstract SuccessCaseWhole onResetClick(View view, SuccessCaseWhole successCaseWhole);
+    protected abstract void onResetClick(View view);
 
-    abstract SuccessCaseWhole onConfirmClick(View view, SuccessCaseWhole successCaseWhole);
+    protected abstract T onConfirmClick(View view, T whole);
 
 
     public interface OnSelectListener {
         void onCancel();
 
-        void onConfirm(SuccessCaseWhole successCaseWhole);
+        void onConfirm(BaseWhole whole);
     }
 }

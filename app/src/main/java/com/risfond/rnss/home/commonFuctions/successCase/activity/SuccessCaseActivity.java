@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,6 +28,8 @@ import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
+import com.risfond.rnss.entry.BaseWhole;
+import com.risfond.rnss.entry.ResumeWhole;
 import com.risfond.rnss.entry.SuccessCasResponse;
 import com.risfond.rnss.entry.SuccessCase;
 import com.risfond.rnss.entry.SuccessCaseWhole;
@@ -34,9 +37,11 @@ import com.risfond.rnss.home.commonFuctions.successCase.adapter.SuccessCaseAdapt
 import com.risfond.rnss.home.commonFuctions.successCase.adapter.SuccessCaseV2Adapter;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.BaseSuccessCaseWholeFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseIndustryFragment;
+import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseMoreFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseOrderFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.modelImpl.SuccessCaseImpl;
 import com.risfond.rnss.home.commonFuctions.successCase.modelInterface.ISuccessCase;
+import com.risfond.rnss.home.resume.fragment.IndustrieFragment;
 import com.risfond.rnss.home.resume.fragment.PositionFragment;
 import com.risfond.rnss.home.resume.modleInterface.SelectCallBack;
 import com.risfond.rnss.widget.RecycleViewDivider;
@@ -91,12 +96,17 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
      * 待选择
      */
     private List<BaseFragment> mFragments;
-
+    /**
+     * 当前显示的Fragment
+     */
+    private BaseFragment mCurrentFragment;
     /**
      * 地点
      */
     private ArrayList<String> selectedIds = new ArrayList<>();
     private ArrayList<String> selectedNames = new ArrayList<>();
+
+    private ResumeWhole mResumeWhole = new ResumeWhole();
 
     @Override
     public int getContentViewResId() {
@@ -110,6 +120,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         initAdapter();
         initFragment();
         resumeRequest();
+        //
     }
 
     /**
@@ -118,7 +129,11 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
     private void initFragment() {
         mFragments = new ArrayList<>();
         mFragments.add(SuccessCaseOrderFragment.getInstance(mSuccessCaseWhole, this));
-        mFragments.add(SuccessCaseIndustryFragment.getInstance(mSuccessCaseWhole, this));
+        IndustrieFragment industrieFragment = new IndustrieFragment(mResumeWhole, this);
+        Bundle bundle = new Bundle();
+        bundle.putString(IndustrieFragment.INDUSTRIE_TYPE, IndustrieFragment.INDUSTRIE);
+        industrieFragment.setArguments(bundle);
+        mFragments.add(industrieFragment);
         mFragments.add(new PositionFragment(selectedIds, selectedNames, new SelectCallBack() {
             @Override
             public void onPositionConfirm(List<String> positions, List<String> names) {
@@ -127,7 +142,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
                 selectedNames.clear();
                 selectedIds.addAll(positions);
                 selectedNames.addAll(names);
-                if (mSuccessCaseWhole.getWorkLocation()!=null) {
+                if (mSuccessCaseWhole.getWorkLocation() != null) {
                     mSuccessCaseWhole.getWorkLocation().clear();
                 }
                 if (mSuccessCaseWhole.getWorkLocations() != null) {
@@ -166,11 +181,13 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
 
             }
         }));
+        mFragments.add(SuccessCaseMoreFragment.getInstance(mSuccessCaseWhole, this));
     }
 
     private void initWhole() {
         mSuccessCaseWhole = new SuccessCaseWhole();
     }
+
     private void initTitle() {
         context = SuccessCaseActivity.this;
         tvResumeSearch.setVisibility(View.VISIBLE);
@@ -206,7 +223,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         request.put("StartTime", mSuccessCaseWhole.getStartTime());
         request.put("EndTime", mSuccessCaseWhole.getEndTime());
         joinParams("WorkLocation", mSuccessCaseWhole.getWorkIndusty());
-        joinParams("WorkIndusty", mSuccessCaseWhole.getWorkLocation());
+        joinParams("WorkIndusty", (ArrayList<String>) mResumeWhole.getIndustrys());
         request.put("StartYearlySalary", String.valueOf(mSuccessCaseWhole.getStartYearlySalary()));
         request.put("EndYearlySalary", String.valueOf(mSuccessCaseWhole.getEndYearlySalary()));
         request.put("OrderType", String.valueOf(mSuccessCaseWhole.getOrderType()));
@@ -214,7 +231,8 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
     }
 
     private void joinParams(String key, ArrayList<String> params) {
-        if (params == null ) return;
+        if (params == null)
+            return;
         for (int i = 0; i < params.size(); i++) {
             String nkey = key + "[" + i + "]";
             request.put(nkey, params.get(i));
@@ -228,47 +246,38 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
             SuccessCaseResultActivity.StartAction(context);
         }
     }
-    @OnCheckedChanged({R.id.cb_order, R.id.cb_worklocation, R.id.cb_more, R.id.cb_jobtitle})
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    @OnClick({R.id.cb_order, R.id.cb_worklocation, R.id.cb_more, R.id.cb_jobtitle})
+    public void onCheckedChanged(View view) {
+        CompoundButton buttonView = (CompoundButton) view;
         int index = Integer.parseInt(buttonView.getTag().toString());
-        /*if (!isChecked && index == getCurrentVisibleFragment()) {
-            //隐藏当前Framgnet
+        boolean checked = buttonView.isChecked();
+        clearAll(mCbContent);
+        if (checked) {
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+            mCurrentFragment = mFragments.get(index);
+            fragmentTransaction.replace(R.id.id_successcase_framelayout, mCurrentFragment);
+            fragmentTransaction.commit();
+            changeFragmentVisibleStatus(true);
+            buttonView.setChecked(checked);
+        }else{
+            //false  收起window
             changeFragmentVisibleStatus(false);
-        }*/
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.id_successcase_framelayout, mFragments.get(index));
-        fragmentTransaction.commit();
-        changeFragmentVisibleStatus(true);
+        }
     }
 
     private void changeFragmentVisibleStatus(boolean isShow) {
-        mFrameLayout.setVisibility(isShow?View.VISIBLE:View.GONE);
-        /*if (!isShow) {
-            removeAllFragment();
-        }*/
-
-    }
-
-    private void removeAllFragment() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments == null) return;
-        for (Fragment fragment : fragments) {
+        if (!isShow) {
+            clearAll(mCbContent);
+        }
+        mFrameLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        //销毁Fragment
+        if (mCurrentFragment != null && !isShow) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.remove(fragment);
+            fragmentTransaction.remove(mCurrentFragment);
             fragmentTransaction.commit();
         }
-    }
-
-    private int getCurrentVisibleFragment() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments == null) {
-            return 0;
-        }
-        if (fragments.size() <= 0) {
-            return 0;
-        }
-        return mFragments.indexOf(fragments.get(0));
     }
 
 
@@ -293,7 +302,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
                     mAdapter.addData(response.getData());
                     if (mAdapter.getData().size() >= response.getTotal()) {
                         mAdapter.setEnableLoadMore(false);
-                    }else{
+                    } else {
                         mAdapter.loadMoreComplete();
                     }
                 }
@@ -353,7 +362,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         } else {
             isLoadMore = true;
             //加载更多
-            mSuccessCaseWhole.setPageIndex(mSuccessCaseWhole.getPageIndex()+1);
+            mSuccessCaseWhole.setPageIndex(mSuccessCaseWhole.getPageIndex() + 1);
             resumeRequest();
         }
     }
@@ -366,14 +375,29 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         mSuccessCaseWhole.setPageIndex(1);
     }
 
+    private void clearAll(ViewGroup viewGroup) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            if (viewGroup.getChildAt(i) instanceof ViewGroup) {
+                clearAll((ViewGroup) viewGroup.getChildAt(i));
+            }
+            if (viewGroup.getChildAt(i) instanceof CheckBox) {
+                ((CheckBox) viewGroup.getChildAt(i)).setChecked(false);
+            }
+        }
+    }
+
     @Override
     public void onCancel() {
         changeFragmentVisibleStatus(false);
     }
 
     @Override
-    public void onConfirm(SuccessCaseWhole successCaseWhole) {
-        this.mSuccessCaseWhole = successCaseWhole;
+    public void onConfirm(BaseWhole successCaseWhole) {
+        if (successCaseWhole instanceof ResumeWhole) {
+            this.mResumeWhole = (ResumeWhole) successCaseWhole;
+        }else{
+            this.mSuccessCaseWhole = (SuccessCaseWhole) successCaseWhole;
+        }
         changeFragmentVisibleStatus(false);
         //重置
         resetPageIndex();

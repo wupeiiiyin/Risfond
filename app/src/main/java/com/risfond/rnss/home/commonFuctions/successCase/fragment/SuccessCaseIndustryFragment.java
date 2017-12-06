@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.risfond.rnss.base.BaseFragment;
+import com.risfond.rnss.entry.BaseWhole;
 import com.risfond.rnss.entry.SuccessCaseWhole;
 
 
@@ -25,17 +26,17 @@ public class SuccessCaseIndustryFragment extends BaseSuccessCaseWholeFragment {
     }
 
     @Override
-    void initView(ViewGroup rootView) {
+    public  void initView(ViewGroup rootView) {
 
     }
 
     @Override
-    SuccessCaseWhole onResetClick(View view, SuccessCaseWhole successCaseWhole) {
-        return null;
+    public void onResetClick(View view) {
+
     }
 
     @Override
-    SuccessCaseWhole onConfirmClick(View view, SuccessCaseWhole successCaseWhole) {
+    public BaseWhole onConfirmClick(View view, BaseWhole successCaseWhole) {
         return null;
     }
 }

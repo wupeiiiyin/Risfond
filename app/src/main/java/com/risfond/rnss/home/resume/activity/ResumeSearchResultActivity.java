@@ -38,12 +38,14 @@ import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
+import com.risfond.rnss.common.utils.net.UtilHelper;
 import com.risfond.rnss.entry.ResumeSearch;
 import com.risfond.rnss.entry.ResumeSearchAdd;
 import com.risfond.rnss.entry.ResumeSearchAddResponse;
 import com.risfond.rnss.entry.ResumeSearchAll;
 import com.risfond.rnss.entry.ResumeSearchResponse;
 import com.risfond.rnss.entry.ResumeSearchWholeResponse;
+import com.risfond.rnss.entry.ResumeWhole;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.activity.MyAttendanceActivity;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAdapter;
 import com.risfond.rnss.home.resume.adapter.ResumeSearchAddAdapter;
@@ -78,7 +80,7 @@ import butterknife.OnClick;
  * 简历搜索结果页面
  * 简历搜索 >> 点击搜索框 >> 简历搜索页
  */
-public class ResumeSearchResultActivity extends BaseActivity implements ResponseCallBack, SelectCallBack, BaseQuickAdapter.RequestLoadMoreListener {
+public class ResumeSearchResultActivity extends BaseActivity implements ResponseCallBack, SelectCallBack, BaseQuickAdapter.RequestLoadMoreListener, MoreFragment.OnResumeSelectListener {
 
     @BindView(R.id.et_resume_search)
     EditText etResumeSearch;
@@ -125,7 +127,6 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private IResumeSearch iResumeSearch;
     private IResumeSearch iResumeSearchWhole;
     private IResumeSearch iResumeSearchAdd;
-    private int pageindex = 1;
     private ResumeSearchResponse response;
     private ResumeSearchWholeResponse wholeResponse;
     private ResumeSearchAddResponse responseAdd;
@@ -160,25 +161,13 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private List<String> recommends = new ArrayList<>();//推荐状态ID
     private List<String> sexs = new ArrayList<>();//性别ID
 
-    //    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
-    //    private List<String> languages_texts = new ArrayList<>();//语言ID
-
-    private String age_From = "";//年龄from
-    private String age_To = "";//年龄to
-    private String salary_From = "";//薪资from
-    private String salary_To = "";//薪资to
 
     private String yearfrom = "";//工作经验开始  0 不限
     private String yearto = "";//工作经验结束  0 不限
-    private String edufrom = "";
-    private String eduto = "";
-    private String agefrom = "";
-    private String ageto = "";
     private String salaryfrom = "";
     private String salaryto = "";
     private boolean isHasData;
 
-    private PopupWindow popupwindow;
     private ResumeSearchWholeAdapter resumeSearchWholeAdapter;
     private ResumeSearchAllImpl resumeSearchAll;
     private ResumeSearchAddAdapter addAdapter;
@@ -186,6 +175,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     private SharedPreferences king;
     private MultiSelectPopupWindow mMultiSelectPopupWindow;
 
+    private ResumeWhole mResumeWhole = new ResumeWhole();
     @Override
     public int getContentViewResId() {
         return R.layout.activity_resume_search_result;
@@ -240,53 +230,77 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             DialogUtil.getInstance().showLoadingDialog(context, "搜索中...");
         }
         request = new HashMap<>();
-
+        request.put("keywordstype", mRequestType + "");//根据传入的值来执行搜索
         request.put("keyword", contact);
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-        request.put("pageindex", String.valueOf(pageindex));
-
+        request.put("pageindex", String.valueOf(mResumeWhole.getPageindex()));
         //判断是否选择职位类型
-        request.put("keywordstype", mRequestType + "");//根据传入的值来执行搜索
         /**
          * 0 > 简历搜索
          * 1 > 职位搜索
          */
         request.put("selecttype", "0");
 
-        for (int i = 0; i < selectedIds.size(); i++) {
-            String key = "worklocation[" + i + "]";
-            request.put(key, selectedIds.get(i));
-        }
+        //工作点
+        join(request, selectedIds, "worklocation");
 
+        //工作经验
         request.put("yearfrom", yearfrom);
         request.put("yearto", yearto);
 
-        for (int i = 0; i < educations.size(); i++) {
-            String key = "edu[" + i + "]";
-            request.put(key, educations.get(i));
+        //学历
+        join(request, educations, "edu");
+
+        //年龄
+        request.put("agefrom", String.valueOf(mResumeWhole.getAgefrom()));
+        request.put("ageto", String.valueOf(mResumeWhole.getAgeto()));
+        //性别
+        if (Integer.parseInt(mResumeWhole.getGender().get(0)) != 0) {
+            request.put("gender[0]", mResumeWhole.getGender().get(0));
+
         }
-
-        request.put("agefrom", agefrom);
-        request.put("ageto", ageto);
-        if (sexs.size() > 0) {
-            request.put("gender[0]", sexs.get(0));
+        //年薪
+        request.put("salaryfrom", String.valueOf(mResumeWhole.getSalaryfrom()));
+        request.put("salaryto", String.valueOf(mResumeWhole.getSalaryto()));
+        //推荐状态
+        if (Integer.parseInt(mResumeWhole.getResumestatus().get(0)) !=0) {
+            request.put("resumestatus[0]", mResumeWhole.getResumestatus().get(0));
         }
+        //语言
+        join(request, mResumeWhole.getLang(), "lang");
+        //当前行业
+        join(request, mResumeWhole.getIndustrys(), "industrys");
+        //期望行业
+        join(request, mResumeWhole.getDesiredIndustries(), "desiredIndustries");
+        //期望地点
+        join(request, mResumeWhole.getDesiredlocations(), "desiredlocations");
+        //期望职位
+        join(request, mResumeWhole.getDesiredoccupations(), "desiredoccupations");
+        //学校名称
+        request.put("schoolname", String.valueOf(mResumeWhole.getSchoolname()));
+        //专业名称
+        request.put("major", String.valueOf(mResumeWhole.getMajor()));
 
-        request.put("salaryfrom", salaryfrom);
-        request.put("salaryto", salaryto);
-        if (recommends.size() > 0) {
-            request.put("resumestatus[0]", recommends.get(0));
+        //推荐历史
+        if (mResumeWhole.getHistory() != 0) {
+            request.put("history", String.valueOf(mResumeWhole.getHistory()));
         }
+        //更新时间
+        request.put("lastupdatetimefrom", "");
+        request.put("lastupdatetimeto", "");
 
-        for (int i = 0; i < languages.size(); i++) {
-            String key = "lang[" + i + "]";
-            request.put(key, languages.get(i));
+        iResumeSearchWhole.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL3, this);
+
+
+    }
+    private Map join(Map map,List<String> datas,String key) {
+        if (datas == null) {
+            return map;
         }
-
-
-        iResumeSearchWhole.resumeRequest(SPUtil.loadToken(context), request, URLConstant.URL_RESUME_SEARCHALL, this);
-
-
+        for (int i = 0; i < datas.size(); i++) {
+            map.put(key+"["+i+"]", datas.get(i));
+        }
+        return map;
     }
 
     @OnClick({R.id.tv_search_cancel, R.id.tv_search_savetiaojian})//监听事件
@@ -312,7 +326,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         request = new HashMap<>();
         request.put("keyword", etResumeSearch.getText().toString().trim());
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
-        request.put("pageindex", String.valueOf(pageindex));
+        request.put("pageindex", String.valueOf(mResumeWhole.getPageindex()));
         for (int i = 0; i < selectedIds.size(); i++) {
             String key = "worklocation[" + i + "]";
             request.put(key, selectedIds.get(i));
@@ -379,7 +393,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {//点击“搜索”软键盘
                     ImeUtil.hideSoftKeyboard(etResumeSearch);
-                    pageindex = 1;
+                    mResumeWhole.setPageindex(1);
                     searches.clear();
                     eTResumeSearch = etResumeSearch.getText().toString().trim();
                     //                    resumeRequest(eTSearch);
@@ -454,7 +468,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
                     hideHistory();
                 } else {
                     if (NetUtil.isConnected(context)) {
-                        pageindex = 1;
+                        mResumeWhole.setPageindex(1);
                         searches.clear();
                         ImeUtil.hideSoftKeyboard(etResumeSearch);
                         etResumeSearch.setText(historiesAESC.get(position));
@@ -742,7 +756,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
      * 公司、职位
      */
     private void onChangeKeywordtypes() {
-        pageindex = 1;
+        mResumeWhole.setPageindex(1);
         adapter.setNewData(null);
         resumeRequest(etResumeSearch.getText().toString().trim());
     }
@@ -811,8 +825,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         } else {
             isHasData = false;
         }
-        moreFragment = new MoreFragment(recommends, age_From, age_To, sexs, salary_From,
-                salary_To, languages, String.valueOf(pageindex), isHasData, this);
+        moreFragment = new MoreFragment(mResumeWhole, this);
         transaction.add(R.id.frame, moreFragment);
         transaction.commit();
 
@@ -882,16 +895,10 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
 
         experience_from = "";
         experience_to = "";
-        age_From = "";
-        age_To = "";
-        salary_From = "";
-        salary_To = "";
+
         yearfrom = "";
         yearto = "";
-        edufrom = "";
-        eduto = "";
-        agefrom = "";
-        ageto = "";
+
         salaryfrom = "";
         salaryto = "";
 
@@ -973,32 +980,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     }
 
     private void setMoreValue() {
-        //年龄
-        /*if (TextUtils.isEmpty(age_From)) {
-            agefrom = "0";
-        } else {
-            agefrom = age_From;
-        }
-        if (TextUtils.isEmpty(age_To)) {
-            ageto = "0";
-        } else {
-            ageto = age_To;
-        }*/
-        agefrom = age_From;
-        ageto = age_To;
-        //年薪
-        /*if (TextUtils.isEmpty(salary_From)) {
-            salaryfrom = "0";
-        } else {
-            salaryfrom = salary_From;
-        }
-        if (TextUtils.isEmpty(salary_To)) {
-            salaryto = "0";
-        } else {
-            salaryto = salary_To;
-        }*/
-        salaryfrom = salary_From;
-        salaryto = salary_To;
+
     }
 
     /**
@@ -1014,7 +996,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         setPositionValue();
         onFinish();
         searches.clear();
-        pageindex = 1;
+        mResumeWhole.setPageindex(1);
         adapter.setNewData(null);
         resumeRequest(etResumeSearch.getText().toString().trim());
     }
@@ -1032,7 +1014,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         setExperienceValue();
         onFinish();
         searches.clear();
-        pageindex = 1;
+        mResumeWhole.setPageindex(1);
         adapter.setNewData(null);
         resumeRequest(etResumeSearch.getText().toString().trim());
     }
@@ -1044,7 +1026,7 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         setCbEducationValue();
         onFinish();
         searches.clear();
-        pageindex = 1;
+        mResumeWhole.setPageindex(1);
         adapter.setNewData(null);
         resumeRequest(etResumeSearch.getText().toString().trim());
     }
@@ -1053,19 +1035,16 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
     public void onMoreConfirm(List<String> recommend, String from1, String to1, List<String> sex,
                               String from2, String to2, List<String> language, String page) {
         recommends = recommend;
-        age_From = from1;
-        age_To = to1;
+
         sexs = sex;
         //        sexs_texts = sexs_text;//add
-        salary_From = from2;
-        salary_To = to2;
+
         languages = language;
         //        languages_texts = languages_t;//add
 
         setMoreValue();
         onFinish();
         searches.clear();
-        pageindex = Integer.parseInt(page);
         //        resumeRequest(etResumeSearch.getText().toString().trim());
         adapter.setNewData(null);
         resumeRequest(etResumeSearch.getText().toString().trim());
@@ -1088,8 +1067,18 @@ public class ResumeSearchResultActivity extends BaseActivity implements Response
         } else {
             isLoadMore = true;
             //加载更多
-            pageindex++;
+            mResumeWhole.setPageindex(mResumeWhole.getPageindex()+1);
             resumeRequest(etResumeSearch.getText().toString().trim());
         }
+    }
+
+    @Override
+    public void onConfirm(ResumeWhole resumeWhole) {
+        this.mResumeWhole = resumeWhole;
+        UtilHelper.outLog("onConfirm",mResumeWhole.toString());
+        onFinish();
+        searches.clear();
+        adapter.setNewData(null);
+        resumeRequest(etResumeSearch.getText().toString().trim());
     }
 }

@@ -1,11 +1,12 @@
 package com.risfond.rnss.home.resume.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,16 +15,28 @@ import android.widget.TextView;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseFragment;
+import com.risfond.rnss.common.utils.EventBusUtil;
 import com.risfond.rnss.common.utils.ImeUtil;
-import com.risfond.rnss.home.resume.modleInterface.SelectCallBack;
+import com.risfond.rnss.common.utils.net.UtilHelper;
+import com.risfond.rnss.entry.BaseWhole;
+import com.risfond.rnss.entry.ResumeWhole;
+import com.risfond.rnss.home.resume.activity.ResumeOhterWholeActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+
+import static com.risfond.rnss.home.resume.activity.ResumeOhterWholeActivity.FRAGMENT_TYPE_KEY;
 
 
 /**
@@ -32,7 +45,7 @@ import butterknife.OnClick;
  */
 
 @SuppressLint("ValidFragment")
-public class MoreFragment extends BaseFragment {
+public class MoreFragment extends BaseFragment implements  View.OnClickListener {
     @BindView(R.id.rb_r_all)
     RadioButton rbRAll;
     @BindView(R.id.rb_r_ketui)
@@ -53,30 +66,6 @@ public class MoreFragment extends BaseFragment {
     EditText salaryFrom;
     @BindView(R.id.salary_to)
     EditText salaryTo;
-    @BindView(R.id.cb_0)
-    CheckBox cb0;
-    @BindView(R.id.cb_1)
-    CheckBox cb1;
-    @BindView(R.id.cb_2)
-    CheckBox cb2;
-    @BindView(R.id.cb_3)
-    CheckBox cb3;
-    @BindView(R.id.cb_4)
-    CheckBox cb4;
-    @BindView(R.id.cb_5)
-    CheckBox cb5;
-    @BindView(R.id.cb_6)
-    CheckBox cb6;
-    @BindView(R.id.cb_7)
-    CheckBox cb7;
-    @BindView(R.id.cb_9)
-    CheckBox cb9;
-    @BindView(R.id.cb_12)
-    CheckBox cb12;
-    @BindView(R.id.cb_13)
-    CheckBox cb13;
-    @BindView(R.id.cb_14)
-    CheckBox cb14;
     @BindView(R.id.tv_reset)
     TextView tvReset;
     @BindView(R.id.tv_confirm)
@@ -89,36 +78,46 @@ public class MoreFragment extends BaseFragment {
     RadioGroup rgSex;
     @BindView(R.id.et_page)
     EditText etPage;
+    @BindView(R.id.id_schoolname)
+    EditText mSchoolname;
+    @BindView(R.id.id_major)
+    EditText mMajor;
+    @BindView(R.id.id_language)
+    TextView mLanguage;
+    @BindView(R.id.id_industrie)
+    TextView mIndustrie;
+    @BindView(R.id.id_desired_industries)
+    TextView mDesiredIndustries;
+    @BindView(R.id.id_desired_locations)
+    TextView mDesiredLocations;
+    @BindView(R.id.id_desiredoccupations)
+    TextView mDesiredoccupations;
+    @BindView(R.id.id_history_all)
+    RadioButton mHistoryAll;
+    @BindView(R.id.id_history_have)
+    RadioButton mHistoryHave;
+    @BindView(R.id.id_history_nhave)
+    RadioButton mHistoryNhave;
+    @BindView(R.id.id_history)
+    RadioGroup mHistory;
+    @BindView(R.id.id_updatetime)
+    RadioGroup mUpdateTimeGroup;
 
-    private SelectCallBack callBack;
-    private List<String> languages = new ArrayList<>();
-    private List<String> languages_texts = new ArrayList<>();//创建一个集合
-    private List<String> recommends = new ArrayList<>();
-    private List<String> sexs = new ArrayList<>();
-    private List<String> sexs_texts = new ArrayList<>();//创建一个集合
-    private String age_From;
-    private String age_To;
-    private String salary_From;
-    private String salary_To;
-    private String page;
-    private boolean isHasData;
+    Unbinder unbinder;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+    private OnResumeSelectListener mOnResumeSelectListener;
 
-    public MoreFragment(List<String> recommend, String age_from, String age_to, List<String> sex,
-                        String salary_from, String salary_to, List<String> language, String page,
-                        boolean isHasData, SelectCallBack callBack) {
-        recommends.addAll(recommend);
-        this.age_From = age_from;
-        this.age_To = age_to;
-        sexs.addAll(sex);
-//        sexs_texts.addAll(sexs_text);//添加
-        this.salary_From = salary_from;
-        this.salary_To = salary_to;
-        languages.addAll(language);
-//        languages_texts.addAll(languages_t);//添加
-        this.page = page;
-        this.isHasData = isHasData;
-        this.callBack = callBack;
+
+    private ResumeWhole mResumeWhole = new ResumeWhole();
+
+    public MoreFragment() {
     }
+
+    public MoreFragment(ResumeWhole resumeWhole, OnResumeSelectListener onResumeSelectListener) {
+        mOnResumeSelectListener = onResumeSelectListener;
+        mResumeWhole = resumeWhole;
+    }
+
 
     @Override
     public int getLayoutResId() {
@@ -127,138 +126,30 @@ public class MoreFragment extends BaseFragment {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        EventBusUtil.registerEventBus(this);
 
-        if (Integer.parseInt(page) > 1) {
-            if (isHasData){
-                page = String.valueOf(Integer.parseInt(page) - 1);
-            }
-        }
-        etPage.setHint(page);
-
-        if (recommends.size() > 0) {
-            switch (Integer.parseInt(recommends.get(0))) {
-                case 0:
-                    rbRAll.setChecked(true);
-                    break;
-                case 1:
-                    rbRKetui.setChecked(true);
-                    break;
-                case 2:
-                    rbRWurao.setChecked(true);
-                    break;
-            }
-        }
-
-        ageFrom.setText(age_From);
-        ageTo.setText(age_To);
-
-        if (sexs.size() > 0) {
-            switch (Integer.parseInt(sexs.get(0))) {
-                case 1:
-                    rbMan.setChecked(true);
-                    break;
-                case 2:
-                    rbWoman.setChecked(true);
-                    break;
-                default:
-                    rbBuxian.setChecked(true);
-                    break;
-            }
-        }
-
-        salaryFrom.setText(salary_From);
-        salaryTo.setText(salary_To);
-
-        /*if (languages.size() == 0) {
-            languages.add("00");
-        }*/
-
-        for (int i = 0; i < languages.size(); i++) {
-            switch (Integer.parseInt(languages.get(i))) {
-                case 0:
-                    cb0.setChecked(true);
-                    break;
-                case 1:
-                    cb1.setChecked(true);
-                    break;
-                case 2:
-                    cb2.setChecked(true);
-                    break;
-                case 3:
-                    cb3.setChecked(true);
-                    break;
-                case 4:
-                    cb4.setChecked(true);
-                    break;
-                case 5:
-                    cb5.setChecked(true);
-                    break;
-                case 6:
-                    cb6.setChecked(true);
-                    break;
-                case 7:
-                    cb7.setChecked(true);
-                    break;
-                case 9:
-                    cb9.setChecked(true);
-                    break;
-                case 12:
-                    cb12.setChecked(true);
-                    break;
-                case 13:
-                    cb13.setChecked(true);
-                    break;
-                case 14:
-                    cb14.setChecked(true);
-                    break;
-            }
-
-        }
-
-        rgRecommend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_r_all:
-                        recommends.clear();
-                        break;
-                    case R.id.rb_r_ketui:
-                        recommends.clear();
-                        recommends.add("1");
-                        break;
-                    case R.id.rb_r_wurao:
-                        recommends.clear();
-                        recommends.add("2");
-                        break;
-                }
-            }
-        });
-        rgSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_buxian:
-                        sexs.clear();
-                        break;
-                    case R.id.rb_man:
-                        sexs.clear();
-//                        sexs_texts.clear();//清除
-                        sexs.add("1");
-//                        sexs_texts.add("男");//添加
-                        break;
-                    case R.id.rb_woman:
-                        sexs.clear();
-//                        sexs_texts.clear();//清除
-                        sexs.add("2");
-//                        sexs_texts.add("女");//添加
-                        break;
-                }
-            }
-        });
+        setSelectToView();
+        initChangeListener(mUpdateTimeGroup);
     }
 
-    @OnClick({R.id.tv_reset, R.id.tv_confirm, R.id.dismiss})
-    public void onClick(View v) {
+    private void initChangeListener(ViewGroup viewGroup) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            if (viewGroup.getChildAt(i) instanceof ViewGroup) {
+                initChangeListener((ViewGroup) viewGroup.getChildAt(i));
+            }
+            if (viewGroup.getChildAt(i) instanceof RadioButton) {
+                ((RadioButton) viewGroup.getChildAt(i)).setOnClickListener(this);
+            }
+        }
+    }
+
+    @OnClick({R.id.tv_reset, R.id.tv_confirm, R.id.dismiss,
+            R.id.id_desired_industries, R.id.id_industrie,
+            R.id.id_desired_locations, R.id.id_desiredoccupations,
+            R.id.id_language})
+    public void onClickEvent(View v) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.tv_reset:
                 reset();
@@ -266,227 +157,123 @@ public class MoreFragment extends BaseFragment {
             case R.id.tv_confirm:
                 confirm();
                 break;
+            case R.id.id_industrie:
+                //当前行业
+                intent.setClass(getActivity(), ResumeOhterWholeActivity.class);
+                intent.putExtra(FRAGMENT_TYPE_KEY, ResumeOhterWholeActivity.INDUSTRIE_FRAGMENT);
+
+                bundle.putString(IndustrieFragment.INDUSTRIE_TYPE, IndustrieFragment.INDUSTRIE);
+                intent.putExtra(IndustrieFragment.INDUSTRIE_TYPE, bundle);
+                intent.putExtra(ResumeOhterWholeActivity.KEY_PARAMS, mResumeWhole);
+                startActivity(intent);
+                break;
+            case R.id.id_desired_industries:
+                //期待行业
+                intent.setClass(getActivity(), ResumeOhterWholeActivity.class);
+                intent.putExtra(FRAGMENT_TYPE_KEY, ResumeOhterWholeActivity.INDUSTRIE_FRAGMENT);
+                bundle.putString(IndustrieFragment.INDUSTRIE_TYPE, IndustrieFragment.DESIRED_INDUSTRIES);
+                intent.putExtra(IndustrieFragment.INDUSTRIE_TYPE, bundle);
+                intent.putExtra(ResumeOhterWholeActivity.KEY_PARAMS, mResumeWhole);
+                startActivity(intent);
+                break;
+            case R.id.id_desired_locations:
+                //期待地点
+                intent.setClass(getActivity(), ResumeOhterWholeActivity.class);
+                intent.putExtra(FRAGMENT_TYPE_KEY, ResumeOhterWholeActivity.POSITION_FRAGMENT);
+                intent.putExtra(ResumeOhterWholeActivity.KEY_PARAMS, mResumeWhole);
+                startActivity(intent);
+                break;
+            case R.id.id_desiredoccupations:
+                //期待职业
+                intent.setClass(getActivity(), ResumeOhterWholeActivity.class);
+                intent.putExtra(FRAGMENT_TYPE_KEY, ResumeOhterWholeActivity.POST_FRAGMENT);
+                intent.putExtra(ResumeOhterWholeActivity.KEY_PARAMS, mResumeWhole);
+                startActivity(intent);
+                break;
+            case R.id.id_language:
+                //语言能力
+                intent.setClass(getActivity(), ResumeOhterWholeActivity.class);
+                intent.putExtra(FRAGMENT_TYPE_KEY, ResumeOhterWholeActivity.LANGUAGE_FRAGMENT);
+                intent.putExtra(ResumeOhterWholeActivity.KEY_PARAMS, mResumeWhole);
+                startActivity(intent);
+                break;
             case R.id.dismiss:
                 ImeUtil.hideSoftKeyboard(ageFrom);
-                callBack.onOutside();
                 break;
         }
     }
 
     private void confirm() {
-        age_From = ageFrom.getText().toString().trim();
-        age_To = ageTo.getText().toString().trim();
+        //年龄
+        mResumeWhole.setAgefrom(Integer.parseInt(ageFrom.getText().toString().trim().length()>0? this.ageFrom.getText().toString().trim():"0"));
+        mResumeWhole.setAgeto(Integer.parseInt(ageTo.getText().toString().trim().length()>0?ageTo.getText().toString().trim():"0"));
+        //性别
+        mResumeWhole.setGender(Arrays.asList(rgSex.findViewById(rgSex.getCheckedRadioButtonId()).getTag().toString()));
+        //学校名称
+        mResumeWhole.setSchoolname(mSchoolname.getText().toString().trim());
+        //专业名称
+        mResumeWhole.setMajor(mMajor.getText().toString().trim());
+        //期望年薪
+        mResumeWhole.setSalaryfrom(Integer.parseInt(salaryFrom.getText().toString().trim().length()>0?salaryFrom.getText().toString().trim():"0"));
+        mResumeWhole.setSalaryto(Integer.parseInt(salaryTo.getText().toString().trim().length()>0?salaryTo.getText().toString().trim():"0"));
+        //推荐状态
+        mResumeWhole.setResumestatus(Arrays.asList(rgRecommend.findViewById(rgRecommend.getCheckedRadioButtonId()).getTag().toString()));
+        //推荐历史
+        mResumeWhole.setHistory(Integer.parseInt(mHistory.findViewById(mHistory.getCheckedRadioButtonId()).getTag().toString()));
 
-        salary_From = salaryFrom.getText().toString().trim();
-        salary_To = salaryTo.getText().toString().trim();
+        //页数
+        String pageindex = etPage.getText().toString().trim();
+        mResumeWhole.setPageindex(TextUtils.isEmpty(pageindex) ? 1 : Integer.parseInt(pageindex));
 
-        page = etPage.getText().toString().trim();
-        if (TextUtils.isEmpty(page)) {
-            page = "1";
+        //更新时间
+        setLastUpdateTimeFrom(mUpdateTimeGroup);
+        mResumeWhole.setLastupdatetimeto(format.format(Calendar.getInstance().getTime()));
+        if ("32".equals(mResumeWhole.getLastupdatetimeTag())) {
+            //一个月以上 只有开始结束日期
+            mResumeWhole.setLastupdatetimefrom("");
+        } else if ("0".equals(mResumeWhole.getLastupdatetimeTag())) {
+            mResumeWhole.setLastupdatetimefrom("");
+            mResumeWhole.setLastupdatetimeto("");
         }
-
-        callBack.onMoreConfirm(recommends, age_From, age_To, sexs, salary_From, salary_To, languages, page);//回调
-    }
-
-    @OnCheckedChanged({R.id.cb_0, R.id.cb_1, R.id.cb_2, R.id.cb_3, R.id.cb_4,
-            R.id.cb_5, R.id.cb_6, R.id.cb_7, R.id.cb_9, R.id.cb_12, R.id.cb_13,
-            R.id.cb_14})
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.cb_0:
-                if (isChecked) {
-                    /*if (!languages.contains("00")) {
-                        languages.add("00");
-                    }*/
-                    languages.clear();
-//                    languages_texts.clear();//清除
-                    clearOthers();
-                } /*else {
-                    languages.remove("00");
-                }*/
-                break;
-            case R.id.cb_1:
-                if (isChecked) {
-                    if (!languages.contains("01")) {
-                        languages.add("01");
-//                        languages_texts.add("汉语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("01");
-//                    languages_texts.remove("汉语");
-                }
-                break;
-            case R.id.cb_2:
-                if (isChecked) {
-                    if (!languages.contains("02")) {
-                        languages.add("02");
-//                        languages_texts.add("英语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("02");
-//                    languages_texts.remove("英语");
-                }
-                break;
-            case R.id.cb_3:
-                if (isChecked) {
-                    if (!languages.contains("03")) {
-                        languages.add("03");
-//                        languages_texts.add("日语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("03");
-//                    languages_texts.remove("日语");
-                }
-                break;
-            case R.id.cb_4:
-                if (isChecked) {
-                    if (!languages.contains("04")) {
-                        languages.add("04");
-//                        languages_texts.add("法语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("04");
-//                    languages_texts.remove("法语");
-                }
-                break;
-            case R.id.cb_5:
-                if (isChecked) {
-                    if (!languages.contains("05")) {
-                        languages.add("05");
-//                        languages_texts.add("德语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("05");
-//                    languages_texts.remove("德语");
-                }
-                break;
-            case R.id.cb_6:
-                if (isChecked) {
-                    if (!languages.contains("06")) {
-                        languages.add("06");
-//                        languages_texts.add("韩语、朝鲜语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("06");
-//                    languages_texts.remove("韩语、朝鲜语");
-                }
-                break;
-            case R.id.cb_7:
-                if (isChecked) {
-                    if (!languages.contains("07")) {
-                        languages.add("07");
-//                        languages_texts.add("俄语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("07");
-//                    languages_texts.remove("俄语");
-                }
-                break;
-            case R.id.cb_9:
-                if (isChecked) {
-                    if (!languages.contains("09")) {
-                        languages.add("09");
-//                        languages_texts.add("西班牙语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("09");
-//                    languages_texts.remove("西班牙语");
-                }
-                break;
-            case R.id.cb_12:
-                if (isChecked) {
-                    if (!languages.contains("12")) {
-                        languages.add("12");
-//                        languages_texts.add("阿拉伯语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("12");
-//                    languages_texts.remove("阿拉伯语");
-                }
-                break;
-            case R.id.cb_13:
-                if (isChecked) {
-                    if (!languages.contains("13")) {
-                        languages.add("13");
-//                        languages_texts.add("意大利语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("13");
-//                    languages_texts.remove("意大利语");
-                }
-                break;
-            case R.id.cb_14:
-                if (isChecked) {
-                    if (!languages.contains("14")) {
-                        languages.add("14");
-//                        languages_texts.add("葡萄牙语");
-                    }
-                    clearBuxian();
-                } else {
-                    languages.remove("14");
-//                    languages_texts.remove("葡萄牙语");
-                }
-                break;
+        if (mOnResumeSelectListener != null) {
+            mOnResumeSelectListener.onConfirm(mResumeWhole);
         }
-    }
-
-    private void clearOthers() {
-        cb1.setChecked(false);
-        cb2.setChecked(false);
-        cb3.setChecked(false);
-        cb4.setChecked(false);
-        cb5.setChecked(false);
-        cb6.setChecked(false);
-        cb7.setChecked(false);
-        cb9.setChecked(false);
-        cb12.setChecked(false);
-        cb13.setChecked(false);
-        cb14.setChecked(false);
-    }
-
-    private void clearBuxian() {
-        cb0.setChecked(false);
     }
 
     private void reset() {
+        mResumeWhole.setAgefrom(0);
+        mResumeWhole.setAgeto(0);
 
-        rbRAll.setChecked(true);
+        mResumeWhole.setGender(Arrays.asList("0"));
+        mResumeWhole.setSchoolname("");
+        mResumeWhole.setMajor("");
 
-        rbBuxian.setChecked(true);
+        mResumeWhole.setLang(new ArrayList<String>());
+        mResumeWhole.setLangs(new ArrayList<String>());
 
-        cb0.setChecked(true);
-        cb1.setChecked(false);
-        cb2.setChecked(false);
-        cb3.setChecked(false);
-        cb4.setChecked(false);
-        cb5.setChecked(false);
-        cb6.setChecked(false);
-        cb7.setChecked(false);
-        cb9.setChecked(false);
-        cb12.setChecked(false);
-        cb13.setChecked(false);
-        cb14.setChecked(false);
+        mResumeWhole.setIndustrys(new ArrayList<String>());
+        mResumeWhole.setIndustrysTip(new ArrayList<String>());
 
-        ageFrom.setText("");
-        ageTo.setText("");
-        age_From = "";
-        age_To = "";
+        mResumeWhole.setDesiredIndustries(new ArrayList<String>());
+        mResumeWhole.setDesiredIndustriesTip(new ArrayList<String>());
 
-        salaryFrom.setText("");
-        salaryTo.setText("");
-        salary_From = "";
-        salary_To = "";
+        mResumeWhole.setDesiredlocations(new ArrayList<String>());
+        mResumeWhole.setDesiredlocationsTip(new ArrayList<String>());
 
+        mResumeWhole.setDesiredoccupations(new ArrayList<String>());
+        mResumeWhole.setDesiredoccupationsTip(new ArrayList<String>());
+        mResumeWhole.setSalaryfrom(0);
+        mResumeWhole.setSalaryto(0);
+
+        mResumeWhole.setResumestatus(Arrays.asList("0"));
+        mResumeWhole.setHistory(0);
+
+        //更新日期
+        mResumeWhole.setLastupdatetimefrom("");
+        mResumeWhole.setLastupdatetimeto("");
+        mResumeWhole.setLastupdatetimeTag("0");
+
+        setSelectToView();
     }
 
     @Override
@@ -494,4 +281,187 @@ public class MoreFragment extends BaseFragment {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onIndustrieResult(BaseWhole whole) {
+        mResumeWhole = (ResumeWhole) whole;
+        setSelectToView();
+        UtilHelper.outLog(TAG, mResumeWhole.toString());
+    }
+
+    private void setSelectToView() {
+        //年龄
+        if (mResumeWhole.getAgefrom() != 0) {
+            ageFrom.setText(String.valueOf(mResumeWhole.getAgefrom()));
+        }
+        if (mResumeWhole.getAgeto() != 0) {
+            ageTo.setText(String.valueOf(mResumeWhole.getAgeto()));
+        }
+        //性别
+        switch (Integer.parseInt(mResumeWhole.getGender().get(0))) {
+            case 1:
+                rbMan.setChecked(true);
+                break;
+            case 2:
+                rbWoman.setChecked(true);
+                break;
+            default:
+                rbBuxian.setChecked(true);
+                break;
+        }
+        //学校名称
+        mSchoolname.setText(mResumeWhole.getSchoolname());
+        //专业名称
+        mMajor.setText(mResumeWhole.getMajor());
+
+        //语言
+        mLanguage.setText(mResumeWhole.getLang().size() > 0 ? joinSelect(mResumeWhole.getLangs()) : "请选择");
+        //当前行业
+        mIndustrie.setText(mResumeWhole.getIndustrys().size() > 0 ? joinSelect(mResumeWhole.getIndustrysTip()) : "请选择");
+        //期望行业
+        mDesiredIndustries.setText(mResumeWhole.getDesiredIndustries().size() > 0 ? joinSelect(mResumeWhole.getDesiredIndustriesTip()) : "请选择");
+        //期望地点
+        mDesiredLocations.setText(mResumeWhole.getDesiredlocations().size() > 0 ? joinSelect(mResumeWhole.getDesiredlocationsTip()) : "请选择");
+        //期望职位
+        mDesiredoccupations.setText(mResumeWhole.getDesiredoccupations().size() > 0 ? joinSelect(mResumeWhole.getDesiredoccupationsTip()) : "请选择");
+        //期望年薪
+        if (mResumeWhole.getSalaryfrom() != 0) {
+            salaryFrom.setText(String.valueOf(mResumeWhole.getSalaryfrom()));
+        }
+        if (mResumeWhole.getSalaryto() != 0) {
+            salaryTo.setText(String.valueOf(mResumeWhole.getSalaryto()));
+        }
+        //推荐状态
+        switch (Integer.parseInt(mResumeWhole.getResumestatus().get(0))) {
+            case 1:
+                rbRKetui.setChecked(true);
+                break;
+            case 2:
+                rbRWurao.setChecked(true);
+                break;
+            default:
+                rbRAll.setChecked(true);
+                break;
+        }
+
+        //推荐历史
+        switch (mResumeWhole.getHistory()) {
+            case 1:
+                mHistoryHave.setChecked(true);
+                break;
+            case 2:
+                mHistoryNhave.setChecked(true);
+                break;
+            default:
+                mHistoryAll.setChecked(true);
+                break;
+        }
+        //分页
+        etPage.setText(String.valueOf(mResumeWhole.getPageindex()));
+
+        //更新日期
+        clearAll(mUpdateTimeGroup);
+        initRadioButton(mUpdateTimeGroup, Integer.parseInt(mResumeWhole.getLastupdatetimeTag()));
+    }
+
+    private String joinSelect(List<String> data) {
+        StringBuffer sb = new StringBuffer();
+        if (data == null) {
+            return sb.toString();
+        }
+        for (String s : data) {
+            sb.append(s + "、");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1);
+        }
+        return sb.toString();
+
+    }
+
+    /**
+     * 日期解析
+     *
+     * @param tag
+     * @return
+     */
+    private String parseTimeToStr(int tag) {
+        if (tag == 0) {
+            return "";
+        }
+        Calendar currCalendar = Calendar.getInstance();
+        currCalendar.setTimeInMillis(System.currentTimeMillis());
+        currCalendar.set(Calendar.DATE, currCalendar.get(Calendar.DATE) - tag);
+        return format.format(currCalendar.getTime());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unRegisterEventBus(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
+    private void clearAll(ViewGroup viewGroup) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            if (viewGroup.getChildAt(i) instanceof ViewGroup) {
+                clearAll((ViewGroup) viewGroup.getChildAt(i));
+            }
+            if (viewGroup.getChildAt(i) instanceof RadioButton) {
+                ((RadioButton) viewGroup.getChildAt(i)).setChecked(false);
+            }
+        }
+    }
+
+    private void setLastUpdateTimeFrom(ViewGroup viewGroup) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            if (viewGroup.getChildAt(i) instanceof ViewGroup) {
+                setLastUpdateTimeFrom((ViewGroup) viewGroup.getChildAt(i));
+            }
+            if (viewGroup.getChildAt(i) instanceof RadioButton) {
+                if (((RadioButton) viewGroup.getChildAt(i)).isChecked()) {
+                    String tag = viewGroup.getChildAt(i).getTag().toString();
+                    mResumeWhole.setLastupdatetimefrom(parseTimeToStr(Integer.parseInt(tag)));
+                    mResumeWhole.setLastupdatetimeTag(tag);
+                }
+            }
+        }
+    }
+    private void initRadioButton(ViewGroup viewGroup,int tag) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View childAt = viewGroup.getChildAt(i);
+            if (childAt instanceof ViewGroup) {
+                initRadioButton((ViewGroup) childAt,tag);
+            }
+            if (childAt instanceof RadioButton) {
+                if (childAt.getTag().toString().equals(String.valueOf(tag))) {
+                    ((RadioButton) childAt).setChecked(true);
+                }
+            }
+        }
+    }
+    @Override
+    public void onClick(View v) {
+        CompoundButton buttonView = (CompoundButton) v;
+        clearAll(mUpdateTimeGroup);
+        buttonView.setChecked(true);
+    }
+
+
+    public interface OnResumeSelectListener {
+        void onConfirm(ResumeWhole resumeWhole);
+    }
 }
