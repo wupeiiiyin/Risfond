@@ -5,12 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -19,8 +25,10 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.common.constant.URLConstant;
@@ -29,10 +37,13 @@ import com.risfond.rnss.common.utils.CallUtil;
 import com.risfond.rnss.common.utils.CommonUtil;
 import com.risfond.rnss.common.utils.EventBusUtil;
 import com.risfond.rnss.common.utils.SPUtil;
+import com.risfond.rnss.common.utils.StatusBarUtils;
+import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.entry.Evaluate;
 import com.risfond.rnss.home.commonFuctions.news.activity.NewsDetailActivity;
 import com.risfond.rnss.home.js.JsToJava;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Timer;
@@ -56,6 +67,11 @@ public class SuccessCaseMainActivity extends BaseActivity {
     LinearLayout tvResumeSearch;
     @BindView(R.id.iv_title_right)
     ImageView mRightIcon;
+
+    @BindView(R.id.id_successcase_main_title)
+    LinearLayout mTitleBarRootView;
+    @BindView(R.id.id_title_rootview)
+    RelativeLayout id_title_rootview;
     private Context context;
     private String url;
     private String id;
@@ -64,6 +80,7 @@ public class SuccessCaseMainActivity extends BaseActivity {
     public int getContentViewResId() {
         return R.layout.activity_success_case_main;
     }
+
     @Override
     public void init(Bundle savedInstanceState) {
         context = SuccessCaseMainActivity.this;
@@ -73,16 +90,33 @@ public class SuccessCaseMainActivity extends BaseActivity {
         initWebView();
         EventBusUtil.registerEventBus(this);
     }
+
     private void initTitleBar() {
         tvTitle.setVisibility(View.INVISIBLE);
         mRightIcon.setImageResource(R.mipmap.rs_successcase_list);
         tvResumeSearch.setVisibility(View.VISIBLE);
+        // Color.parseColor("#135dbd")
+        int colors[] = {Color.argb(146,19,93,189), Color.parseColor("#26a4ee")};
+        final GradientDrawable bg = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
+        mTitleBarRootView.setBackgroundResource(R.mipmap.rs_successcase_title);
+        id_title_rootview.setBackgroundColor(Color.TRANSPARENT);
+        StatusBarUtils.setTransparentForWindow(this);
+        ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
+        if (contentView.getChildCount() > 1) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                contentView.getChildAt(1).setBackground(bg);
+            } else {
+                mTitleBarRootView.setBackgroundDrawable(bg);
+                contentView.getChildAt(1).setBackgroundDrawable(bg);
+            }
+        }
     }
 
     @OnClick(R.id.iv_title_right)
     public void onClick(View v) {
         SuccessCaseActivity.StartAction(this);
     }
+
     private void initWebView() {
         WebSettings settings = wvResumeDetail.getSettings();
         //支持JavaScript脚本语言
@@ -191,7 +225,7 @@ public class SuccessCaseMainActivity extends BaseActivity {
         });
 
         wvResumeDetail.loadUrl(url);
-        wvResumeDetail.addJavascriptInterface(new JsToJava(context, SPUtil.loadToken(context)), "AndroidWebView");
+        wvResumeDetail.addJavascriptInterface(new SuccessCaseJs(), "AndroidWebView");
 
     }
 
@@ -260,5 +294,20 @@ public class SuccessCaseMainActivity extends BaseActivity {
     public static void startAction(Context context) {
         Intent intent = new Intent(context, SuccessCaseMainActivity.class);
         context.startActivity(intent);
+    }
+
+    public class SuccessCaseJs{
+
+        @JavascriptInterface
+        public void seeDetail(String id) {
+            if (TextUtils.isEmpty(id)) {
+                return;
+            }else{
+                Intent intent = new Intent(SuccessCaseMainActivity.this, SuccessCaseActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+
+            }
+        }
     }
 }

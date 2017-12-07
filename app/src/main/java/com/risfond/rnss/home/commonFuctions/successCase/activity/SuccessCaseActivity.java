@@ -3,20 +3,19 @@ package com.risfond.rnss.home.commonFuctions.successCase.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -25,35 +24,36 @@ import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.base.BaseFragment;
 import com.risfond.rnss.callback.ResponseCallBack;
 import com.risfond.rnss.common.constant.URLConstant;
+import com.risfond.rnss.common.utils.DensityUtils;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.entry.BaseWhole;
+import com.risfond.rnss.entry.IndustrieInfo;
 import com.risfond.rnss.entry.ResumeWhole;
 import com.risfond.rnss.entry.SuccessCasResponse;
-import com.risfond.rnss.entry.SuccessCase;
 import com.risfond.rnss.entry.SuccessCaseWhole;
-import com.risfond.rnss.home.commonFuctions.successCase.adapter.SuccessCaseAdapter;
 import com.risfond.rnss.home.commonFuctions.successCase.adapter.SuccessCaseV2Adapter;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.BaseSuccessCaseWholeFragment;
-import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseIndustryFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseMoreFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.fragment.SuccessCaseOrderFragment;
 import com.risfond.rnss.home.commonFuctions.successCase.modelImpl.SuccessCaseImpl;
 import com.risfond.rnss.home.commonFuctions.successCase.modelInterface.ISuccessCase;
 import com.risfond.rnss.home.resume.fragment.IndustrieFragment;
 import com.risfond.rnss.home.resume.fragment.PositionFragment;
+import com.risfond.rnss.home.resume.fragment.SuccessIndustrieFragment;
 import com.risfond.rnss.home.resume.modleInterface.SelectCallBack;
 import com.risfond.rnss.widget.RecycleViewDivider;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -79,6 +79,17 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
     LinearLayout mCbContent;
     @BindView(R.id.id_successcase_framelayout)
     FrameLayout mFrameLayout;
+    @BindView(R.id.cb_order)
+    CheckBox mOrder;
+    @BindView(R.id.cb_jobtitle)
+    CheckBox mJobtitle;
+    @BindView(R.id.cb_worklocation)
+    CheckBox mWorklocation;
+    @BindView(R.id.cb_more)
+    CheckBox mMore;
+
+    @BindView(R.id.id_title_right)
+    LinearLayout mTitleRightLinearLayout;
 
     private Context context;
     private SuccessCaseV2Adapter mAdapter;
@@ -90,7 +101,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
     /**
      * 查询条件
      */
-    private SuccessCaseWhole mSuccessCaseWhole;
+    private SuccessCaseWhole mSuccessCaseWhole = new SuccessCaseWhole();
 
     /**
      * 待选择
@@ -100,11 +111,6 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
      * 当前显示的Fragment
      */
     private BaseFragment mCurrentFragment;
-    /**
-     * 地点
-     */
-    private ArrayList<String> selectedIds = new ArrayList<>();
-    private ArrayList<String> selectedNames = new ArrayList<>();
 
     private ResumeWhole mResumeWhole = new ResumeWhole();
 
@@ -115,6 +121,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
 
     @Override
     public void init(Bundle savedInstanceState) {
+        initParams();
         initWhole();
         initTitle();
         initAdapter();
@@ -123,37 +130,49 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         //
     }
 
+    private void initParams() {
+        String id = getIntent().getStringExtra("id");
+        ArrayList<String> industrys = new ArrayList<>();
+        ArrayList<String> industrysTip = new ArrayList<>();
+        if (!TextUtils.isEmpty(id)) {
+            industrys.add(id);
+            mResumeWhole.setIndustrys(industrys);
+            List<IndustrieInfo> industrieInfos = SuccessIndustrieFragment.getIndustrieInfos();
+            for (IndustrieInfo industrieInfo : industrieInfos) {
+                if (Integer.parseInt(industrieInfo.getCode()) == Integer.parseInt(id)) {
+                    industrysTip.add(industrieInfo.getContent());
+                    mResumeWhole.setIndustrysTip(industrysTip);
+                    break;
+                }
+            }
+            setActionTitle();
+        }
+
+    }
+
     /**
      * 初始化选择条件Fragment
      */
     private void initFragment() {
         mFragments = new ArrayList<>();
         mFragments.add(SuccessCaseOrderFragment.getInstance(mSuccessCaseWhole, this));
-        IndustrieFragment industrieFragment = new IndustrieFragment(mResumeWhole, this);
+        SuccessIndustrieFragment industrieFragment = new SuccessIndustrieFragment(mResumeWhole, this);
         Bundle bundle = new Bundle();
         bundle.putString(IndustrieFragment.INDUSTRIE_TYPE, IndustrieFragment.INDUSTRIE);
         industrieFragment.setArguments(bundle);
         mFragments.add(industrieFragment);
-        mFragments.add(new PositionFragment(selectedIds, selectedNames, new SelectCallBack() {
+        mFragments.add(new PositionFragment(mSuccessCaseWhole.getWorkLocation(),mSuccessCaseWhole.getWorkLocations(), new SelectCallBack() {
             @Override
             public void onPositionConfirm(List<String> positions, List<String> names) {
                 changeFragmentVisibleStatus(false);
-                selectedIds.clear();
-                selectedNames.clear();
-                selectedIds.addAll(positions);
-                selectedNames.addAll(names);
-                if (mSuccessCaseWhole.getWorkLocation() != null) {
-                    mSuccessCaseWhole.getWorkLocation().clear();
-                }
-                if (mSuccessCaseWhole.getWorkLocations() != null) {
-                    mSuccessCaseWhole.getWorkLocations().clear();
-                }
-                mSuccessCaseWhole.setWorkLocation(selectedIds);
-                mSuccessCaseWhole.setWorkLocations(selectedNames);
+                mSuccessCaseWhole.setWorkLocation((ArrayList<String>) positions);
+                mSuccessCaseWhole.setWorkLocations((ArrayList<String>) names);
                 //重置
                 resetPageIndex();
                 //刷新数据
                 resumeRequest();
+
+                setActionTitle();
             }
 
             @Override
@@ -190,8 +209,31 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
 
     private void initTitle() {
         context = SuccessCaseActivity.this;
-        tvResumeSearch.setVisibility(View.VISIBLE);
+        tvResumeSearch.setVisibility(View.GONE);
         mtvTitleImg.setText("成功案例");
+        mTitleRightLinearLayout.setVisibility(View.VISIBLE);
+        ImageView searchView = new ImageView(this);
+        searchView.setImageResource(R.mipmap.biconsearch);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuccessCaseResultActivity.StartAction(context);
+            }
+        });
+        mTitleRightLinearLayout.addView(searchView);
+
+        ImageView iconView = new ImageView(this);
+        iconView.setImageResource(R.mipmap.rs_successcase_icon);
+        iconView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuccessCaseActivity.this.finish();
+            }
+        });
+        mTitleRightLinearLayout.addView(iconView);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) iconView.getLayoutParams();
+        layoutParams.leftMargin = DensityUtils.dip2px(this, 17);
+        iconView.requestFocus();
     }
 
     private void initAdapter() {
@@ -215,19 +257,24 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         if (!isLoadMore) {
             DialogUtil.getInstance().showLoadingDialog(context, "加载中...");
         }
+        request.clear();
         request.put("KeyWords", "");
         request.put("staffid", String.valueOf(SPUtil.loadId(context)));
         request.put("PageIndex", String.valueOf(mSuccessCaseWhole.getPageIndex()));
         request.put("PageSize", String.valueOf(mSuccessCaseWhole.getPageSize()));
-        request.put("Type", mSuccessCaseWhole.getType());
+        //request.put("Type", mSuccessCaseWhole.getType());
         request.put("StartTime", mSuccessCaseWhole.getStartTime());
         request.put("EndTime", mSuccessCaseWhole.getEndTime());
-        joinParams("WorkLocation", mSuccessCaseWhole.getWorkIndusty());
+        joinParams("WorkLocation", mSuccessCaseWhole.getWorkLocation());
         joinParams("WorkIndusty", (ArrayList<String>) mResumeWhole.getIndustrys());
-        request.put("StartYearlySalary", String.valueOf(mSuccessCaseWhole.getStartYearlySalary()));
-        request.put("EndYearlySalary", String.valueOf(mSuccessCaseWhole.getEndYearlySalary()));
+        if (mSuccessCaseWhole.getStartYearlySalary() > 0) {
+            request.put("StartYearlySalary", String.valueOf(mSuccessCaseWhole.getStartYearlySalary()));
+        }
+        if (mSuccessCaseWhole.getEndYearlySalary() > 0) {
+            request.put("EndYearlySalary", String.valueOf(mSuccessCaseWhole.getEndYearlySalary()));
+        }
         request.put("OrderType", String.valueOf(mSuccessCaseWhole.getOrderType()));
-        iResumeSearch.positionSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_SUCCESS_CASE2, this);
+        iResumeSearch.positionSearchRequest(SPUtil.loadToken(context), request, URLConstant.URL_SUCCESS_CASE3, this);
     }
 
     private void joinParams(String key, ArrayList<String> params) {
@@ -239,13 +286,6 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         }
     }
 
-
-    @OnClick({R.id.ll_title_search})
-    public void onClick(View v) {
-        if (v.getId() == R.id.ll_title_search) {
-            SuccessCaseResultActivity.StartAction(context);
-        }
-    }
 
     @OnClick({R.id.cb_order, R.id.cb_worklocation, R.id.cb_more, R.id.cb_jobtitle})
     public void onCheckedChanged(View view) {
@@ -261,7 +301,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
             fragmentTransaction.commit();
             changeFragmentVisibleStatus(true);
             buttonView.setChecked(checked);
-        }else{
+        } else {
             //false  收起window
             changeFragmentVisibleStatus(false);
         }
@@ -395,7 +435,7 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
     public void onConfirm(BaseWhole successCaseWhole) {
         if (successCaseWhole instanceof ResumeWhole) {
             this.mResumeWhole = (ResumeWhole) successCaseWhole;
-        }else{
+        } else {
             this.mSuccessCaseWhole = (SuccessCaseWhole) successCaseWhole;
         }
         changeFragmentVisibleStatus(false);
@@ -403,5 +443,43 @@ public class SuccessCaseActivity extends BaseActivity implements ResponseCallBac
         resetPageIndex();
         //刷新数据
         resumeRequest();
+        setActionTitle();
     }
+
+    private void setActionTitle() {
+        if (mSuccessCaseWhole.getOrderType() == 0) {
+            mOrder.setText("排序");
+        }else{
+            mOrder.setText(mSuccessCaseWhole.getOrderType() == 1 ? "薪资" : "时间");
+        }
+        if (mResumeWhole.getIndustrys().size()<=0) {
+            mJobtitle.setText("行业");
+        }else{
+            mJobtitle.setText(joinSelect(mResumeWhole.getIndustrysTip()));
+        }
+
+        if (mSuccessCaseWhole.getWorkLocation().size() <= 0) {
+            mWorklocation.setText("地点");
+        }else{
+            mWorklocation.setText(joinSelect(mSuccessCaseWhole.getWorkLocations()));
+        }
+
+    }
+    private String joinSelect(List<String> data) {
+        StringBuffer sb = new StringBuffer();
+        if (data == null) {
+            return sb.toString();
+        }
+        for (String s : data) {
+            sb.append(s + "+");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1);
+        }
+        return sb.toString();
+
+    }
+
+
+
 }

@@ -369,7 +369,7 @@ public class MoreFragment extends BaseFragment implements  View.OnClickListener 
             return sb.toString();
         }
         for (String s : data) {
-            sb.append(s + "、");
+            sb.append(s + "+");
         }
         if (sb.length() > 0) {
             sb.setLength(sb.length() - 1);

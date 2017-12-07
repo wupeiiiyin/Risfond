@@ -38,6 +38,16 @@ public class CustomerSearch {
     private String CompanyName;
     private String OptionStatus;
 
+    private Boolean IsDetial;
+
+    public Boolean getDetial() {
+        return IsDetial;
+    }
+
+    public void setDetial(Boolean detial) {
+        IsDetial = detial;
+    }
+
     public String getCompanyName() {
         return CompanyName;
     }

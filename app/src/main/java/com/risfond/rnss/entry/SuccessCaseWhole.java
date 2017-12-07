@@ -18,12 +18,12 @@ public class SuccessCaseWhole extends BaseWhole implements Serializable {
     public int pageSize = 15;//每页条数
     public String startTime = "";//开始时间 ,默认不传
     public String endTime = "";//结束时间，不传默认当前时间
-    public ArrayList<String> workLocation;//工作地点 id
-    public ArrayList<String> workIndusty;//工作行业 id
-    public ArrayList<String> workLocations;//工作地点 中文
-    public ArrayList<String> workIndustys;//工作行业 中文
-    public double startYearlySalary;//开始年薪
-    public double endYearlySalary;//结束年薪
+    public ArrayList<String> workLocation = new ArrayList<>();//工作地点 id
+    public ArrayList<String> workIndusty = new ArrayList<>();//工作行业 id
+    public ArrayList<String> workLocations = new ArrayList<>();//工作地点 中文
+    public ArrayList<String> workIndustys = new ArrayList<>();//工作行业 中文
+    public int startYearlySalary;//开始年薪
+    public int endYearlySalary;//结束年薪
     public int orderType;//排序类型1：薪资，2：时间
 
     public String getType() {
@@ -110,15 +110,15 @@ public class SuccessCaseWhole extends BaseWhole implements Serializable {
         return startYearlySalary;
     }
 
-    public void setStartYearlySalary(double startYearlySalary) {
+    public void setStartYearlySalary(int startYearlySalary) {
         this.startYearlySalary = startYearlySalary;
     }
 
-    public double getEndYearlySalary() {
+    public int getEndYearlySalary() {
         return endYearlySalary;
     }
 
-    public void setEndYearlySalary(double endYearlySalary) {
+    public void setEndYearlySalary(int endYearlySalary) {
         this.endYearlySalary = endYearlySalary;
     }
 

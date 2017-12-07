@@ -44,17 +44,17 @@ import butterknife.BindView;
  */
 public class PositionFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener, ResponseCallBack {
     /**
-     * 我的职位
+     * 我e的职位
      */
-    public static String GUISHU_TYPE_MY_CUSTOM = "1";
+    public static String GUISHU_TYPE_MY_CUSTOM = "0";
     /**
      * 合作职位
      */
-    public static String GUISHU_TYPE_COOP_CUSTOM = "2";
+    public static String GUISHU_TYPE_COOP_CUSTOM = "1";
     /**
      * 其他职位
      */
-    public static String GUISHU_TYPE_OTHER_CUSTOM = "3";
+    public static String GUISHU_TYPE_OTHER_CUSTOM = "2";
 
     /**
      * 职位类型 KEY

@@ -67,6 +67,8 @@ public class SuccessCaseResultActivity extends BaseActivity implements ResponseC
     @BindView(R.id.activity_resume_search_result)
     LinearLayout activityResumeSearchResult;
 
+    @BindView(R.id.id_whole_action)
+    LinearLayout mWholeActionView;
     private Context context;
     private SuccessCaseAdapter adapter;
     private SuccessCaseHistoryAdapter historyAdapter;
@@ -90,6 +92,7 @@ public class SuccessCaseResultActivity extends BaseActivity implements ResponseC
     @Override
     public void init(Bundle savedInstanceState) {
         context = SuccessCaseResultActivity.this;
+        mWholeActionView.setVisibility(View.GONE);
         histories = new ArrayList<>();
         historiesAESC = new ArrayList<>();
         iResumeSearch = new SuccessCaseImpl();

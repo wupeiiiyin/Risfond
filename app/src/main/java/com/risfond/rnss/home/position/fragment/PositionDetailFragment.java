@@ -54,7 +54,7 @@ public class PositionDetailFragment extends BaseFragment {
     public void init(Bundle savedInstanceState) {
         context = getContext();
         id = getArguments().getString("id");
-        url = URLConstant.URL_JOB_DETAIL_H5 + "?token=" + SPUtil.loadToken(context) + "&id=" + id;
+        url = URLConstant.URL_JOB_DETAIL_H5 + "?token=" + SPUtil.loadToken(context) + "&id=" + id +"&staffid="+String.valueOf(SPUtil.loadId(context));
         initWebView();
     }
 

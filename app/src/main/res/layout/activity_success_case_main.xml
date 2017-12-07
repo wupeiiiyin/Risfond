@@ -7,7 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.risfond.rnss.home.resume.activity.ResumeSearchActivity">
-    <include layout="@layout/include_title"/>
+    <LinearLayout
+        android:id="@+id/id_successcase_main_title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="bottom">
+        <include layout="@layout/include_title"/>
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

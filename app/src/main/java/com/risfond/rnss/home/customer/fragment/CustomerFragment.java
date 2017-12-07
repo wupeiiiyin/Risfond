@@ -18,6 +18,7 @@ import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.NumberUtil;
 import com.risfond.rnss.common.utils.SPUtil;
+import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.UtilHelper;
 import com.risfond.rnss.entry.CustomerSearchResponse;
 import com.risfond.rnss.home.customer.activity.CustomDetailActivity2;
@@ -42,15 +43,15 @@ public class CustomerFragment extends BaseFragment implements BaseQuickAdapter.R
     /**
      * 我的客户
      */
-    public static String GUISHU_TYPE_MY_CUSTOM = "1";
+    public static String GUISHU_TYPE_MY_CUSTOM = "0";
     /**
      * 合作客户
      */
-    public static String GUISHU_TYPE_COOP_CUSTOM = "2";
+    public static String GUISHU_TYPE_COOP_CUSTOM = "1";
     /**
      * 其他客户
      */
-    public static String GUISHU_TYPE_OTHER_CUSTOM = "3";
+    public static String GUISHU_TYPE_OTHER_CUSTOM = "2";
 
     /**
      * 客户类型 KEY
@@ -116,6 +117,10 @@ public class CustomerFragment extends BaseFragment implements BaseQuickAdapter.R
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!mAdapter.getData().get(position).getDetial()) {
+                    ToastUtil.showShort(CustomerFragment.this.getContext(),"您没有权限");
+                    return;
+                }
                 CustomDetailActivity2.startAction(getContext(), String.valueOf(mAdapter.getData().get(position).getClientId()), URLConstant.URL_CUSTOMER_DETAIL);
             }
         });

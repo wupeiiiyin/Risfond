@@ -1,6 +1,7 @@
 package com.risfond.rnss.home.js;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.risfond.rnss.common.constant.URLConstant;
@@ -38,7 +39,7 @@ public class JsToJava {
      * @return
      */
     @JavascriptInterface
-    public void showClientDetail(String id) {
+    public void showClientDetail(String id,String isDetail) {
         CustomDetailActivity2.startAction(context, id, URLConstant.URL_CUSTOMER_DETAIL);
     }
 

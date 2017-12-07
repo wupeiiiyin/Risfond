@@ -80,7 +80,7 @@ public class URLConstant {
     /* 推荐管理接口URL*/
     public static final String URL_JOB_RECOMMEND = URL_TOP + "job/recommend";
     /* 推荐管理列表接口URL*/
-    public static final String URL_JOB_RECOMMEND_LIST = URL_TOP + "job/recommendlist";
+    public static final String URL_JOB_RECOMMEND_LIST = URL_TOP + "job/recommendlist2";
     /* 推荐流程接口URL*/
     public static final String URL_JOB_RECOMMEND_STEP = URL_TOP + "job/recommendstep";
     /* 推荐信息接口URL*/
@@ -121,7 +121,7 @@ public class URLConstant {
     @Deprecated
     public static final String URL_SUCCESS_CASE = URL_TOP + "SuccessfulCase/SuccessArticle";
     /* 成功案例 V2*/
-    public static final String URL_SUCCESS_CASE2 = URL_TOP + "SuccessfulCase/SuccessArticle2";
+    public static final String URL_SUCCESS_CASE3 = URL_TOP + "SuccessfulCase/SuccessArticle3";
     /* 案例详情H5接口URL*/
     public static final String URL_CASE_DETAIL_H5 = H5_URL_TOP + "successfulcase/ltdetail?";
     /* 推荐人选列表接口URL*/

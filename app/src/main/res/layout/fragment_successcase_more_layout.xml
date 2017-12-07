@@ -29,13 +29,14 @@
         android:paddingLeft="14dp"
         android:paddingRight="14dp">
 
-        <EditText
+        <TextView
             android:id="@+id/id_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/ebg1"
             android:hint="不限"
+            android:gravity="center_vertical"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:paddingLeft="8dp"
@@ -49,15 +50,17 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="#969696"/>
+            android:background="#969696"
+            android:enabled="false"/>
 
-        <EditText
+        <TextView
             android:id="@+id/id_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/ebg1"
             android:hint="不限"
+            android:gravity="center_vertical"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:paddingLeft="8dp"
@@ -78,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="时间"
+            android:text="薪资"
             android:textColor="#323232"
             android:textSize="14sp"/>
 
