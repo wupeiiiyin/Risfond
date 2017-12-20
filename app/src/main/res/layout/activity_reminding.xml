@@ -123,5 +123,16 @@
             android:gravity="center_horizontal"
             android:text="添加今日事务"
             android:textColor="#5EB4EC"/>
+
+        <ImageView
+            android:id="@+id/img_reminding_buttonplus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/buttonplus"
+            android:paddingBottom="20dp"
+            android:paddingRight="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
     </RelativeLayout>
 </LinearLayout>

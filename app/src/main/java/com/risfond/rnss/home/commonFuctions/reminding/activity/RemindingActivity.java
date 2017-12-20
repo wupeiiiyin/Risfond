@@ -15,6 +15,7 @@ import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -36,6 +37,8 @@ public class RemindingActivity extends BaseActivity implements GestureDetector.O
     TextView tvTitle;
     @BindView(R.id.tv_reminding_addevent)
     TextView tvRemindingAddevent;
+    @BindView(R.id.img_reminding_buttonplus)
+    ImageView imgRemindingButtonplus;
 
 
     private Context context;
@@ -323,8 +326,11 @@ public class RemindingActivity extends BaseActivity implements GestureDetector.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_reminding_addevent:
+
+                break;
+            case R.id.img_reminding_buttonplus:
 
                 break;
         }
