@@ -1,5 +1,6 @@
 package com.risfond.rnss.base;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -75,4 +76,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    public void startActivity(Class clzz, boolean isFinish){
+        startActivity(new Intent(this,clzz));
+        if (isFinish){
+            finish();
+        }
+    }
 }
