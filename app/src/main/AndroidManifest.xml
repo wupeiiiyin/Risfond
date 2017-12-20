@@ -314,6 +314,8 @@
         </activity>
         <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseMainActivity">
         </activity>
+        <activity android:name=".home.commonFuctions.reminding.activity.RemindingActivity">
+        </activity>
     </application>
 
 </manifest>

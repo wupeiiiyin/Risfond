@@ -44,6 +44,7 @@ import com.risfond.rnss.home.commonFuctions.performanceManage.activity.Performan
 import com.risfond.rnss.home.commonFuctions.dynamics.activity.DynamicsActivity;
 import com.risfond.rnss.home.commonFuctions.publicCustomer.activity.PublicCustomerActivity;
 import com.risfond.rnss.home.commonFuctions.referencemanage.activity.ReferenceManageActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.activity.RemindingActivity;
 import com.risfond.rnss.home.commonFuctions.successCase.activity.SuccessCaseActivity;
 import com.risfond.rnss.home.commonFuctions.successCase.activity.SuccessCaseMainActivity;
 import com.risfond.rnss.home.commonFuctions.workorder.activity.WorkOrderActivity;
@@ -148,9 +149,9 @@ public class HomeFragment extends BaseFragment implements OperationPlatformCallb
 
         mProjectImg = new int[]{R.mipmap.iconclien, R.mipmap.iconmanag, R.mipmap.icontacke,
                 R.mipmap.iconperformanc, R.mipmap.iconlesson, R.mipmap.iconcheckingin,
-                R.mipmap.iconsuccessfulcase, R.mipmap.icondynamic, R.mipmap.icongongdan, R.mipmap.iconnews};
-        mProjectName = new String[]{"公共客户", "推荐管理", "发票管理", "绩效审核", "课程培训", "我的考勤", "成功案例", "信息互动", "工我的单", "公司新闻"};
-        mProjectItemId = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+                R.mipmap.iconsuccessfulcase, R.mipmap.icondynamic, R.mipmap.icongongdan, R.mipmap.iconnews, R.mipmap.iconreminding};
+        mProjectName = new String[]{"公共客户", "推荐管理", "发票管理", "绩效审核", "课程培训", "我的考勤", "成功案例", "信息互动", "我的工单", "公司新闻", "事务提醒"};
+        mProjectItemId = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         for (int i = 0; i < mProjectImg.length; i++) {
             HomeProjectInfo picture = new HomeProjectInfo(mProjectName[i], mProjectImg[i], mProjectItemId[i], 0);
             pictures.add(picture);
@@ -284,6 +285,9 @@ public class HomeFragment extends BaseFragment implements OperationPlatformCallb
                         break;
                     case 10://新闻
                         NewsMainActivity.StartAction(context);
+                        break;
+                    case 11://提醒
+                        RemindingActivity.StartAction(context);
                         break;
                     default:
                         break;

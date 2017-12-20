@@ -17,14 +17,12 @@ import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.risfond.rnss.R;
 import com.risfond.rnss.common.activity.URLWebViewActivity;
 import com.risfond.rnss.common.constant.Constant;
-import com.risfond.rnss.common.em.EMHelper;
-import com.risfond.rnss.common.utils.JsonUtil;
-import com.risfond.rnss.common.utils.ToastUtil;
+
 import com.risfond.rnss.common.utils.UmengUtil;
 import com.risfond.rnss.contacts.activity.ContactsInfoActivity;
-import com.risfond.rnss.entry.ResumeSearch;
+
 import com.risfond.rnss.home.resume.activity.ResumeDetailActivity;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
