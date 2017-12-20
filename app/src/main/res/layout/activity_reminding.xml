@@ -83,56 +83,62 @@
             android:text="六" />
     </LinearLayout>
 
-    <ViewFlipper
-        android:id="@+id/flipper1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F5F5F5">
+        <ViewFlipper
+            android:id="@+id/flipper1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的事务("
+            android:id="@+id/tv_reminding_one"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/iconaffairs"
-            android:layout_marginBottom="5dp"
-            android:layout_above="@+id/tv_Notransaction"
-            android:layout_centerHorizontal="true"/>
         <TextView
-            android:id="@+id/tv_Notransaction"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_reminding_itemsum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="这一天暂无事务"
-            android:textColor="#AFAFAF"
-            android:layout_above="@+id/tv_reminding_addevent"
-            android:layout_marginBottom="20dp"
-            android:layout_centerHorizontal="true"/>
+            android:text="0"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tv_reminding_one"
+            android:layout_toEndOf="@+id/tv_reminding_one"/>
         <TextView
-            android:id="@+id/tv_reminding_addevent"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_reminding_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="#ffffff"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center_horizontal"
-            android:text="添加今日事务"
-            android:textColor="#5EB4EC"/>
+            android:text=")"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tv_reminding_itemsum"
+            android:layout_toEndOf="@+id/tv_reminding_itemsum"/>
 
         <ImageView
             android:id="@+id/img_reminding_buttonplus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/buttonplus"
-            android:paddingBottom="20dp"
-            android:paddingRight="20dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            />
+            android:padding="10dp"
+            android:layout_alignParentEnd="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/tv_reminding_two"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_reminding_item"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 </LinearLayout>

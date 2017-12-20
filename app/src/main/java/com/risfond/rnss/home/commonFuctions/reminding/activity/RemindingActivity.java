@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -35,10 +36,14 @@ import butterknife.ButterKnife;
 public class RemindingActivity extends BaseActivity implements GestureDetector.OnGestureListener, View.OnClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_reminding_addevent)
-    TextView tvRemindingAddevent;
+//    @BindView(R.id.tv_reminding_addevent)
+//    TextView tvRemindingAddevent;
     @BindView(R.id.img_reminding_buttonplus)
     ImageView imgRemindingButtonplus;
+    @BindView(R.id.tv_reminding_itemsum)
+    TextView tvRemindingItemsum;
+    @BindView(R.id.rv_reminding_item)
+    RecyclerView rvRemindingItem;
 
 
     private Context context;
@@ -76,7 +81,6 @@ public class RemindingActivity extends BaseActivity implements GestureDetector.O
 
     @Override
     public void init(Bundle savedInstanceState) {
-
         context = RemindingActivity.this;
         tvTitle.setText("事务提醒");
         tvDate = (TextView) findViewById(R.id.tv_date);
@@ -90,7 +94,6 @@ public class RemindingActivity extends BaseActivity implements GestureDetector.O
         selectPostion = dateAdapter.getTodayPosition();
         gridView.setSelection(selectPostion);
         flipper1.addView(gridView, 0);
-        tvRemindingAddevent.setOnClickListener(this);
 
     }
 
@@ -327,10 +330,11 @@ public class RemindingActivity extends BaseActivity implements GestureDetector.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_reminding_addevent:
-
-                break;
+//            case R.id.tv_reminding_addevent:
+//
+//                break;
             case R.id.img_reminding_buttonplus:
+//                startActivity();
 
                 break;
         }
