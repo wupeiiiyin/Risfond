@@ -316,6 +316,8 @@
         </activity>
         <activity android:name=".home.commonFuctions.reminding.activity.RemindingActivity">
         </activity>
+        <activity android:name=".home.commonFuctions.reminding.activity.AddTheTransactionActivity">
+        </activity>
     </application>
 
 </manifest>
