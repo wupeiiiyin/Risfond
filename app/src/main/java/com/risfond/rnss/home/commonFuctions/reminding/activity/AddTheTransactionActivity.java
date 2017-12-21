@@ -1,17 +1,17 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
-import com.risfond.rnss.common.utils.TimeUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
+import com.risfond.rnss.home.commonFuctions.workorder.activity.OrderPeopleSelectActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +48,9 @@ public class AddTheTransactionActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_addthetransaction_time:
-                ToastUtil.showShort(getApplication(),"选择时间");
-
+                AlertDialog.Builder db = new AlertDialog.Builder(this);
+                db.setView(R.layout.activity_choose_time);
+                db.show();
                 break;
             case R.id.ll_addthetransaction_reminding:
                 ToastUtil.showShort(getApplication(),"提前提醒");
