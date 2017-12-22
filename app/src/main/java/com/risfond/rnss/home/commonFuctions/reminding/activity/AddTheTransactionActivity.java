@@ -1,16 +1,19 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.common.utils.ToastUtil;
+
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +41,9 @@ public class AddTheTransactionActivity extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("添加事务");
         ButterKnife.bind(this);
+
+
+
     }
 
 
@@ -47,18 +53,21 @@ public class AddTheTransactionActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_addthetransaction_time:
-                //ToastUtil.showShort(getApplication(),"选择时间");
-//                AlertDialog.Builder db = new AlertDialog.Builder(this);
-//                db.setView(R.layout.activity_choose_time);
-//                db.show();
-                startActivity(ChooseTimeActivity.class,true);
                 break;
             case R.id.ll_addthetransaction_reminding:
                 ToastUtil.showShort(getApplication(),"提前提醒");
                 break;
             case R.id.tv_addthetransaction_commit:
-                ToastUtil.showShort(getApplication(),"保存提交");
-                break;
+                String arr_list = editAddthetransactionContent.getText().toString();
+                if (arr_list == null || arr_list.equals("")) {
+                    Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(this,RemindingActivity.class);
+                    startActivity(intent.putExtra("arr_list",arr_list));
+                    finish();
+                    break;
+                }
+
         }
     }
 }
