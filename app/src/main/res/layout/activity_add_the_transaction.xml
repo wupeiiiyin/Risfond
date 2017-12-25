@@ -90,4 +90,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/xxx"
+        android:text="查看"
+        android:layout_above="@+id/tv_addthetransaction_commit"
+        android:layout_alignLeft="@+id/tv_addthetransaction_commit"
+        android:layout_alignStart="@+id/tv_addthetransaction_commit"
+        android:layout_marginLeft="37dp"
+        android:layout_marginStart="37dp"/>
 </RelativeLayout>

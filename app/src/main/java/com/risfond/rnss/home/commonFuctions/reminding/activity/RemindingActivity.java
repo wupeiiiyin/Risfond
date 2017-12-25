@@ -44,8 +44,8 @@ public class RemindingActivity extends BaseActivity {
     TextView tvRemindingAddaffairs;
     @BindView(R.id.ll_reminding_reference)
     RelativeLayout mLlRemindingReference;
-    @BindView(R.id.list_reminding_item)
-    ListView listRemindingItem;
+//    @BindView(R.id.list_reminding_item)
+//    ListView listRemindingItem;
     @BindView(R.id.imageView)
     ImageView imageView;
     private boolean isHasNum = true;//记录是否加载有数据
@@ -59,50 +59,7 @@ public class RemindingActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("事务提醒");
-        String ss = "111";
-        list_positionSearches.add(ss);
-        list_positionSearches.add(ss+"1");
-        list_positionSearches.add(ss+"2");
-//        if (!isHasNum) {
-//            if (positionSearches != null) {
-//                mLlRemindingReference.setVisibility(View.VISIBLE);
-//            }
-//            if (mLlRemindingReference != null) {
-//                tvRemindingContext.setVisibility(View.GONE);
-//                tvRemindingAddaffairs.setVisibility(View.GONE);
-//            }
-//        }
-//                if (positionSearches.size() >= 0){
-//                    listRemindingItem.setVisibility(View.GONE);        //隐藏listview
-//                    mLlRemindingReference.setVisibility(View.VISIBLE); //无数据时显示占位文字
-//                    tvRemindingAddaffairs.setVisibility(View.VISIBLE); //无数据时显示占位文字
-//                }else {
-//                    listRemindingItem.setVisibility(View.VISIBLE);
-//                    mLlRemindingReference.setVisibility(View.GONE);
-//                    tvRemindingAddaffairs.setVisibility(View.GONE);
-//                }
 
-
-//
-//        if (positionSearches.size() >= 0) {
-//            isHasNum = true;
-//            if (mLlRemindingReference != null) {
-//                listRemindingItem.setVisibility(View.VISIBLE);
-//            }
-//            if (listRemindingItem != null) {
-//                tvRemindingContext.setVisibility(View.GONE);
-//                tvRemindingAddaffairs.setVisibility(View.GONE);
-//            }
-//        } else {
-//            isHasNum = false;
-//            if (mLlRemindingReference != null) {
-//                listRemindingItem.setVisibility(View.GONE);
-//            }
-//            if (listRemindingItem != null) {
-//                tvRemindingContext.setVisibility(View.VISIBLE);
-//                tvRemindingAddaffairs.setVisibility(View.VISIBLE);
-//            }
-//        }
 
         CaledarAdapter adapter = new CaledarAdapter() {
             @Override
@@ -172,7 +129,6 @@ public class RemindingActivity extends BaseActivity {
 //                if (convertView == null) {
 //                    convertView = LayoutInflater.from(RemindingActivity.this).inflate(R.layout.item_customer_detail, null);
 //                }
-////                convertView.setTag();
 //                TextView textView = (TextView) convertView;
 //                textView.setText(list_positionSearches.get(position).toString());
 //                return convertView;
@@ -193,6 +149,7 @@ public class RemindingActivity extends BaseActivity {
 
     private String getDisPlayNumber(int num) {
         return num < 10 ? "0" + num : "" + num;
+
     }
 
     @Override
@@ -201,15 +158,6 @@ public class RemindingActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
 
-        if (list_positionSearches.size() == 0){
-            listRemindingItem.setVisibility(View.GONE);
-            tvRemindingContext.setVisibility(View.VISIBLE);
-            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
-        }else {
-            listRemindingItem.setVisibility(View.VISIBLE);
-            tvRemindingContext.setVisibility(View.GONE);
-            tvRemindingAddaffairs.setVisibility(View.GONE);
-        }
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})
@@ -217,9 +165,11 @@ public class RemindingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_reminding_addaffairs:
                 startActivity(AddTheTransactionActivity.class, false);
+                finish();
                 break;
             case R.id.imageView:
                 startActivity(AddTheTransactionActivity.class, false);
+                finish();
                 break;
         }
     }
