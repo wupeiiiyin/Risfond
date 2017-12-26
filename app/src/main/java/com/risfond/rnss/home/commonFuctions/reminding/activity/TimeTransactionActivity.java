@@ -3,9 +3,11 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,12 +53,11 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("选择时间");
-
-    }@Override
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_transaction);
         initView();
         initEvent();
     }
@@ -118,21 +119,40 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
                 backgroundAlpha(1f);
             }
         });
+        //确定
         tv_ensure.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 beginTime = wheelMainDate.getTime().toString();
                 tv_house_time.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
+
+                //携带时间跳转
+                String selectedtime = tv_house_time.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("selectedtime",selectedtime);
+                intent.setClass(TimeTransactionActivity.this, AddTheTransactionActivity.class);
+                TimeTransactionActivity.this.startActivity(intent);
+
                 mPopupWindow.dismiss();
                 backgroundAlpha(1f);
 
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+                    long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
 
+                    int m5=300000;
+                    long l = millionSeconds - m5;
+                    long l1 = System.currentTimeMillis();
+                    Log.i("cq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+l+"\t当前的毫秒"+l1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
-
     boolean isShow;
+
     boolean isCurrentSelect;
     public boolean judgeTime(String nowDate,String beginTime){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -180,6 +200,7 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
             case R.id.tv_house_time:
                 showBottoPopupWindow();
                 break;
+
         }
     }
 

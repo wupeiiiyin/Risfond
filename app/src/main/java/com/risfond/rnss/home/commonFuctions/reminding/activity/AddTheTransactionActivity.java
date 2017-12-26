@@ -1,8 +1,11 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +17,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -21,15 +26,17 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
-import com.risfond.rnss.common.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddTheTransactionActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.tv_time_display)
+    TextView tvTimeDisplay;
     private TransactiondatabaseSQL ttdbsqlite;
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -44,6 +51,8 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     private Button btn;
     private ListView llllll;
     private Cursor c;
+
+    private MediaPlayer mediaPlayer;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -64,43 +73,53 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
         btn = (Button) findViewById(R.id.xxx);
         llllll = (ListView) findViewById(R.id.llllll);
         btn.setOnClickListener(this);
-        String trim = "abcdiefjiijij";
-        ContentValues cv = new ContentValues();
-        cv.put("name", trim);
-        ttdbsqlite.Addtransaction(cv);
-        ToastUtil.showShort(getApplication(), "添加成功");
+
+        Intent intent = getIntent();
+        String selectedtime = intent.getStringExtra("selectedtime");
+        tvTimeDisplay.setText(selectedtime);
+        /*
+        * 集合数据
+        * */
+//        String trim = "abcdiefjiijij";
+//        ContentValues cv = new ContentValues();
+//        cv.put("name", trim);
+//        ttdbsqlite.Addtransaction(cv);
     }
 
     @OnClick({R.id.ll_addthetransaction_time, R.id.ll_addthetransaction_reminding, R.id.tv_addthetransaction_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_addthetransaction_time:
-                startActivity(TimeTransactionActivity.class, false);
+                TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String time = hourOfDay+"时:"+minute+"秒";
+                        Toast.makeText(AddTheTransactionActivity.this, time, 0).show();
+                    }
+                }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+                //显示
+                dialog.show();
+                //startActivity(TimeTransactionActivity.class, false);
                 break;
             case R.id.ll_addthetransaction_reminding:
-                startActivity(RemindingTimeActivity.class, false);
-                break;
 //                Intent intent = new Intent(this,AgainRemindingActivity.class);
 //                startActivity(intent);
-//                String arr_list = editAddthetransactionContent.getText().toString();
-//                if (arr_list == null || arr_list.equals("")) {
-//                    Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
-//
-//                }
-//                else {
+                String arr_list = editAddthetransactionContent.getText().toString();
+                if (arr_list == null || arr_list.equals("")) {
+                    Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    startActivity(RemindingTimeActivity.class, false);
 //                    Intent intent = new Intent(this,RemindingActivity.class);
 //                    startActivity(intent.putExtra("arr_list",arr_list));
 //                    finish();
-//                    break;
-//                }
+                    break;
+                }
             //添加
             case R.id.tv_addthetransaction_commit:
                 String trim = "abcdiefjiijij";
                 ContentValues cv = new ContentValues();
                 cv.put("name", trim);
                 ttdbsqlite.Addtransaction(cv);
-
-                ToastUtil.showShort(getApplication(), "添加成功");
                 break;
         }
     }
@@ -141,6 +160,10 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//                //时间一到跳转Activity,在这个Activity中播放音乐
+//                mediaPlayer = MediaPlayer.create(this, R.raw.duan);
+//                mediaPlayer.start();
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -176,7 +199,8 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     public void onStop() {
         super.onStop();
-
+//                mediaPlayer.stop();
+//                finish();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
