@@ -89,23 +89,28 @@ public class RemindingTimeActivity extends BaseActivity {
                 //当前时间
                 Log.e("cq","小时:"+hour+"分:"+minutef);
 
+
                 Intent intent = getIntent();
                 String time = intent.getStringExtra("time");
                 String date = intent.getStringExtra("date");
                 String yMdhm = time+date;
-                tvTimeTq0.setText(DateUtils.formateStringH(date+time,DateUtils.yyyyMMddHHmm));
+
+                //5分钟毫秒值
+                int m5=300000;
+                long l = millionSeconds - m5;
+                long l1 = System.currentTimeMillis();
+//                long millionSeconds = 0;
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
-                    long millionSeconds = sdf.parse(yMdhm.trim()).getTime();
-                    //long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
-                    //5分钟毫秒值
-                    int m5=300000;
-                    long l = millionSeconds - m5;
-                    long l1 = System.currentTimeMillis();
-                    Log.i("cq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+l+"\t当前的毫秒"+l1);
+                    millionSeconds = sdf.parse(yMdhm.trim()).getTime();
+                    tvTimeTq0.setText(DateUtils.formateStringH(date+time,DateUtils.yyyyMMddHHmm));
+                    Log.i("cqq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+l+"\t当前的毫秒"+l1);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                //long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
+
+
                 break;
             case R.id.tv_time_tq15:
                 break;
