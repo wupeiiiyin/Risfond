@@ -39,8 +39,6 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
     private TextView tv_house_time;
     private TextView tv_center;
     private WheelMain wheelMainDate;
-    private WheelRangeMain wheelRangeMainDate;
-    private WheelWeekMain wheelWeekMainDate;
     private String beginTime;
 
     @Override

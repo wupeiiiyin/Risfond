@@ -24,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.risfond.rnss.home.commonFuctions.reminding.wheelview.DateUtils.yyyyMMddHHmm;
+
 public class RemindingTimeActivity extends BaseActivity {
     private AlarmManager alarmManager;
 
@@ -59,7 +61,10 @@ public class RemindingTimeActivity extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("提醒时间");
 
-//        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        Intent intent = getIntent();
+        String year_month_day = intent.getStringExtra("year_month_day");
+        tvTimeTq0.setText(year_month_day);
+        //        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
 //        duan = soundPool.load(this, R.raw.duan, 1);
 //        yulu = soundPool.load(this, R.raw.yulu, 1);
     }
@@ -69,7 +74,6 @@ public class RemindingTimeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -97,28 +101,34 @@ public class RemindingTimeActivity extends BaseActivity {
 
                 //5分钟毫秒值
                 int m5=300000;
-                long l = millionSeconds - m5;
-                long l1 = System.currentTimeMillis();
-//                long millionSeconds = 0;
+                long five_minutes = millionSeconds - m5;
+                long current = System.currentTimeMillis();
+                long millionSeconds = 0;
+
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
                     millionSeconds = sdf.parse(yMdhm.trim()).getTime();
-                    tvTimeTq0.setText(DateUtils.formateStringH(date+time,DateUtils.yyyyMMddHHmm));
-                    Log.i("cqq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+l+"\t当前的毫秒"+l1);
+//                    Intent intent1 = new Intent();
+//                    intent1.putExtra("key",yyyyMMddHHmm);
+//                    sendBroadcast(intent1);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
-
+                tvTimeTq0.setText(DateUtils.formateStringH(date+"."+time, yyyyMMddHHmm));
+                Log.i("cqq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+five_minutes+"\t当前的毫秒"+current);
 
                 break;
             case R.id.tv_time_tq15:
+
                 break;
             case R.id.tv_time_tq30:
+
                 break;
             case R.id.tv_time_tq60:
+
                 break;
             case R.id.tv_time_tq240:
+
                 break;
         }
     }
