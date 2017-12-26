@@ -3,21 +3,15 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
-import com.risfond.rnss.common.utils.ToastUtil;
-import com.risfond.rnss.entry.ReferenceItemInfo;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CaledarAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarBean;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarDateView;
@@ -59,38 +53,29 @@ public class RemindingActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("事务提醒");
-
-
         CaledarAdapter adapter = new CaledarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarBean bean) {
                 Intent intent = getIntent();
                 String arr_list = intent.getStringExtra("arr_list");
                 list_positionSearches.add(arr_list);
-
-
                 TextView view;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(px(60), px(48));
                     convertView.setLayoutParams(params);
                 }
-
                 view = (TextView) convertView.findViewById(R.id.text);
-
                 view.setText("" + bean.day);
                 if (bean.mothFlag != 0) {
                     view.setTextColor(0xff999999);
                 } else {
                     view.setTextColor(0xff333333);
                 }
-
                 return convertView;
             }
         };
         mCalendarDateView.setAdapter(adapter);
-
-
         mCalendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
@@ -100,7 +85,6 @@ public class RemindingActivity extends BaseActivity {
 
         int[] data = CalendarUtil.getYMD(new Date());
         mTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
-
 //        BaseAdapter baseAdapter = new BaseAdapter() {
 //
 //            @Override

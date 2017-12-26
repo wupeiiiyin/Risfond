@@ -120,6 +120,7 @@
             />
         <RelativeLayout
             android:id="@+id/ll_reminding_reference"
+            android:background="#eee"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <!--<ListView-->
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@mipmap/iconaffairs"
                 android:textColor="#AEAEAE"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="45dp"
                 android:id="@+id/tv_reminding_context"
                 android:gravity="center"
                 android:text="这一天暂无事务"

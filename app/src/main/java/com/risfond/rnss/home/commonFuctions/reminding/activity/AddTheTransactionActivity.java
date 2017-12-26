@@ -1,7 +1,7 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,6 +38,9 @@ import butterknife.OnClick;
 public class AddTheTransactionActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_time_display)
     TextView tvTimeDisplay;
+    @BindView(R.id.tv_time_displaytime)
+    TextView tvTimeDisplaytime;
+
     private TransactiondatabaseSQL ttdbsqlite;
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -48,6 +52,12 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     LinearLayout llAddthetransactionReminding;
     @BindView(R.id.tv_addthetransaction_commit)
     TextView tvAddthetransactionCommit;
+
+    @BindView(R.id.ll_adddate)
+    LinearLayout lladddate;
+    @BindView(R.id.ll_addtime)
+    LinearLayout lladdtime;
+
     private Button btn;
     private ListView llllll;
     private Cursor c;
@@ -57,7 +67,9 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
+    private String time,date;
     private GoogleApiClient client;
+    private String beginTime;
 
     @Override
     public int getContentViewResId() {
@@ -74,9 +86,10 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
         llllll = (ListView) findViewById(R.id.llllll);
         btn.setOnClickListener(this);
 
-        Intent intent = getIntent();
-        String selectedtime = intent.getStringExtra("selectedtime");
-        tvTimeDisplay.setText(selectedtime);
+//        Intent intent = getIntent();
+//        String selectedtime = intent.getStringExtra("selectedtime");
+//        tvTimeDisplay.setText(selectedtime);
+
         /*
         * 集合数据
         * */
@@ -86,41 +99,57 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
 //        ttdbsqlite.Addtransaction(cv);
     }
 
-    @OnClick({R.id.ll_addthetransaction_time, R.id.ll_addthetransaction_reminding, R.id.tv_addthetransaction_commit})
+    @OnClick({R.id.ll_adddate,R.id.ll_addtime,R.id.ll_addthetransaction_time,R.id.tv_addthetransaction_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_addthetransaction_time:
+            //日期
+            case R.id.ll_adddate:
+                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        //当前选择的日期
+                        date = year+"-"+Integer.parseInt(monthOfYear+1+"")+"-"+dayOfMonth;
+                        tvTimeDisplay.setText(date);
+                    }
+                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                //通过Calendar获得当前年、月、日
+                //显示
+                dialog1.show();
+                break;
+            //时间
+            case R.id.ll_addtime:
                 TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String time = hourOfDay+"时:"+minute+"秒";
-                        Toast.makeText(AddTheTransactionActivity.this, time, 0).show();
+                        time = hourOfDay+":"+minute;
+                        tvTimeDisplaytime.setText(time);
                     }
                 }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
                 //显示
                 dialog.show();
                 //startActivity(TimeTransactionActivity.class, false);
                 break;
-            case R.id.ll_addthetransaction_reminding:
-//                Intent intent = new Intent(this,AgainRemindingActivity.class);
-//                startActivity(intent);
+
+            case R.id.ll_addthetransaction_time:
+                Intent intent = new Intent();
+                intent.putExtra("time",time);
+                intent.putExtra("date",date);
+                intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
+                AddTheTransactionActivity.this.startActivity(intent);
+                finish();
+                break;
+            //添加
+            case R.id.tv_addthetransaction_commit:
+//                String trim = "abcdiefjiijij";
+//                ContentValues cv = new ContentValues();
+//                cv.put("name", trim);
+//                ttdbsqlite.Addtransaction(cv);
                 String arr_list = editAddthetransactionContent.getText().toString();
                 if (arr_list == null || arr_list.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    startActivity(RemindingTimeActivity.class, false);
-//                    Intent intent = new Intent(this,RemindingActivity.class);
-//                    startActivity(intent.putExtra("arr_list",arr_list));
-//                    finish();
+                    startActivity(RemindingActivity.class, false);
                     break;
                 }
-            //添加
-            case R.id.tv_addthetransaction_commit:
-                String trim = "abcdiefjiijij";
-                ContentValues cv = new ContentValues();
-                cv.put("name", trim);
-                ttdbsqlite.Addtransaction(cv);
-                break;
         }
     }
 

@@ -13,10 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
@@ -121,7 +119,6 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
         });
         //确定
         tv_ensure.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 beginTime = wheelMainDate.getTime().toString();
@@ -136,7 +133,6 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
 
                 mPopupWindow.dismiss();
                 backgroundAlpha(1f);
-
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
                     long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
@@ -151,64 +147,23 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
             }
         });
     }
-    boolean isShow;
-
-    boolean isCurrentSelect;
-    public boolean judgeTime(String nowDate,String beginTime){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //此处会抛异常
-        Date date;
-        long longDate = 0;
-        Date currentDate;
-        long longCurrentDate = 0;
-
-        try {
-            date = sdf.parse(beginTime);
-            //获取毫秒数
-            longDate = date.getTime();
-            currentDate = sdf.parse(nowDate);
-            longCurrentDate = currentDate.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (longCurrentDate== longDate ){
-            isCurrentSelect = true;
-        }
-        if (longCurrentDate > longDate){
-            Toast.makeText(TimeTransactionActivity.this, "当前时间选择有误", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-    public void showDateSelector(LinearLayout time_select, LinearLayout date_select){
-        time_select.setVisibility(View.GONE);
-        date_select.setVisibility(View.VISIBLE);
-    }
-    public void showTimeSelector(LinearLayout time_select, LinearLayout date_select){
-        time_select.setVisibility(View.VISIBLE);
-        date_select.setVisibility(View.GONE);
-    }
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getWindow().setAttributes(lp);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_house_time:
                 showBottoPopupWindow();
                 break;
-
         }
     }
-
     class poponDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
             backgroundAlpha(1f);
         }
-
     }
 }

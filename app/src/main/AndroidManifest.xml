@@ -277,9 +277,6 @@
 
         <activity android:name=".home.commonFuctions.reminding.activity.TimeTransactionActivity" />
 
-        <receiver android:name=".home.commonFuctions.reminding.broadcast.RingReceived" />
-
-        <activity android:name=".home.commonFuctions.reminding.activity.RingActivity"></activity>
     </application>
 
 </manifest>
