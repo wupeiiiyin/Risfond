@@ -3,6 +3,7 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -13,15 +14,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.common.utils.ToastUtil;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 public class AddTheTransactionActivity extends BaseActivity implements View.OnClickListener {
-    private  TransactiondatabaseSQL ttdbsqlite  ;
+    private TransactiondatabaseSQL ttdbsqlite;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.edit_addthetransaction_content)
@@ -35,6 +44,11 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     private Button btn;
     private ListView llllll;
     private Cursor c;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public int getContentViewResId() {
@@ -52,15 +66,16 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
         btn.setOnClickListener(this);
         String trim = "abcdiefjiijij";
         ContentValues cv = new ContentValues();
-        cv.put("name",trim);
+        cv.put("name", trim);
         ttdbsqlite.Addtransaction(cv);
-        ToastUtil.showShort(getApplication(),"添加成功");
+        ToastUtil.showShort(getApplication(), "添加成功");
     }
+
     @OnClick({R.id.ll_addthetransaction_time, R.id.ll_addthetransaction_reminding, R.id.tv_addthetransaction_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_addthetransaction_time:
-                startActivity(TransactiontimeActivity.class, false);
+                startActivity(TimeTransactionActivity.class, false);
                 break;
             case R.id.ll_addthetransaction_reminding:
                 startActivity(RemindingTimeActivity.class, false);
@@ -82,27 +97,27 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
             case R.id.tv_addthetransaction_commit:
                 String trim = "abcdiefjiijij";
                 ContentValues cv = new ContentValues();
-                cv.put("name",trim);
+                cv.put("name", trim);
                 ttdbsqlite.Addtransaction(cv);
 
-                ToastUtil.showShort(getApplication(),"添加成功");
+                ToastUtil.showShort(getApplication(), "添加成功");
                 break;
         }
     }
 
-    //查找就
+    //查
     @Override
     public void onClick(View v) {
         ArrayList<String> list = new ArrayList();
         View view2 = LayoutInflater.from(AddTheTransactionActivity.this).inflate(R.layout.activity_text, null);
         llllll = (ListView) view2.findViewById(R.id.llllll);
         c.moveToFirst();
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             String cursorString1 = c.getString(c.getColumnIndex("name"));
-            list.add( "内容:"+cursorString1);
+            list.add("内容:" + cursorString1);
 
         }
-        ArrayAdapter Adapter = new ArrayAdapter(AddTheTransactionActivity.this,android.R.layout.simple_expandable_list_item_1,list);
+        ArrayAdapter Adapter = new ArrayAdapter(AddTheTransactionActivity.this, android.R.layout.simple_expandable_list_item_1, list);
         llllll.setAdapter(Adapter);
 
 
@@ -121,5 +136,50 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
             }
         });
         builder2.show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("AddTheTransaction Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
