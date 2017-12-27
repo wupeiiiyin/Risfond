@@ -62,9 +62,6 @@ public class RemindingTimeActivity extends BaseActivity {
         Intent intent = getIntent();
         String year_month_day = intent.getStringExtra("year_month_day");
         tvTimeTq0.setText(year_month_day);
-        //        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-//        duan = soundPool.load(this, R.raw.duan, 1);
-//        yulu = soundPool.load(this, R.raw.yulu, 1);
     }
 
     @Override
@@ -79,53 +76,44 @@ public class RemindingTimeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_time_tq0:
-                finish();
                 ToastUtil.showShort(getApplication(),"不提醒");
                 break;
             case R.id.tv_time_tq5:
-                //startActivity(RemindingTimeActivity.class, false);
-//                //获取当前系统的时间
-//                Calendar calendar= Calendar.getInstance();
-//                int hour=calendar.get(Calendar.HOUR_OF_DAY);
-//                int minutef=calendar.get(Calendar.MINUTE);
-//                //当前时间
-//                Log.e("cq","小时:"+hour+"分:"+minutef);
-//
                 Intent intent = getIntent();
-
                 String time = intent.getStringExtra("time");
-//                String date = intent.getStringExtra("date");
-//                String yMdhm = time+date;
-//
-//                try {
-//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
-//                    millionSeconds = sdf.parse(yMdhm.trim()).getTime();
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                tvTimeTq0.setText(DateUtils.formateStringH(date+"."+time, yyyyMMddHHmm));
+                    if (time == null){
+                        Toast.makeText(this, "请选择日期", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String[] split = time.split(":");
+                        int mHour = Integer.parseInt(split[0]);
+                        int mMinute = Integer.parseInt(split[1]);
 
+                        long l = millionSeconds - System.currentTimeMillis();
+                        int day = (int) (l / 1000 / 60 / 60 / 24);
 
-                String[] split = time.split(":");
-                int mHour = Integer.parseInt(split[0]);
-                int mMinute = Integer.parseInt(split[1]);
+                        startRemind(mHour,mMinute,day);
 
-                long l = millionSeconds - System.currentTimeMillis();
-                int day = (int) (l / 1000 / 60 / 60 / 24);
+                        Intent intent1 = new Intent();
+                        String tq5 = "提前5分钟";
+                        intent1.putExtra("tq5",tq5);
+                        intent1.putExtra("mHour",mHour);
+                        intent1.putExtra("mMinute",mMinute);
+                        intent1.putExtra("day",day);
+                    }
+                ToastUtil.showShort(getApplication(),"提前5分钟");
 
-                startRemind(mHour,mMinute,day);
                 break;
             case R.id.tv_time_tq15:
-
+                ToastUtil.showShort(getApplication(),"提前15分钟");
                 break;
             case R.id.tv_time_tq30:
-
+                ToastUtil.showShort(getApplication(),"提前30分钟");
                 break;
             case R.id.tv_time_tq60:
-
+                ToastUtil.showShort(getApplication(),"提前60分钟");
                 break;
             case R.id.tv_time_tq240:
-
+                ToastUtil.showShort(getApplication(),"提前1天");
                 break;
         }
     }
@@ -134,7 +122,6 @@ public class RemindingTimeActivity extends BaseActivity {
      * 开启提醒
      */
     private void startRemind(int hour, int minute, int day) {
-
         //得到日历实例，主要是为了下面的获取时间
         final Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(System.currentTimeMillis());

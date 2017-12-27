@@ -14,7 +14,7 @@ import android.util.Log;
 public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     private static final String DB_NAME="cool.db";
     private static final String TAB_NAME = "collTab";
-    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text)";
+    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text,time text,remind text)";
 
     private SQLiteDatabase db;
     public TransactiondatabaseSQL(Context context) {

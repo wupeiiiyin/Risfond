@@ -285,8 +285,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".home.commonFuctions.reminding.activity.TimeTransactionActivity" />
-
         <receiver android:name=".home.commonFuctions.reminding.broadcastreceiver.TimeBroReceiver" />
 
         <service android:name=".home.commonFuctions.reminding.receiver.MusicTimeService"></service>
