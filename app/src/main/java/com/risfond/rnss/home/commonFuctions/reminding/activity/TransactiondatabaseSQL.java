@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by lenovo on 2017/7/22.
@@ -13,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     private static final String DB_NAME="cool.db";
     private static final String TAB_NAME = "collTab";
-    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text)";
+    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text,time text,remind text)";
 
     private SQLiteDatabase db;
     public TransactiondatabaseSQL(Context context) {
@@ -33,7 +34,10 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     }
 
     public void Addtransaction(ContentValues contentValues){
+        Log.e("sss","增加");
         db.insert(TAB_NAME,null,contentValues);
+        Log.e("sss","增加111");
+
     }
 
     public Cursor checktransaction(){

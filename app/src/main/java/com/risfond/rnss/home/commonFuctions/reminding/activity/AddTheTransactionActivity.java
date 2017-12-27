@@ -1,22 +1,28 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
+import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,21 +33,23 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.broadcastreceiver.AlarmReceiver;
+import com.risfond.rnss.home.commonFuctions.reminding.wheelview.DateUtils;
+import com.risfond.rnss.home.commonFuctions.reminding.wheelview.JudgeDate;
+import com.risfond.rnss.home.commonFuctions.reminding.wheelview.ScreenInfo;
+import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddTheTransactionActivity extends BaseActivity implements View.OnClickListener {
+public class AddTheTransactionActivity extends BaseActivity {
     @BindView(R.id.tv_time_display)
     TextView tvTimeDisplay;
-    @BindView(R.id.tv_time_displaytime)
-    TextView tvTimeDisplaytime;
-
-    private TransactiondatabaseSQL ttdbsqlite;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.edit_addthetransaction_content)
@@ -53,24 +61,19 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.tv_addthetransaction_commit)
     TextView tvAddthetransactionCommit;
 
-    @BindView(R.id.ll_adddate)
-    LinearLayout lladddate;
-    @BindView(R.id.ll_addtime)
-    LinearLayout lladdtime;
 
-    private Button btn;
-    private ListView llllll;
+    private WheelMain wheelMainDate;
+    private TransactiondatabaseSQL ttdbsqlite;
     private Cursor c;
-
+    private TextView tv_center;
     private MediaPlayer mediaPlayer;
+    private String time, date;
+    private GoogleApiClient client;
+    private String beginTime;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private String time,date;
-    private GoogleApiClient client;
-    private String beginTime;
-
     @Override
     public int getContentViewResId() {
         return R.layout.activity_add_the_transaction;
@@ -78,122 +81,76 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void init(Bundle savedInstanceState) {
+        tv_center = (TextView) findViewById(R.id.tv_center);
         ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
         tvTitle.setText("添加事务");
         ButterKnife.bind(this);
         c = ttdbsqlite.checktransaction();
-        btn = (Button) findViewById(R.id.xxx);
-        llllll = (ListView) findViewById(R.id.llllll);
-        btn.setOnClickListener(this);
-
-//        Intent intent = getIntent();
-//        String selectedtime = intent.getStringExtra("selectedtime");
-//        tvTimeDisplay.setText(selectedtime);
-
-        /*
-        * 集合数据
-        * */
-//        String trim = "abcdiefjiijij";
-//        ContentValues cv = new ContentValues();
-//        cv.put("name", trim);
-//        ttdbsqlite.Addtransaction(cv);
     }
 
-    @OnClick({R.id.ll_adddate,R.id.ll_addtime,R.id.ll_addthetransaction_time,R.id.tv_addthetransaction_commit})
+    @OnClick({R.id.ll_addthetransaction_reminding, R.id.ll_addthetransaction_time, R.id.tv_addthetransaction_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //日期
-            case R.id.ll_adddate:
-                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        //当前选择的日期
-                        date = year+"-"+Integer.parseInt(monthOfYear+1+"")+"-"+dayOfMonth;
-                        tvTimeDisplay.setText(date);
-                    }
-                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-                //通过Calendar获得当前年、月、日
-                //显示
-                dialog1.show();
-                break;
-            //时间
-            case R.id.ll_addtime:
-                TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time = hourOfDay+":"+minute;
-                        tvTimeDisplaytime.setText(time);
-                    }
-                }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
-                //显示
-                dialog.show();
-                //startActivity(TimeTransactionActivity.class, false);
-                break;
+            case R.id.ll_addthetransaction_reminding:
+                //雷达图,统计图
+                //startActivity(ContionActivity.class, false);
 
+
+                //PopupWindow
+                showBottoPopupWindow();
+
+                //系统自带
+//                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                        //当前选择的日期
+//                        date = year + "-" + Integer.parseInt(monthOfYear + 1 + "") + "-" + dayOfMonth;
+//
+//                        TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                                time = hourOfDay + ":" + minute;
+//                                tvTimeDisplay.setText(date +" "+ time);
+//                            }
+//                        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+//                        //显示
+//                        dialog.show();
+//                    }
+//                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+//                //通过Calendar获得当前年、月、日
+//                dialog1.show();
+                break;
             case R.id.ll_addthetransaction_time:
                 Intent intent = new Intent();
-                intent.putExtra("time",time);
-                intent.putExtra("date",date);
+                intent.putExtra("time", time);
+                intent.putExtra("date", date);
                 intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
                 AddTheTransactionActivity.this.startActivity(intent);
-                finish();
                 break;
             //添加
             case R.id.tv_addthetransaction_commit:
-//                String trim = "abcdiefjiijij";
-//                ContentValues cv = new ContentValues();
-//                cv.put("name", trim);
-//                ttdbsqlite.Addtransaction(cv);
+                String trim = editAddthetransactionContent.getText().toString();
+                ContentValues cv = new ContentValues();
+                cv.put("name", trim);
+                ttdbsqlite.Addtransaction(cv);
                 String arr_list = editAddthetransactionContent.getText().toString();
                 if (arr_list == null || arr_list.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    startActivity(RemindingActivity.class, false);
+                } else {
+                    startActivity(RemindingActivity.class, true);
+//                    Intent intent1 = getIntent();
+//                    //String tq5 = intent1.getStringExtra("tq5");
+//                    int mHour = intent1.getExtras().getInt("mHour");
+//                    int mMinute = intent1.getExtras().getInt("mMinute");
+//                    int day = intent1.getExtras().getInt("day");
+//                    startRemind(mHour,mMinute,day);
                     break;
                 }
         }
     }
 
-    //查
-    @Override
-    public void onClick(View v) {
-        ArrayList<String> list = new ArrayList();
-        View view2 = LayoutInflater.from(AddTheTransactionActivity.this).inflate(R.layout.activity_text, null);
-        llllll = (ListView) view2.findViewById(R.id.llllll);
-        c.moveToFirst();
-        while (c.moveToNext()) {
-            String cursorString1 = c.getString(c.getColumnIndex("name"));
-            list.add("内容:" + cursorString1);
-
-        }
-        ArrayAdapter Adapter = new ArrayAdapter(AddTheTransactionActivity.this, android.R.layout.simple_expandable_list_item_1, list);
-        llllll.setAdapter(Adapter);
-
-
-        AlertDialog.Builder builder2 = new AlertDialog.Builder(AddTheTransactionActivity.this);
-        builder2.setView(view2);
-        builder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder2.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder2.show();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//                //时间一到跳转Activity,在这个Activity中播放音乐
-//                mediaPlayer = MediaPlayer.create(this, R.raw.duan);
-//                mediaPlayer.start();
-
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -218,9 +175,6 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
@@ -228,11 +182,95 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     public void onStop() {
         super.onStop();
-//                mediaPlayer.stop();
-//                finish();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    public void showBottoPopupWindow() {
+        WindowManager manager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display defaultDisplay = manager.getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        View menuView = LayoutInflater.from(this).inflate(R.layout.show_popup_window,null);
+        final PopupWindow mPopupWindow = new PopupWindow(menuView, (int)(width*0.8),
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        ScreenInfo screenInfoDate = new ScreenInfo(this);
+        wheelMainDate = new WheelMain(menuView, true);
+        wheelMainDate.screenheight = screenInfoDate.getHeight();
+        String time = DateUtils.currentMonth().toString();
+        Calendar calendar = Calendar.getInstance();
+        if (JudgeDate.isDate(time, "yyyy-MM-DD")) {
+            try {
+                calendar.setTime(new Date(time));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        wheelMainDate.initDateTimePicker(year, month, day, hours,minute);
+        mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        mPopupWindow.showAtLocation(tv_center, Gravity.CENTER, 0, 0);
+        mPopupWindow.setOnDismissListener(new poponDismissListener());
+//        backgroundAlpha(0.6f);
+
+        TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
+        TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
+        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
+//        tv_pop_title.setText("选择起始时间");
+        tv_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                mPopupWindow.dismiss();
+//                backgroundAlpha(1f);
+            }
+        });
+        //确定
+        tv_ensure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                beginTime = wheelMainDate.getTime().toString();
+                tvTimeDisplay.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
+                //传递时间
+                String selectedtime = tvTimeDisplay.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("selectedtime",selectedtime);
+//                intent.setClass(TimeTransactionActivity.this, AddTheTransactionActivity.class);
+//                TimeTransactionActivity.this.startActivity(intent);
+                mPopupWindow.dismiss();
+//                backgroundAlpha(1f);
+//                try {
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+//                    long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
+//
+//                    int m5=300000;
+//                    long l = millionSeconds - m5;
+//                    long l1 = System.currentTimeMillis();
+//                    Log.i("cq","定时的毫秒:"+millionSeconds+"\t提前五分的毫秒:"+l+"\t当前的毫秒"+l1);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+            }
+        });
+    }
+    class poponDismissListener implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+//            backgroundAlpha(1f);
+        }
+    }
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
     }
 }

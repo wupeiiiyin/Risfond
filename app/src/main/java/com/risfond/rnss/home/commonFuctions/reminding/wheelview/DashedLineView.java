@@ -21,9 +21,9 @@ public class DashedLineView extends View {
  protected void onDraw(Canvas canvas) {
  // TODO Auto-generated method stub
  super.onDraw(canvas);
- Paint paint = new Paint();
+ Paint paint = new Paint();android:
  paint.setStyle(Paint.Style.STROKE);
- paint.setColor(Color.parseColor("#66717171"));//颜色可以自己设置
+ paint.setColor(Color.parseColor("#2fbbdad5"));//颜色可以自己设置
   paint.setStrokeWidth(8);
  Path path = new Path();
  path.moveTo(0, 0);//起始坐标

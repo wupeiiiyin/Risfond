@@ -2,16 +2,23 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.adapter.HomePageAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CaledarAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarBean;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarDateView;
@@ -38,12 +45,25 @@ public class RemindingActivity extends BaseActivity {
     TextView tvRemindingAddaffairs;
     @BindView(R.id.ll_reminding_reference)
     RelativeLayout mLlRemindingReference;
-//    @BindView(R.id.list_reminding_item)
-//    ListView listRemindingItem;
     @BindView(R.id.imageView)
     ImageView imageView;
+
+    @BindView(R.id.list_reminding_item)
+    ListView listRemindingItem;
+    @BindView(R.id.tv_affairsleft)
+    TextView tvAffairsleft;
+    @BindView(R.id.tv_itemnumber)
+    TextView tvItemnumber;
+    @BindView(R.id.tv_affairsright)
+    TextView tvAffairsright;
+    @BindView(R.id.ll_reming_affairs)
+    LinearLayout llRemingAffairs;
+
+    private HomePageAdapter Adapter;
     private boolean isHasNum = true;//记录是否加载有数据
-    private List list_positionSearches = new ArrayList();
+    private List<String> list_positionSearches = new ArrayList();
+    private Cursor c;
+    private TransactiondatabaseSQL ttdbsqlite;
 
     @Override
     public int getContentViewResId() {
@@ -52,13 +72,51 @@ public class RemindingActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
+        c = ttdbsqlite.checktransaction();
+        c.moveToFirst();
+        while (c.moveToNext()) {
+            String cursorString1 = c.getString(c.getColumnIndex("name"));
+            list_positionSearches.add("内容:" + cursorString1);
+        }
+
+        int size = list_positionSearches.size();
+        tvItemnumber.setText(size+"");
+
+        if (list_positionSearches.size() > 0) {//-1
+            listRemindingItem.setVisibility(View.VISIBLE);      //ListView显示
+            llRemingAffairs.setVisibility(View.VISIBLE);
+            tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
+            tvItemnumber.setVisibility(View.VISIBLE);           //数量  显示
+            tvAffairsright.setVisibility(View.VISIBLE);         // ) 显示
+            tvRemindingAddaffairs.setVisibility(View.GONE);     //占位图片隐藏
+            tvRemindingContext.setVisibility(View.GONE);        //文字隐藏
+
+
+
+            Adapter = new HomePageAdapter(list_positionSearches, this);
+            listRemindingItem.setAdapter(Adapter);
+        } else if (list_positionSearches.size() <= 0) {
+            listRemindingItem.setVisibility(View.GONE);         //ListView隐藏
+            llRemingAffairs.setVisibility(View.GONE);
+            tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏
+            tvItemnumber.setVisibility(View.GONE);              //数量  隐藏
+            tvAffairsright.setVisibility(View.GONE);            // ) 隐藏
+            tvRemindingAddaffairs.setVisibility(View.VISIBLE);  //占位图片显示
+            tvRemindingContext.setVisibility(View.VISIBLE);     //文字显示
+        }
+
+
+        listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(RemindingActivity.this, "item" + i + "--------" + l, Toast.LENGTH_SHORT).show();
+            }
+        });
         tvTitle.setText("事务提醒");
         CaledarAdapter adapter = new CaledarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarBean bean) {
-                Intent intent = getIntent();
-                String arr_list = intent.getStringExtra("arr_list");
-                list_positionSearches.add(arr_list);
                 TextView view;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
@@ -85,40 +143,6 @@ public class RemindingActivity extends BaseActivity {
 
         int[] data = CalendarUtil.getYMD(new Date());
         mTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
-//        BaseAdapter baseAdapter = new BaseAdapter() {
-//
-//            @Override
-//            public int getCount() {
-//                if (list_positionSearches != null) {
-//                    return list_positionSearches.size();
-//                }
-//
-//                return 0;
-//
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return list_positionSearches.get(position);
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return position;
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//
-//                if (convertView == null) {
-//                    convertView = LayoutInflater.from(RemindingActivity.this).inflate(R.layout.item_customer_detail, null);
-//                }
-//                TextView textView = (TextView) convertView;
-//                textView.setText(list_positionSearches.get(position).toString());
-//                return convertView;
-//            }
-//        };
-//        listRemindingItem.setAdapter(baseAdapter);
     }
 
     public static void StartAction(Context context) {
@@ -133,7 +157,6 @@ public class RemindingActivity extends BaseActivity {
 
     private String getDisPlayNumber(int num) {
         return num < 10 ? "0" + num : "" + num;
-
     }
 
     @Override
@@ -141,7 +164,6 @@ public class RemindingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})
@@ -149,11 +171,9 @@ public class RemindingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_reminding_addaffairs:
                 startActivity(AddTheTransactionActivity.class, false);
-                finish();
                 break;
             case R.id.imageView:
                 startActivity(AddTheTransactionActivity.class, false);
-                finish();
                 break;
         }
     }
