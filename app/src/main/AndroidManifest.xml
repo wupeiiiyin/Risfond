@@ -33,6 +33,7 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -41,11 +42,11 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver
             android:name=".home.commonFuctions.reminding.broadcastreceiver.AlarmReceiver"
             android:process=":remote" />
-        <service android:name=".home.commonFuctions.reminding.broadcastreceiver.MyService"/>
+
+        <service android:name=".home.commonFuctions.reminding.broadcastreceiver.MyService" />
 
         <!-- 设置环信应用的AppKey -->
         <meta-data
@@ -287,9 +288,10 @@
 
         <receiver android:name=".home.commonFuctions.reminding.broadcastreceiver.TimeBroReceiver" />
 
-        <service android:name=".home.commonFuctions.reminding.receiver.MusicTimeService"></service>
+        <service android:name=".home.commonFuctions.reminding.receiver.MusicTimeService" />
 
-        <activity android:name=".home.commonFuctions.reminding.activity.ContionActivity"></activity>
+        <activity android:name=".home.commonFuctions.reminding.activity.ContionActivity" />
+        <activity android:name=".home.commonFuctions.reminding.activity.TimeTransactionActivity"></activity>
     </application>
 
 </manifest>

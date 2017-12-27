@@ -56,7 +56,7 @@ public class WheelView extends View {
 	private static final int MIN_DELTA_FOR_SCROLLING = 1;
 
 	/** 当前值与标签文本颜色 */
-	private static final int VALUE_TEXT_COLOR = 0x8FFE1100;
+	private static final int VALUE_TEXT_COLOR = 0xFF000000;
 
 	/** 项目文本颜色 */
 	private static final int ITEMS_TEXT_COLOR = 0xFF000000;
