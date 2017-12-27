@@ -24,17 +24,6 @@
         android:maxLength="2000"/>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/xxx"
-        android:text="查看"
-        android:layout_above="@+id/tv_addthetransaction_commit"
-        android:layout_alignLeft="@+id/tv_addthetransaction_commit"
-        android:layout_alignStart="@+id/tv_addthetransaction_commit"
-        android:layout_marginLeft="37dp"
-        android:layout_marginStart="37dp"/>
-
     <TextView
         android:id="@+id/tv_addthetransaction_commit"
         android:layout_width="match_parent"

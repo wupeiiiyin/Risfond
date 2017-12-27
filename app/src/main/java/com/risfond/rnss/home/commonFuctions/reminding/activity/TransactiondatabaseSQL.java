@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by lenovo on 2017/7/22.
@@ -33,7 +34,10 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     }
 
     public void Addtransaction(ContentValues contentValues){
+        Log.e("sss","增加");
         db.insert(TAB_NAME,null,contentValues);
+        Log.e("sss","增加111");
+
     }
 
     public Cursor checktransaction(){

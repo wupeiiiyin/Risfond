@@ -2,21 +2,16 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,14 +23,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddTheTransactionActivity extends BaseActivity implements View.OnClickListener {
+public class AddTheTransactionActivity extends BaseActivity{
     @BindView(R.id.tv_time_display)
     TextView tvTimeDisplay;
     @BindView(R.id.tv_time_displaytime)
@@ -58,8 +52,6 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.ll_addtime)
     LinearLayout lladdtime;
 
-    private Button btn;
-    private ListView llllll;
     private Cursor c;
 
     private MediaPlayer mediaPlayer;
@@ -82,21 +74,6 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
         tvTitle.setText("添加事务");
         ButterKnife.bind(this);
         c = ttdbsqlite.checktransaction();
-        btn = (Button) findViewById(R.id.xxx);
-        llllll = (ListView) findViewById(R.id.llllll);
-        btn.setOnClickListener(this);
-
-//        Intent intent = getIntent();
-//        String selectedtime = intent.getStringExtra("selectedtime");
-//        tvTimeDisplay.setText(selectedtime);
-
-        /*
-        * 集合数据
-        * */
-//        String trim = "abcdiefjiijij";
-//        ContentValues cv = new ContentValues();
-//        cv.put("name", trim);
-//        ttdbsqlite.Addtransaction(cv);
     }
 
     @OnClick({R.id.ll_adddate,R.id.ll_addtime,R.id.ll_addthetransaction_time,R.id.tv_addthetransaction_commit})
@@ -138,10 +115,10 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
                 break;
             //添加
             case R.id.tv_addthetransaction_commit:
-//                String trim = "abcdiefjiijij";
-//                ContentValues cv = new ContentValues();
-//                cv.put("name", trim);
-//                ttdbsqlite.Addtransaction(cv);
+                String trim = editAddthetransactionContent.getText().toString();
+                ContentValues cv = new ContentValues();
+                cv.put("name", trim);
+                ttdbsqlite.Addtransaction(cv);
                 String arr_list = editAddthetransactionContent.getText().toString();
                 if (arr_list == null || arr_list.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
@@ -153,47 +130,10 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    //查
-    @Override
-    public void onClick(View v) {
-        ArrayList<String> list = new ArrayList();
-        View view2 = LayoutInflater.from(AddTheTransactionActivity.this).inflate(R.layout.activity_text, null);
-        llllll = (ListView) view2.findViewById(R.id.llllll);
-        c.moveToFirst();
-        while (c.moveToNext()) {
-            String cursorString1 = c.getString(c.getColumnIndex("name"));
-            list.add("内容:" + cursorString1);
-
-        }
-        ArrayAdapter Adapter = new ArrayAdapter(AddTheTransactionActivity.this, android.R.layout.simple_expandable_list_item_1, list);
-        llllll.setAdapter(Adapter);
-
-
-        AlertDialog.Builder builder2 = new AlertDialog.Builder(AddTheTransactionActivity.this);
-        builder2.setView(view2);
-        builder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder2.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder2.show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//                //时间一到跳转Activity,在这个Activity中播放音乐
-//                mediaPlayer = MediaPlayer.create(this, R.raw.duan);
-//                mediaPlayer.start();
-
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -218,9 +158,6 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
@@ -228,10 +165,6 @@ public class AddTheTransactionActivity extends BaseActivity implements View.OnCl
     @Override
     public void onStop() {
         super.onStop();
-//                mediaPlayer.stop();
-//                finish();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }

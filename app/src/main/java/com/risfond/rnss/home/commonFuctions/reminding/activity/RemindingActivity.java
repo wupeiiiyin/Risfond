@@ -2,16 +2,21 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.adapter.HomePageAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CaledarAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarBean;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarDateView;
@@ -28,7 +33,7 @@ import butterknife.OnClick;
 
 import static com.risfond.rnss.home.commonFuctions.reminding.activity.Utils.px;
 
-public class RemindingActivity extends BaseActivity {
+public class RemindingActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
@@ -38,13 +43,15 @@ public class RemindingActivity extends BaseActivity {
     TextView tvRemindingAddaffairs;
     @BindView(R.id.ll_reminding_reference)
     RelativeLayout mLlRemindingReference;
-//    @BindView(R.id.list_reminding_item)
-//    ListView listRemindingItem;
     @BindView(R.id.imageView)
     ImageView imageView;
-    private boolean isHasNum = true;//记录是否加载有数据
-    private List list_positionSearches = new ArrayList();
 
+    @BindView(R.id.list_reminding_item)
+    ListView listRemindingItem;
+    private boolean isHasNum = true;//记录是否加载有数据
+    private List<String> list_positionSearches = new ArrayList();
+    private Cursor c;
+    private TransactiondatabaseSQL ttdbsqlite;
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -52,13 +59,37 @@ public class RemindingActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
+        c = ttdbsqlite.checktransaction();
+        c.moveToFirst();
+        while (c.moveToNext()) {
+            Log.e("sssss","ksfjlaf");
+            String cursorString1 = c.getString(c.getColumnIndex("name"));
+            list_positionSearches.add("内容:" + cursorString1);
+            Log.e("sssss",cursorString1);
+        }
+        //Toast.makeText(this, list_positionSearches.size(), Toast.LENGTH_SHORT).show();
+        if (list_positionSearches.size() > 0){
+            listRemindingItem.setVisibility(View.VISIBLE);
+            tvRemindingAddaffairs.setVisibility(View.GONE);
+            tvRemindingContext.setVisibility(View.GONE);
+            Log.e("sss",list_positionSearches.size()+"");
+            HomePageAdapter Adapter = new HomePageAdapter(list_positionSearches,this);
+            //ArrayAdapter Adapter = new ArrayAdapter(RemindingActivity.this,android.R.layout.simple_expandable_list_item_1,list_positionSearches);
+            listRemindingItem.setAdapter(Adapter);
+        }else if(list_positionSearches.size() < 0){
+            listRemindingItem.setVisibility(View.GONE);
+            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
+            tvRemindingContext.setVisibility(View.VISIBLE);
+        }
+
+        tvRemindingContext.setVisibility(View.GONE);
+
+        listRemindingItem.setOnItemClickListener(this);
         tvTitle.setText("事务提醒");
         CaledarAdapter adapter = new CaledarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarBean bean) {
-                Intent intent = getIntent();
-                String arr_list = intent.getStringExtra("arr_list");
-                list_positionSearches.add(arr_list);
                 TextView view;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
@@ -85,40 +116,9 @@ public class RemindingActivity extends BaseActivity {
 
         int[] data = CalendarUtil.getYMD(new Date());
         mTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
-//        BaseAdapter baseAdapter = new BaseAdapter() {
-//
-//            @Override
-//            public int getCount() {
-//                if (list_positionSearches != null) {
-//                    return list_positionSearches.size();
-//                }
-//
-//                return 0;
-//
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return list_positionSearches.get(position);
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return position;
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//
-//                if (convertView == null) {
-//                    convertView = LayoutInflater.from(RemindingActivity.this).inflate(R.layout.item_customer_detail, null);
-//                }
-//                TextView textView = (TextView) convertView;
-//                textView.setText(list_positionSearches.get(position).toString());
-//                return convertView;
-//            }
-//        };
-//        listRemindingItem.setAdapter(baseAdapter);
+
+
+
     }
 
     public static void StartAction(Context context) {
@@ -141,7 +141,6 @@ public class RemindingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})
@@ -156,6 +155,12 @@ public class RemindingActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        Intent intent = new Intent(RemindingActivity.this,ContionActivity.class);
+//        startActivity(intent);
     }
 }
 
