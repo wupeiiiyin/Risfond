@@ -54,11 +54,9 @@ public class HomePageAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_list_againdetail,null);
         TextView tv_item_content = (TextView) view.findViewById(R.id.tv_item_content);
-        TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
+//        TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
 
         tv_item_content.setText(list.get(i)+"");
-        //tv_item_time.setText();
-        Log.e("cccccq",i+"");
         return view;
     }
 }

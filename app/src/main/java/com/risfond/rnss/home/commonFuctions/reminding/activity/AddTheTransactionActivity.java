@@ -2,7 +2,9 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.app.ActionBar;
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +19,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -46,8 +50,6 @@ import butterknife.OnClick;
 public class AddTheTransactionActivity extends BaseActivity {
     @BindView(R.id.tv_time_display)
     TextView tvTimeDisplay;
-    private WheelMain wheelMainDate;
-    private TransactiondatabaseSQL ttdbsqlite;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.edit_addthetransaction_content)
@@ -59,20 +61,19 @@ public class AddTheTransactionActivity extends BaseActivity {
     @BindView(R.id.tv_addthetransaction_commit)
     TextView tvAddthetransactionCommit;
 
-//    @BindView(R.id.ll_addtime)
-//    LinearLayout lladdtime;
 
+    private WheelMain wheelMainDate;
+    private TransactiondatabaseSQL ttdbsqlite;
     private Cursor c;
     private TextView tv_center;
     private MediaPlayer mediaPlayer;
+    private String time, date;
+    private GoogleApiClient client;
+    private String beginTime;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private String time, date;
-    private GoogleApiClient client;
-    private String beginTime;
-
     @Override
     public int getContentViewResId() {
         return R.layout.activity_add_the_transaction;
@@ -92,7 +93,14 @@ public class AddTheTransactionActivity extends BaseActivity {
         switch (view.getId()) {
             //日期
             case R.id.ll_addthetransaction_reminding:
+                //雷达图,统计图
+                //startActivity(ContionActivity.class, false);
+
+
+                //PopupWindow
                 showBottoPopupWindow();
+
+                //系统自带
 //                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
 //                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                        //当前选择的日期
@@ -109,7 +117,6 @@ public class AddTheTransactionActivity extends BaseActivity {
 //                    }
 //                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 //                //通过Calendar获得当前年、月、日
-//                //显示
 //                dialog1.show();
                 break;
             case R.id.ll_addthetransaction_time:
@@ -129,77 +136,16 @@ public class AddTheTransactionActivity extends BaseActivity {
                 if (arr_list == null || arr_list.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent1 = getIntent();
-                    //String tq5 = intent1.getStringExtra("tq5");
-                    int mHour = intent1.getExtras().getInt("mHour");
-                    int mMinute = intent1.getExtras().getInt("mMinute");
-                    int day = intent1.getExtras().getInt("day");
-                    startRemind(mHour,mMinute,day);
-
                     startActivity(RemindingActivity.class, true);
+//                    Intent intent1 = getIntent();
+//                    //String tq5 = intent1.getStringExtra("tq5");
+//                    int mHour = intent1.getExtras().getInt("mHour");
+//                    int mMinute = intent1.getExtras().getInt("mMinute");
+//                    int day = intent1.getExtras().getInt("day");
+//                    startRemind(mHour,mMinute,day);
                     break;
                 }
         }
-    }
-    /**
-     * 开启提醒
-     */
-    private void startRemind(int hour, int minute, int day) {
-        //得到日历实例，主要是为了下面的获取时间
-        final Calendar mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(System.currentTimeMillis());
-
-        //获取当前毫秒值
-        final long systemTime = System.currentTimeMillis();
-
-        //是设置日历的时间，主要是让日历的年月日和当前同步
-        mCalendar.setTimeInMillis(System.currentTimeMillis());
-        // 这里时区需要设置一下，不然可能个别手机会有8个小时的时间差
-        mCalendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        //设置在几点提醒  设置的为13点
-        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
-        //设置在几分提醒  设置的为25分
-        mCalendar.set(Calendar.MINUTE, minute);
-        //下面这两个看字面意思也知道
-        mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND, 0);
-        //上面设置的就是13点25分的时间点
-        //获取上面设置的13点25分的毫秒值
-        final long selectTime = mCalendar.getTimeInMillis();
-
-        // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
-        mCalendar.add(Calendar.DAY_OF_MONTH, day);
-
-        //AlarmReceiver.class为广播接受者
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        //得到AlarmManager实例
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //**********注意！！下面的两个根据实际需求任选其一即可*********
-        /**
-         * 单次提醒
-         * mCalendar.getTimeInMillis() 上面设置的13点25分的时间点毫秒值
-         */
-        am.set(AlarmManager.RTC_WAKEUP, selectTime, pi);
-//        /**
-//         * 重复提醒
-//         * 第一个参数是警报类型；下面有介绍
-//         * 第二个参数网上说法不一，很多都是说的是延迟多少毫秒执行这个闹钟，但是我用的刷了MIUI的三星手机的实际效果是与单次提醒的参数一样，即设置的13点25分的时间点毫秒值
-//         * 第三个参数是重复周期，也就是下次提醒的间隔 毫秒值 我这里是一天后提醒
-//         */
-//        am.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), (1000 * 60 * 60 * 24), pi);
-    }
-    /**
-     * 关闭提醒
-     */
-    private void stopRemind() {
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0,
-                intent, 0);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //取消警报
-        am.cancel(pi);
-        Toast.makeText(this, "关闭了提醒", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -275,17 +221,17 @@ public class AddTheTransactionActivity extends BaseActivity {
 
         mPopupWindow.showAtLocation(tv_center, Gravity.CENTER, 0, 0);
         mPopupWindow.setOnDismissListener(new poponDismissListener());
-        backgroundAlpha(0.6f);
+//        backgroundAlpha(0.6f);
 
         TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
         TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
         TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
-        tv_pop_title.setText("选择起始时间");
+//        tv_pop_title.setText("选择起始时间");
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 mPopupWindow.dismiss();
-                backgroundAlpha(1f);
+//                backgroundAlpha(1f);
             }
         });
         //确定
@@ -294,7 +240,6 @@ public class AddTheTransactionActivity extends BaseActivity {
             public void onClick(View arg0) {
                 beginTime = wheelMainDate.getTime().toString();
                 tvTimeDisplay.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
-
                 //传递时间
                 String selectedtime = tvTimeDisplay.getText().toString();
                 Intent intent = new Intent();
@@ -302,7 +247,7 @@ public class AddTheTransactionActivity extends BaseActivity {
 //                intent.setClass(TimeTransactionActivity.this, AddTheTransactionActivity.class);
 //                TimeTransactionActivity.this.startActivity(intent);
                 mPopupWindow.dismiss();
-                backgroundAlpha(1f);
+//                backgroundAlpha(1f);
 //                try {
 //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
 //                    long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
@@ -320,7 +265,7 @@ public class AddTheTransactionActivity extends BaseActivity {
     class poponDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
-            backgroundAlpha(1f);
+//            backgroundAlpha(1f);
         }
     }
     public void backgroundAlpha(float bgAlpha) {

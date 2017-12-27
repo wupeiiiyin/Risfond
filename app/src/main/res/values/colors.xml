@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="one">#D2D2D2</color>
+    <color name="two">#85cdd4</color>
+    <color name="three">#48afb6</color>
+    <color name="four">#22737b</color>
+    <color name="color_red">#FF5722</color>
+    <color name="color_orange">#FF9800</color>
+    <color name="color_yellow">#FDA328</color>
+    <color name="color_green">#3FB830</color>
+    <color name="color_blues">#00BAED</color>
+    <color name="color_dark">#ffffff</color>
+    <color name="color_dark_light">#DBDBDB</color>
+    <color name="color_light">#DBDBDB</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
     <color name="color_black">#000000</color>

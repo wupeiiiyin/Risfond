@@ -6,10 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import com.risfond.rnss.R;
 
 public class ContionActivity extends AppCompatActivity {
-
+    //private XingView xXingView = null;
+    private DashboardView4 xXingView = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contion);
+        /* 实例化GameView对象 */
+        //this.xXingView = new XingView(this);
+        this.xXingView = new DashboardView4(this);
+        // 设置显示为我们自定义的View(GameView)
+        setContentView(xXingView);
     }
 }

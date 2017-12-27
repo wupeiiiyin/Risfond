@@ -1,71 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:id="@+id/ll_top"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_white_real"
+    android:background="#FFFFFF"
     android:orientation="horizontal"
     android:paddingLeft="15dp">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="5dp">
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="@color/color_home_stoke"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/record_circle"/>
-
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@color/color_home_stoke"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="13dp"
-        android:orientation="vertical"
-        android:paddingRight="13dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_item_time"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/color_resume_blue_txt"
-                android:textSize="13sp"/>
+                android:id="@+id/img_dian"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/color_home_stoke"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/record_circle"/>
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/color_home_stoke"/>
+                </LinearLayout>
+            </LinearLayout>
 
 
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_item_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text=""
-            android:textColor="@color/color_customer_black"
-            android:textSize="12sp"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_toRightOf="@+id/img_dian"
+                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="23dp"
+                    android:id="@+id/tv_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017.12.27"
+                    />
+                <TextView
+                    android:id="@+id/tv_item_content"
+                    android:layout_toRightOf="@+id/tv_item_time"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:maxLines="2"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_below="@+id/tv_item_time"
+                    android:background="#EBEBEB"></View>
+            </RelativeLayout>
+</RelativeLayout>

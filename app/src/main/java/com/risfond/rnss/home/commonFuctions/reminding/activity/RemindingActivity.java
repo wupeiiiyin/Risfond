@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 
 import static com.risfond.rnss.home.commonFuctions.reminding.activity.Utils.px;
 
-public class RemindingActivity extends BaseActivity{
+public class RemindingActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
@@ -49,11 +50,21 @@ public class RemindingActivity extends BaseActivity{
 
     @BindView(R.id.list_reminding_item)
     ListView listRemindingItem;
+    @BindView(R.id.tv_affairsleft)
+    TextView tvAffairsleft;
+    @BindView(R.id.tv_itemnumber)
+    TextView tvItemnumber;
+    @BindView(R.id.tv_affairsright)
+    TextView tvAffairsright;
+    @BindView(R.id.ll_reming_affairs)
+    LinearLayout llRemingAffairs;
+
     private HomePageAdapter Adapter;
     private boolean isHasNum = true;//记录是否加载有数据
     private List<String> list_positionSearches = new ArrayList();
     private Cursor c;
     private TransactiondatabaseSQL ttdbsqlite;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -65,34 +76,41 @@ public class RemindingActivity extends BaseActivity{
         c = ttdbsqlite.checktransaction();
         c.moveToFirst();
         while (c.moveToNext()) {
-            Log.e("sssss","ksfjlaf");
             String cursorString1 = c.getString(c.getColumnIndex("name"));
             list_positionSearches.add("内容:" + cursorString1);
-            Log.e("sssss",cursorString1);
         }
-        //Toast.makeText(this, list_positionSearches.size(), Toast.LENGTH_SHORT).show();
-        if (list_positionSearches.size() > 0){//-1
-            listRemindingItem.setVisibility(View.VISIBLE);
-            tvRemindingAddaffairs.setVisibility(View.GONE);
-            tvRemindingContext.setVisibility(View.GONE);
-            Log.e("sss",list_positionSearches.size()+"");
-            Adapter = new HomePageAdapter(list_positionSearches,this);
-            //ArrayAdapter Adapter = new ArrayAdapter(RemindingActivity.this,android.R.layout.simple_expandable_list_item_1,list_positionSearches);
+
+        int size = list_positionSearches.size();
+        tvItemnumber.setText(size+"");
+
+        if (list_positionSearches.size() > 0) {//-1
+            listRemindingItem.setVisibility(View.VISIBLE);      //ListView显示
+            llRemingAffairs.setVisibility(View.VISIBLE);
+            tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
+            tvItemnumber.setVisibility(View.VISIBLE);           //数量  显示
+            tvAffairsright.setVisibility(View.VISIBLE);         // ) 显示
+            tvRemindingAddaffairs.setVisibility(View.GONE);     //占位图片隐藏
+            tvRemindingContext.setVisibility(View.GONE);        //文字隐藏
+
+
+
+            Adapter = new HomePageAdapter(list_positionSearches, this);
             listRemindingItem.setAdapter(Adapter);
-        }else if(list_positionSearches.size() <= 0){
-            listRemindingItem.setVisibility(View.GONE);
-            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
-            tvRemindingContext.setVisibility(View.VISIBLE);
+        } else if (list_positionSearches.size() <= 0) {
+            listRemindingItem.setVisibility(View.GONE);         //ListView隐藏
+            llRemingAffairs.setVisibility(View.GONE);
+            tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏
+            tvItemnumber.setVisibility(View.GONE);              //数量  隐藏
+            tvAffairsright.setVisibility(View.GONE);            // ) 隐藏
+            tvRemindingAddaffairs.setVisibility(View.VISIBLE);  //占位图片显示
+            tvRemindingContext.setVisibility(View.VISIBLE);     //文字显示
         }
-
-        tvRemindingContext.setVisibility(View.GONE);
-
 
 
         listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(RemindingActivity.this, "item"+i+"--------"+l, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RemindingActivity.this, "item" + i + "--------" + l, Toast.LENGTH_SHORT).show();
             }
         });
         tvTitle.setText("事务提醒");
@@ -139,7 +157,6 @@ public class RemindingActivity extends BaseActivity{
 
     private String getDisPlayNumber(int num) {
         return num < 10 ? "0" + num : "" + num;
-
     }
 
     @Override
@@ -160,10 +177,5 @@ public class RemindingActivity extends BaseActivity{
                 break;
         }
     }
-
-//    @Override
-//    public void back(View v) {
-//        Toast.makeText(this, "返回上一级", Toast.LENGTH_SHORT).show();
-//    }
 }
 
