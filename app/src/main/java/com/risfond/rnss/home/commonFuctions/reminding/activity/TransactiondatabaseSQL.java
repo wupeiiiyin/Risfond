@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.risfond.rnss.home.commonFuctions.reminding.utils.Data;
+
 /**
  * Created by lenovo on 2017/7/22.
  */
@@ -15,9 +17,8 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     private static final String DB_NAME="cool.db";
     private static final String TAB_NAME = "collTab";
     private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text,time text)";
-    private static final String checkTAB = "SELECT * FROM Create_TAB WHERE ADDRESS IS ";
     private SQLiteDatabase db;
-    public TransactiondatabaseSQL(Context context) {
+    public TransactiondatabaseSQL(Context context) {//time  时间   name 内容
         super(context,DB_NAME,null,2);
         this.db = this.getWritableDatabase();
     }
@@ -38,24 +39,26 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
 //        return 0;
 //    }
 
+    //查
     public Cursor checktransaction(){
-
         Cursor query = db.query(TAB_NAME, null, null, null, null, null, null);
         return query;
     }
 
+    //增
     public void Addtransaction(ContentValues contentValues){
-        Log.e("sss","增加");
         db.insert(TAB_NAME,null,contentValues);
         Log.e("sss","增加111");
 
     }
 
 
+    //删除
     public void deletetransaction(int i){
-//        SQLiteDatabase db1 = getWritableDatabase();
-        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(i)});
+//        SQLiteDatabase db1 = getWritableDatabase();.
 //        db1.close();
+        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(i)});
+
     }
     public void updatetransaction(ContentValues c,int i ){
 //        SQLiteDatabase db1 = getWritableDatabase();
@@ -69,4 +72,5 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         }
         super.close();
     }
+
 }

@@ -3,7 +3,7 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.risfond.rnss.R;
+import com.risfond.rnss.home.commonFuctions.reminding.view.DashboardView4;
 
 public class ContionActivity extends AppCompatActivity {
     //private XingView xXingView = null;

@@ -1,6 +1,8 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.app.ActionBar;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -10,15 +12,18 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -89,29 +94,27 @@ public class AddTheTransactionActivity extends BaseActivity {
             case R.id.ll_addthetransaction_reminding:
                 //雷达图,统计图
                 //startActivity(ContionActivity.class, false);
-
-
                 //PopupWindow
-                showBottoPopupWindow();
+                //showBottoPopupWindow();
 
                 //系统自带
-//                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                        //当前选择的日期
-//                        date = year + "-" + Integer.parseInt(monthOfYear + 1 + "") + "-" + dayOfMonth;
-//
-//                        TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
-//                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                                time = hourOfDay + ":" + minute;
-//                                tvTimeDisplay.setText(date +" "+ time);
-//                            }
-//                        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
-//                        //显示
-//                        dialog.show();
-//                    }
-//                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-//                //通过Calendar获得当前年、月、日
-//                dialog1.show();
+                DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        //当前选择的日期
+                        date = year + "-" + Integer.parseInt(monthOfYear + 1 + "") + "-" + dayOfMonth;
+
+                        TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                time = hourOfDay + ":" + minute;
+                                tvTimeDisplay.setText(date +" "+ time);
+                            }
+                        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+                        //显示
+                        dialog.show();
+                    }
+                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                //通过Calendar获得当前年、月、日
+                dialog1.show();
                 break;
             case R.id.ll_addthetransaction_time:
                 Intent intent = new Intent();
@@ -124,7 +127,10 @@ public class AddTheTransactionActivity extends BaseActivity {
             case R.id.tv_addthetransaction_commit:
                 String trim = editAddthetransactionContent.getText().toString();
                 String date = tvTimeDisplay.getText().toString();
-                if (trim == null || trim.equals("") || date == null||date.equals("")||date.equals("请选择时间")) {
+                if (date == null||date.equals("")||date.equals("请选择时间")){
+                    Toast.makeText(getApplicationContext(), "日期未选择", Toast.LENGTH_SHORT).show();
+                }
+                if (trim == null && trim.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -245,14 +251,15 @@ public class AddTheTransactionActivity extends BaseActivity {
                 //年月日
                 //tvTimeDisplay.setText(mTime);
                 //年月日时分
+                Log.e("hhhhhhh",datatime);
                 tvTimeDisplay.setText(datatime);
                 mPopupWindow.dismiss();
                 //传递时间
-//                String selectedtime = tvTimeDisplay.getText().toString();
-//                Intent intent = new Intent();
-//                intent.putExtra("selectedtime",selectedtime);
-//                intent.setClass(TimeTransactionActivity.this, AddTheTransactionActivity.class);
-//                TimeTransactionActivity.this.startActivity(intent);
+                String selectedtime = tvTimeDisplay.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("selectedtime",selectedtime);
+                intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
+                AddTheTransactionActivity.this.startActivity(intent);
 
 //                backgroundAlpha(1f);
 //                try {

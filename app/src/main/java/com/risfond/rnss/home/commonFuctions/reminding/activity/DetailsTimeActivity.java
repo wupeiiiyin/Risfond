@@ -1,8 +1,9 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
@@ -21,7 +22,7 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     TextView tvDetailstimeContent;
 
     @BindView(R.id.ll_detailstime_onclick)
-    LinearLayout llDetailstimeOnclick;
+    RelativeLayout llDetailstimeOnclick;
     @Override
     public int getContentViewResId() {
         return R.layout.activity_details_time;
@@ -30,6 +31,8 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("日程");
+        Intent intent = getIntent();
+        intent.getStringExtra("time");
         llDetailstimeOnclick.setOnClickListener(this);
     }
 
@@ -37,6 +40,7 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_detailstime_onclick:
+
                 startActivity(RemindingTimeActivity.class, false);
                 break;
         }
