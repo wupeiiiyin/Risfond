@@ -2,17 +2,25 @@ package com.risfond.rnss.home.commonFuctions.reminding.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
+import com.risfond.rnss.home.commonFuctions.reminding.activity.AddTheTransactionActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.activity.DetailsTimeActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.activity.RemindingTimeActivity;
+import com.risfond.rnss.home.commonFuctions.reminding.activity.TransactiondatabaseSQL;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.umeng.analytics.a.p;
 
 /**
  * Created by lenovo on 2017/12/26.
@@ -22,11 +30,15 @@ public class HomePageAdapter extends BaseAdapter {
     private List<String> list2 = new ArrayList<>();
     private List<String> list = new ArrayList<>();
     private Context context;
+    private List<Integer> ids;
+    private TransactiondatabaseSQL ttdbsqlite;
 
-    public HomePageAdapter(List<String> list,Context context,List<String> list2) {
+    public HomePageAdapter(List<String> list,Context context,List<String> list2,List<Integer> ids,TransactiondatabaseSQL ttdbsqlite) {
         this.list = list;
         this.context = context;
         this.list2 = list2;
+        this.ids=ids;
+        this.ttdbsqlite=ttdbsqlite;
     }
     public interface OnItemClicklitener{
         void OnItemClick(View view, int position);
@@ -45,7 +57,9 @@ public class HomePageAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
+
         return list.get(i);
+
     }
 
     @Override
@@ -55,26 +69,72 @@ public class HomePageAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_list_againdetail,null);
         TextView tv_item_content = (TextView) view.findViewById(R.id.tv_item_content);
         TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
+        Button btn_delete = (Button) view.findViewById(R.id.btn_delete);
+        TextView tv_item_hand = (TextView) view.findViewById(R.id.tv_item_hand);
+        TextView tv_item_foot = (TextView) view.findViewById(R.id.tv_item_foot);
+
+        if (i==0){
+            tv_item_hand.setVisibility(View.INVISIBLE);
+        }
+        if (i == list.size()-1){
+            tv_item_foot.setVisibility(View.INVISIBLE);
+        }
+
+
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ttdbsqlite.deletetransaction(ids.get(i));
+                if (getCount() == 0){
+                    return ;
+                }else{
+                    setDatas();
+                }
+
+            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(context, DetailsTimeActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
         tv_item_content.setText(list.get(i)+"");//内容
         tv_item_time.setText(list2.get(i)+"");//时间
-
-
-//        String s = list.get(i);
-//        String s2= list2.get(i);
-//        Intent intent = new Intent();
-//        intent.putExtra("time",s2);
-//        intent.putExtra("content",s);
         return view;
     }
 
     public void addAll(List<String> list,List<String> list2){
         this.list = list;
         this.list2 = list2;
+        notifyDataSetChanged();
+    }
+
+
+    public void setDatas() {
+        Cursor c;
+        c = ttdbsqlite.checktransaction();
+        c.moveToFirst();
+        list.clear();
+        list2.clear();
+        ids.clear();
+        while (c.moveToNext()) {
+            int id = c.getInt(c.getColumnIndex("_id"));
+            String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
+            String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
+
+            list2.add(time);
+            list.add(cursorString1);
+            ids.add(id);
+        }
         notifyDataSetChanged();
     }
 }

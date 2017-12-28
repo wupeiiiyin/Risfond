@@ -1,4 +1,4 @@
-package com.risfond.rnss.home.commonFuctions.reminding.activity;
+package com.risfond.rnss.home.commonFuctions.reminding.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

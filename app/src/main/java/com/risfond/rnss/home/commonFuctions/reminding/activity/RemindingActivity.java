@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.M;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.adapter.HomePageAdapter;
@@ -24,10 +25,17 @@ import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarBean;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarDateView;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarUtil;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarView;
+import com.risfond.rnss.home.commonFuctions.reminding.utils.CommonAdapter;
+import com.risfond.rnss.home.commonFuctions.reminding.utils.Data;
+import com.risfond.rnss.home.commonFuctions.reminding.utils.ViewHolder;
+import com.risfond.rnss.home.commonFuctions.reminding.view.SwipeMenuLayout;
+import com.risfond.rnss.message.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +75,8 @@ public class RemindingActivity extends BaseActivity {
     private HomePageAdapter Adapter;
     private boolean isHasNum = true;//记录是否加载有数据
     private List<String> list_positionSearches = new ArrayList();  //内容
-    private List<String> list_positionSearches2 = new ArrayList(); //时间
-    private Cursor c;
+    private List<String> list_positionSearches_time = new ArrayList(); //时间
+
     private TransactiondatabaseSQL ttdbsqlite;
 
     private TextView view;
@@ -78,6 +86,11 @@ public class RemindingActivity extends BaseActivity {
     List<String> descs = new ArrayList<>();
 
     private String according;
+
+    private CommonAdapter<Data> commonAdapter;
+    private Map<String,Object> map;
+    private Cursor c;
+    private List<Integer> ids = new ArrayList<>();
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -91,13 +104,22 @@ public class RemindingActivity extends BaseActivity {
         c.moveToFirst();
 
         while (c.moveToNext()) {
+            int id = c.getInt(c.getColumnIndex("_id"));
             String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
             String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
 
             Log.e("ccccc",time);
-            list_positionSearches2.add(time);
+            list_positionSearches_time.add(time);
             list_positionSearches.add(cursorString1);
+            ids.add(id);
         }
+        map =new HashMap<>();
+        map.put("list_positionSearches_time",list_positionSearches_time);
+        map.put("list_positionSearches",list_positionSearches);
+        map.put("id",ids);
+
+
+
 
 //        int size = list_positionSearches.size();
 //        tvItemnumber.setText(size + "");
@@ -111,7 +133,7 @@ public class RemindingActivity extends BaseActivity {
             tvRemindingAddaffairs.setVisibility(View.GONE);     //占位图片隐藏
             tvRemindingContext.setVisibility(View.GONE);        //文字隐藏
 
-            Adapter = new HomePageAdapter(list_positionSearches, this,list_positionSearches2);
+            Adapter = new HomePageAdapter(list_positionSearches, this,list_positionSearches_time,ids,ttdbsqlite);
             listRemindingItem.setAdapter(Adapter);
         } else if (list_positionSearches.size() < 0) {
             listRemindingItem.setVisibility(View.GONE);         //ListView隐藏
@@ -129,6 +151,7 @@ public class RemindingActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(RemindingActivity.this, "item"+i, Toast.LENGTH_SHORT).show();
                 //CharSequence text = getText(i);
+
                 startActivity(DetailsTimeActivity.class, false);
             }
         });
@@ -185,8 +208,8 @@ public class RemindingActivity extends BaseActivity {
     public void notifyAdapter(String time){
         times.clear();
         descs.clear();
-        for (int i = 0; i < list_positionSearches2.size(); i++) {
-            String t = list_positionSearches2.get(i);
+        for (int i = 0; i < list_positionSearches_time.size(); i++) {
+            String t = list_positionSearches_time.get(i);
             if (t.contains(time)){
                 String desc = list_positionSearches.get(i);
                 times.add(t);
@@ -242,6 +265,44 @@ public class RemindingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+
+
+
+
+//        commonAdapter = new CommonAdapter<Data>(this, map, R.layout.item_list_againdetail) {
+//
+//            @Override
+//            public void convert(final ViewHolder holder, final Data data, final int position, View convertView) {
+//                List<String> list = (List<String>) map.get("list_positionSearches");
+//                List<String> list1 = (List<String>) map.get("list_positionSearches_time");
+//                final List<Integer> id = (List<Integer>) map.get("id");
+//                holder.setText(R.id.tv_item_content,list.get(position) );
+//                holder.setText(R.id.tv_item_time,list1.get(position) );
+//                //可以根据自己需求设置一些选项(这里设置了IOS阻塞效果以及item的依次左滑、右滑菜单)
+//                ((SwipeMenuLayout) holder.getConvertView()).setIos(true).setLeftSwipe(position % 2 == 0 ? true : false);
+//                holder.setOnClickListener(R.id.layout, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(RemindingActivity.this, DetailsTimeActivity.class);
+//                        intent.putExtra("data", data);
+//                        startActivity(intent);
+//                    }
+//                });
+//                holder.setOnClickListener(R.id.btn_delete, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(RemindingActivity.this, "点击了删除选项", Toast.LENGTH_SHORT).show();
+//                        //在ListView里，点击侧滑菜单上的选项时，如果想让侧滑菜单同时关闭，调用这句话
+//                        ((SwipeMenuLayout) holder.getConvertView()).quickClose();
+//                        //删除操作
+//                        ttdbsqlite.deletetransaction(id.get(position));
+//                        map.remove(position);
+//                        notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//        };
+//        listRemindingItem.setAdapter(commonAdapter);
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.risfond.rnss.home.commonFuctions.reminding.view.SwipeMenuLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_top"
     android:layout_width="match_parent"
@@ -7,63 +7,77 @@
     android:background="#FFFFFF"
     android:orientation="horizontal"
     android:paddingLeft="15dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_dian"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/img_dian"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/color_home_stoke"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/record_circle"/>
-                    <TextView
-                        android:layout_width="1dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/color_home_stoke"/>
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_toRightOf="@+id/img_dian"
-                android:layout_marginLeft="10dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
                 <TextView
-                    android:layout_marginTop="23dp"
-                    android:id="@+id/tv_item_time"
+                    android:id="@+id/tv_item_hand"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/color_home_stoke"/>
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    />
+                    android:src="@mipmap/record_circle"/>
                 <TextView
-                    android:id="@+id/tv_item_content"
-                    android:layout_toRightOf="@+id/tv_item_time"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="match_parent"
-                    android:maxLines="2"
+                    android:id="@+id/tv_item_foot"
+                    android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_below="@+id/tv_item_time"
-                    android:background="#EBEBEB"></View>
-            </RelativeLayout>
-</RelativeLayout>
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_home_stoke"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/img_dian"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="23dp"
+                android:id="@+id/tv_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017.12.11"
+                />
+            <TextView
+                android:id="@+id/tv_item_content"
+                android:layout_toRightOf="@+id/tv_item_time"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:maxLines="2"
+                android:layout_height="wrap_content"
+                android:text="内容是这个"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="13dp"
+                android:layout_below="@+id/tv_item_time"
+                android:background="#EBEBEB"></View>
+        </LinearLayout>
+    </RelativeLayout>
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#f52d29"
+                android:text="删除"
+                android:textColor="@android:color/white"
+                />
+</com.risfond.rnss.home.commonFuctions.reminding.view.SwipeMenuLayout>

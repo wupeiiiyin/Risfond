@@ -1,4 +1,4 @@
-package com.risfond.rnss.home.commonFuctions.reminding.activity;
+package com.risfond.rnss.home.commonFuctions.reminding.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -50,6 +50,15 @@ public class SwipeMenuLayout extends ViewGroup {
     private int mPointerId;//多点触摸只算第一根手指的速度
     private int mHeight;//自己的高度
     private int mMaxWidth;//父控件留给自己的最大的水平空间
+    /**
+     * xDistance x轴的相对位移量
+     * yDistance y轴的相对位移量
+     * xLast  手指最后位移的X坐标点
+     * yLast  手指最后位移的Y坐标点
+     * mTouchSlop  一个距离 如果小于 不触发效果 大于 触发移动
+     */
+    private float xDistance, yDistance, xLast, yLast;
+    private int mTouchSlop;
     /**
      * 右侧菜单宽度总和(最大滑动距离)
      */
@@ -157,6 +166,8 @@ public class SwipeMenuLayout extends ViewGroup {
         mMaxVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
         //初始化滑动帮助类对象
         //mScroller = new Scroller(context);
+
+        mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
 
     @Override
@@ -201,6 +212,7 @@ public class SwipeMenuLayout extends ViewGroup {
             forceUniformHeight(childCount, widthMeasureSpec);
         }
     }
+
 
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
@@ -266,6 +278,8 @@ public class SwipeMenuLayout extends ViewGroup {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+
+
         //LogUtils.d(TAG, "dispatchTouchEvent() called with: " + "ev = [" + ev + "]");
         if (isSwipeEnable) {
             acquireVelocityTracker(ev);
@@ -295,6 +309,9 @@ public class SwipeMenuLayout extends ViewGroup {
                     }
                     //求第一个触点的id， 此时可能有多个触点，但至少一个，计算滑动速率用
                     mPointerId = ev.getPointerId(0);
+                    xDistance = yDistance = 0f;
+                    xLast = ev.getX();
+                    yLast = ev.getY();
                     break;
                 case MotionEvent.ACTION_MOVE:
                     //add by 2016 09 11 ，IOS模式开启的话，且当前有侧滑菜单的View，且不是自己的，就该拦截事件咯。滑动也不该出现
@@ -334,8 +351,27 @@ public class SwipeMenuLayout extends ViewGroup {
                     }
 
                     mLastP.set(ev.getRawX(), ev.getRawY());
+                    final float curX = ev.getX();
+                    final float curY = ev.getY();
+
+                    xDistance += Math.abs(curX - xLast);
+                    yDistance += Math.abs(curY - yLast);
+                    xLast = curX;
+                    yLast = curY;
+                    /**
+                     * 当x轴的相对位移大于y轴的相对位移时，让其父控件（外层嵌套的那个listview）让出滑动事件
+                     * （默认只让swipmenulistview左滑）
+                     */
+                    if (xDistance > yDistance) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    } else if (yDistance > mTouchSlop) {
+                        //当y轴相对移动大于自定义的位移量时，将滑动事件还给父控件
+                        getParent().requestDisallowInterceptTouchEvent(false);
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
+
+
                 case MotionEvent.ACTION_CANCEL:
                     //2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
                     if (Math.abs(ev.getRawX() - mFirstP.x) > mScaleTouchSlop) {
@@ -387,6 +423,7 @@ public class SwipeMenuLayout extends ViewGroup {
                     break;
             }
         }
+
         return super.dispatchTouchEvent(ev);
     }
 
