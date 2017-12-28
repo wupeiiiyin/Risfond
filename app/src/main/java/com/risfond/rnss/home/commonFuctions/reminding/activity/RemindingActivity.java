@@ -243,13 +243,6 @@ if (img_line!=null){
                 tv.setTextColor(Color.WHITE);
 
 
-
-//                if (list_positionSearches.size()>0){
-//                    img_line.setVisibility(View.VISIBLE);
-//                }else {
-//                    img_line.setVisibility(View.GONE);
-//                }
-
                 String time = mTitle.getText().toString();
                 notifyAdapter(time);
             }
@@ -320,44 +313,6 @@ if (img_line!=null){
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
-
-
-
-//        commonAdapter = new CommonAdapter<Data>(this, map, R.layout.item_list_againdetail) {
-//
-//            @Override
-//            public void convert(final ViewHolder holder, final Data data, final int position, View convertView) {
-//                List<String> list = (List<String>) map.get("list_positionSearches");
-//                List<String> list1 = (List<String>) map.get("list_positionSearches_time");
-//                final List<Integer> id = (List<Integer>) map.get("id");
-//                holder.setText(R.id.tv_item_content,list.get(position) );
-//                holder.setText(R.id.tv_item_time,list1.get(position) );
-//                //可以根据自己需求设置一些选项(这里设置了IOS阻塞效果以及item的依次左滑、右滑菜单)
-//                ((SwipeMenuLayout) holder.getConvertView()).setIos(true).setLeftSwipe(position % 2 == 0 ? true : false);
-//                holder.setOnClickListener(R.id.layout, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(RemindingActivity.this, DetailsTimeActivity.class);
-//                        intent.putExtra("data", data);
-//                        startActivity(intent);
-//                    }
-//                });
-//                holder.setOnClickListener(R.id.btn_delete, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(RemindingActivity.this, "点击了删除选项", Toast.LENGTH_SHORT).show();
-//                        //在ListView里，点击侧滑菜单上的选项时，如果想让侧滑菜单同时关闭，调用这句话
-//                        ((SwipeMenuLayout) holder.getConvertView()).quickClose();
-//                        //删除操作
-//                        ttdbsqlite.deletetransaction(id.get(position));
-//                        map.remove(position);
-//                        notifyDataSetChanged();
-//                    }
-//                });
-//            }
-//        };
-//        listRemindingItem.setAdapter(commonAdapter);
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})

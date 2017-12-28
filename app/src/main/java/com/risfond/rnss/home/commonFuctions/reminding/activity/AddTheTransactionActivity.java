@@ -255,10 +255,10 @@ public class AddTheTransactionActivity extends BaseActivity {
                 mPopupWindow.dismiss();
                 //传递时间
                 String selectedtime = tvTimeDisplay.getText().toString();
-                Intent intent = new Intent();
+                Log.e("aaaaa",selectedtime);
+                Intent intent = new Intent(AddTheTransactionActivity.this,RemindingTimeActivity.class);
                 intent.putExtra("selectedtime",selectedtime);
-                intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
-                AddTheTransactionActivity.this.startActivity(intent);
+                startActivity(intent);
 
 //                backgroundAlpha(1f);
 //                try {

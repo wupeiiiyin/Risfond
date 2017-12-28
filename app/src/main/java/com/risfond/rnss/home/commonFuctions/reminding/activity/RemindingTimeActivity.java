@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -115,18 +114,18 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-//                Intent intent = getIntent();
-//                String time = intent.getStringExtra("selectedtime");
-//                Log.e("aaaaa",time);
-//                    String[] split = time.split(":");
-//                    int mHour = Integer.parseInt(split[0]);
-//                    int mMinute = Integer.parseInt(split[1]);
-//
-//                    long l = millionSeconds - System.currentTimeMillis();
-//                    int day = (int) (l / 1000 / 60 / 60 / 24);
-//
-//                    startRemind(mHour, mMinute, day);
-//
+                Intent intent = getIntent();
+                String time = intent.getStringExtra("selectedtime");
+                Log.e("aaaaa",time);
+                    String[] split = time.split(":");
+                    int mHour = Integer.parseInt(split[0]);
+                    int mMinute = Integer.parseInt(split[1]);
+
+                    long l = millionSeconds - System.currentTimeMillis();
+                    int day = (int) (l / 1000 / 60 / 60 / 24);
+
+                    startRemind(mHour, mMinute, day);
+
 //                    Intent intent1 = new Intent();
 //                    String tq5 = "提前5分钟";
 //                    intent1.putExtra("tq5", tq5);
