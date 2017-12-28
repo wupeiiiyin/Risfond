@@ -1,10 +1,6 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.app.ActionBar;
-import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +15,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -33,7 +27,6 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
-import com.risfond.rnss.home.commonFuctions.reminding.broadcastreceiver.AlarmReceiver;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.DateUtils;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.JudgeDate;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.ScreenInfo;
@@ -41,7 +34,6 @@ import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +62,8 @@ public class AddTheTransactionActivity extends BaseActivity {
     private String time, date;
     private GoogleApiClient client;
     private String beginTime;
+    private String datatime;
+    private int year,month,day,hours,minute;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -121,21 +115,26 @@ public class AddTheTransactionActivity extends BaseActivity {
                 break;
             case R.id.ll_addthetransaction_time:
                 Intent intent = new Intent();
-                intent.putExtra("time", time);
-                intent.putExtra("date", date);
+                intent.putExtra("datatime", datatime);
+//                intent.putExtra("date", date);
                 intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
                 AddTheTransactionActivity.this.startActivity(intent);
                 break;
             //添加
             case R.id.tv_addthetransaction_commit:
                 String trim = editAddthetransactionContent.getText().toString();
-                ContentValues cv = new ContentValues();
-                cv.put("name", trim);
-                ttdbsqlite.Addtransaction(cv);
-                String arr_list = editAddthetransactionContent.getText().toString();
-                if (arr_list == null || arr_list.equals("")) {
+                String date = tvTimeDisplay.getText().toString();
+                if (trim == null || trim.equals("") || date == null||date.equals("")||date.equals("请选择时间")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
+
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("name", trim);
+                    cv.put("time", date);
+
+                    ttdbsqlite.Addtransaction(cv);
+
                     startActivity(RemindingActivity.class, true);
 //                    Intent intent1 = getIntent();
 //                    //String tq5 = intent1.getStringExtra("tq5");
@@ -195,7 +194,7 @@ public class AddTheTransactionActivity extends BaseActivity {
         View menuView = LayoutInflater.from(this).inflate(R.layout.show_popup_window,null);
         final PopupWindow mPopupWindow = new PopupWindow(menuView, (int)(width*0.8),
                 ActionBar.LayoutParams.WRAP_CONTENT);
-        ScreenInfo screenInfoDate = new ScreenInfo(this);
+        final ScreenInfo screenInfoDate = new ScreenInfo(this);
         wheelMainDate = new WheelMain(menuView, true);
         wheelMainDate.screenheight = screenInfoDate.getHeight();
         String time = DateUtils.currentMonth().toString();
@@ -207,14 +206,15 @@ public class AddTheTransactionActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hours = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
 
         wheelMainDate.initDateTimePicker(year, month, day, hours,minute);
-        mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
+
+        //mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -225,7 +225,7 @@ public class AddTheTransactionActivity extends BaseActivity {
 
         TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
         TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
-        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
+//        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
 //        tv_pop_title.setText("选择起始时间");
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,15 +238,22 @@ public class AddTheTransactionActivity extends BaseActivity {
         tv_ensure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                String mTime = year+"-"+month+"-"+day;
                 beginTime = wheelMainDate.getTime().toString();
-                tvTimeDisplay.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
+                datatime=DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm);
+
+                //年月日
+                //tvTimeDisplay.setText(mTime);
+                //年月日时分
+                tvTimeDisplay.setText(datatime);
+                mPopupWindow.dismiss();
                 //传递时间
-                String selectedtime = tvTimeDisplay.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra("selectedtime",selectedtime);
+//                String selectedtime = tvTimeDisplay.getText().toString();
+//                Intent intent = new Intent();
+//                intent.putExtra("selectedtime",selectedtime);
 //                intent.setClass(TimeTransactionActivity.this, AddTheTransactionActivity.class);
 //                TimeTransactionActivity.this.startActivity(intent);
-                mPopupWindow.dismiss();
+
 //                backgroundAlpha(1f);
 //                try {
 //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");

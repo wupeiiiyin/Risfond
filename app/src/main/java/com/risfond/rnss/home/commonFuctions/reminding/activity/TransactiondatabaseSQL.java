@@ -14,8 +14,8 @@ import android.util.Log;
 public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     private static final String DB_NAME="cool.db";
     private static final String TAB_NAME = "collTab";
-    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text,time text,remind text)";
-
+    private static final String Create_TAB = "create table collTab(_id integer primary key autoincrement,name text,time text)";
+    private static final String checkTAB = "SELECT * FROM Create_TAB WHERE ADDRESS IS ";
     private SQLiteDatabase db;
     public TransactiondatabaseSQL(Context context) {
         super(context,DB_NAME,null,2);
@@ -24,13 +24,24 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(Create_TAB);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+//    public Cursor checkTime(){
+//        String status = "available";
+//        Cursor c = db.query(TAB_NAME, columns, KEY_STATUS +"=?",
+//                new String[] {status}, null, null, KEY_NAME);
+//        return 0;
+//    }
+
+    public Cursor checktransaction(){
+
+        Cursor query = db.query(TAB_NAME, null, null, null, null, null, null);
+        return query;
     }
 
     public void Addtransaction(ContentValues contentValues){
@@ -40,10 +51,7 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
 
     }
 
-    public Cursor checktransaction(){
-        Cursor query = db.query(TAB_NAME, null, null, null, null, null, null);
-        return query;
-    }
+
     public void deletetransaction(int i){
 //        SQLiteDatabase db1 = getWritableDatabase();
         db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(i)});

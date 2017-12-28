@@ -4,10 +4,11 @@ import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,26 +26,34 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RemindingTimeActivity extends BaseActivity {
+    @BindView(R.id.img_time_tq0)
+    ImageView imgTimeTq0;
+    @BindView(R.id.img_time_tq5)
+    ImageView imgTimeTq5;
+    @BindView(R.id.img_time_tq15)
+    ImageView imgTimeTq15;
+    @BindView(R.id.img_time_tq30)
+    ImageView imgTimeTq30;
+    @BindView(R.id.img_time_tq60)
+    ImageView imgTimeTq60;
+    @BindView(R.id.img_time_tq240)
+    ImageView imgTimeTq240;
     private AlarmManager alarmManager;
 
     @BindView(R.id.tv_time_tq0)
-    TextView tvTimeTq0;
+    LinearLayout tvTimeTq0;
     @BindView(R.id.tv_time_tq5)
-    TextView tvTimeTq5;
+    LinearLayout tvTimeTq5;
     @BindView(R.id.tv_time_tq15)
-    TextView tvTimeTq15;
+    LinearLayout tvTimeTq15;
     @BindView(R.id.tv_time_tq30)
-    TextView tvTimeTq30;
+    LinearLayout tvTimeTq30;
     @BindView(R.id.tv_time_tq60)
-    TextView tvTimeTq60;
+    LinearLayout tvTimeTq60;
     @BindView(R.id.tv_time_tq240)
-    TextView tvTimeTq240;
+    LinearLayout tvTimeTq240;
     private long millionSeconds;
     //响铃
-    private SoundPool soundPool;
-    private int duan, yulu;
-
-
     private WheelMain wheelMainDate;
     private String beginTime;
     @BindView(R.id.tv_title)
@@ -58,10 +67,9 @@ public class RemindingTimeActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("提醒时间");
-
-        Intent intent = getIntent();
-        String year_month_day = intent.getStringExtra("year_month_day");
-        tvTimeTq0.setText(year_month_day);
+//        Intent intent = getIntent();
+//        String year_month_day = intent.getStringExtra("year_month_day");
+//        tvTimeTq0.setText(year_month_day);
     }
 
     @Override
@@ -72,13 +80,24 @@ public class RemindingTimeActivity extends BaseActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    @OnClick({R.id.tv_time_tq0,R.id.tv_time_tq5, R.id.tv_time_tq15, R.id.tv_time_tq30, R.id.tv_time_tq60, R.id.tv_time_tq240})
+    @OnClick({R.id.tv_time_tq0, R.id.tv_time_tq5, R.id.tv_time_tq15, R.id.tv_time_tq30, R.id.tv_time_tq60, R.id.tv_time_tq240})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_time_tq0:
-                ToastUtil.showShort(getApplication(),"不提醒");
+                imgTimeTq0.setVisibility(View.VISIBLE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
                 break;
             case R.id.tv_time_tq5:
+//                imgTimeTq0.setVisibility(View.GONE);
+//                imgTimeTq5.setVisibility(View.VISIBLE);
+//                imgTimeTq15.setVisibility(View.GONE);
+//                imgTimeTq30.setVisibility(View.GONE);
+//                imgTimeTq60.setVisibility(View.GONE);
+//                imgTimeTq240.setVisibility(View.GONE);
                 Intent intent = getIntent();
                 String time = intent.getStringExtra("time");
                     if (time == null){
@@ -104,16 +123,36 @@ public class RemindingTimeActivity extends BaseActivity {
 
                 break;
             case R.id.tv_time_tq15:
-                ToastUtil.showShort(getApplication(),"提前15分钟");
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.VISIBLE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
                 break;
             case R.id.tv_time_tq30:
-                ToastUtil.showShort(getApplication(),"提前30分钟");
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.VISIBLE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
                 break;
             case R.id.tv_time_tq60:
-                ToastUtil.showShort(getApplication(),"提前60分钟");
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.VISIBLE);
+                imgTimeTq240.setVisibility(View.GONE);
                 break;
             case R.id.tv_time_tq240:
-                ToastUtil.showShort(getApplication(),"提前1天");
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.VISIBLE);
                 break;
         }
     }
