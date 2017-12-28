@@ -316,5 +316,12 @@ public class RemindingActivity extends BaseActivity {
                 break;
         }
     }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        list_positionSearches.clear();
+//        //list_positionSearches.addAll(ttdbsqlite.quereData());
+//        Adapter.notifyDataSetChanged();
+//    }
 }
 

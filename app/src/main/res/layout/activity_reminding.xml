@@ -132,7 +132,7 @@
             android:id="@+id/ll_reminding_reference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF">
+            android:background="#F5F5F5">
 
             <LinearLayout
                 android:id="@+id/ll_reming_affairs"

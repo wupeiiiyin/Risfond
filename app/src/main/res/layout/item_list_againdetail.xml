@@ -9,7 +9,7 @@
     android:paddingLeft="15dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,13 +19,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
                 <TextView
                     android:id="@+id/tv_item_hand"
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@color/color_home_stoke"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -35,20 +34,29 @@
                     android:id="@+id/tv_item_foot"
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:background="@color/color_home_stoke"/>
             </LinearLayout>
         </LinearLayout>
-
+        <View
+            android:layout_toRightOf="@+id/img_dian"
+            android:layout_alignLeft="@+id/tv_item_time"
+            android:layout_marginLeft="44px"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_item_time"
+            android:background="#EBEBEB"
+            android:layout_alignParentBottom="true"></View>
 
         <LinearLayout
+            android:layout_marginTop="46px"
+            android:layout_marginBottom="20px"
             android:layout_width="match_parent"
             android:layout_toRightOf="@+id/img_dian"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="44px"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <TextView
-                android:layout_marginTop="23dp"
                 android:id="@+id/tv_item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,19 +65,13 @@
             <TextView
                 android:id="@+id/tv_item_content"
                 android:layout_toRightOf="@+id/tv_item_time"
-                android:layout_marginTop="23dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="44px"
                 android:layout_width="match_parent"
                 android:maxLines="2"
                 android:layout_height="wrap_content"
                 android:text="内容是这个"
                 />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="13dp"
-                android:layout_below="@+id/tv_item_time"
-                android:background="#EBEBEB"></View>
+
         </LinearLayout>
     </RelativeLayout>
             <Button
