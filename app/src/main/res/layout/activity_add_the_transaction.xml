@@ -225,7 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="请选择时间  "
+            android:hint="请选择时间  "
             android:drawableRight="@mipmap/iconmoregray"
             android:id="@+id/tv_time_display"
             />
@@ -254,7 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="提前五分钟  "
+            android:hint="提前五分钟  "
             android:drawableRight="@mipmap/iconmoregray"
             />
     </LinearLayout>

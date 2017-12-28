@@ -106,8 +106,8 @@ public class TimeTransactionActivity extends BaseActivity implements View.OnClic
         backgroundAlpha(0.6f);
         TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
         TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
-        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
-        tv_pop_title.setText("选择起始时间");
+//        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
+//        tv_pop_title.setText("选择起始时间");
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {

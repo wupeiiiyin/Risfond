@@ -6,15 +6,6 @@
     android:layout_margin="10dp"
     android:background="@drawable/border_circle_radius"
     android:orientation="vertical" >
-<TextView
-    android:background="#2f19dfbb"
-    android:padding="10dp"
-    android:id="@+id/tv_pop_title"
-    android:textSize="18sp"
-    android:gravity="center"
-    android:textColor="#301616"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/timePicker1"
         android:layout_width="match_parent"

@@ -10,11 +10,15 @@
 
     <include layout="@layout/include_title"/>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="#F5F5F5"></View>
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -112,8 +116,8 @@
 
     <com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl"
         android:background="#F5F5F5"
         >
 
@@ -128,7 +132,7 @@
             android:id="@+id/ll_reminding_reference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#F5F5F5">
+            android:background="#FFFFFF">
 
             <LinearLayout
                 android:id="@+id/ll_reming_affairs"
@@ -171,7 +175,7 @@
                 android:divider="@null"/>
 
             <TextView
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="35dp"
                 android:drawableTop="@mipmap/iconaffairs"
                 android:id="@+id/tv_reminding_context"
                 android:layout_width="match_parent"
@@ -199,9 +203,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="52px"
             android:layout_marginRight="28px"
-            android:layout_gravity="end"
+            android:layout_alignParentBottom="true"
             android:padding="5dp"
             android:layout_alignParentRight="true"
             android:src="@mipmap/buttonplus"/>
+    </RelativeLayout>
 </LinearLayout>
 

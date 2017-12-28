@@ -1,6 +1,7 @@
 package com.risfond.rnss.home.commonFuctions.reminding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,14 @@ import java.util.List;
  */
 
 public class HomePageAdapter extends BaseAdapter {
-    public HomePageAdapter(List<String> list,Context context) {
+    private List<String> list2 = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
+    private Context context;
+
+    public HomePageAdapter(List<String> list,Context context,List<String> list2) {
         this.list = list;
         this.context = context;
+        this.list2 = list2;
     }
     public interface OnItemClicklitener{
         void OnItemClick(View view, int position);
@@ -32,8 +38,6 @@ public class HomePageAdapter extends BaseAdapter {
         this.onItemClicklitener = onItemClicklitener;
     }
 
-    private List<String> list = new ArrayList<>();
-    private Context context;
     @Override
     public int getCount() {
         return list.size();
@@ -54,9 +58,23 @@ public class HomePageAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_list_againdetail,null);
         TextView tv_item_content = (TextView) view.findViewById(R.id.tv_item_content);
-//        TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
+        TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
 
-        tv_item_content.setText(list.get(i)+"");
+        tv_item_content.setText(list.get(i)+"");//内容
+        tv_item_time.setText(list2.get(i)+"");//时间
+
+
+//        String s = list.get(i);
+//        String s2= list2.get(i);
+//        Intent intent = new Intent();
+//        intent.putExtra("time",s2);
+//        intent.putExtra("content",s);
         return view;
+    }
+
+    public void addAll(List<String> list,List<String> list2){
+        this.list = list;
+        this.list2 = list2;
+        notifyDataSetChanged();
     }
 }

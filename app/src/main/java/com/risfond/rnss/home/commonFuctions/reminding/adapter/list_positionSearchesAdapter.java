@@ -5,13 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
-import com.risfond.rnss.home.commonFuctions.reminding.activity.AgainRemindingActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
