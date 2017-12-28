@@ -3,7 +3,6 @@ package com.risfond.rnss.home.commonFuctions.reminding.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.risfond.rnss.R;
-import com.risfond.rnss.home.commonFuctions.reminding.activity.AddTheTransactionActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.activity.DetailsTimeActivity;
-import com.risfond.rnss.home.commonFuctions.reminding.activity.RemindingTimeActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.activity.TransactiondatabaseSQL;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.umeng.analytics.a.p;
 
 /**
  * Created by lenovo on 2017/12/26.
@@ -84,7 +79,14 @@ public class HomePageAdapter extends BaseAdapter {
             tv_item_foot.setVisibility(View.INVISIBLE);
         }
 
-
+    view.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(context, DetailsTimeActivity.class);
+            intent.putExtra("key",123);
+            context.startActivity(intent);
+        }
+    });
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override

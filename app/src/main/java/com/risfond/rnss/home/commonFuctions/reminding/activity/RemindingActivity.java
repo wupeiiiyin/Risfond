@@ -3,6 +3,7 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.baidu.platform.comapi.map.M;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.adapter.HomePageAdapter;
@@ -27,9 +26,6 @@ import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarUtil;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarView;
 import com.risfond.rnss.home.commonFuctions.reminding.utils.CommonAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.utils.Data;
-import com.risfond.rnss.home.commonFuctions.reminding.utils.ViewHolder;
-import com.risfond.rnss.home.commonFuctions.reminding.view.SwipeMenuLayout;
-import com.risfond.rnss.message.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +87,8 @@ public class RemindingActivity extends BaseActivity {
     private Map<String,Object> map;
     private Cursor c;
     private List<Integer> ids = new ArrayList<>();
+    private TextView tv;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -108,7 +106,7 @@ public class RemindingActivity extends BaseActivity {
             String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
             String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
 
-            Log.e("ccccc",time);
+//            Log.e("ccccc",time);
             list_positionSearches_time.add(time);
             list_positionSearches.add(cursorString1);
             ids.add(id);
@@ -149,10 +147,7 @@ public class RemindingActivity extends BaseActivity {
         listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(RemindingActivity.this, "item"+i, Toast.LENGTH_SHORT).show();
-                //CharSequence text = getText(i);
 
-                startActivity(DetailsTimeActivity.class, false);
             }
         });
 
@@ -161,23 +156,47 @@ public class RemindingActivity extends BaseActivity {
 
         //日历适配器
         CaledarAdapter adapter = new CaledarAdapter() {
+
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarBean bean) {
+                ViewHolder vh;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
+                    vh=new ViewHolder();
+                    vh.tv= (TextView) convertView.findViewById(R.id.text);
+                    vh.dian= (ImageView) convertView.findViewById(R.id.img_point);
+                    vh.xian= (ImageView) convertView.findViewById(R.id.img_line);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(px(60), px(48));
                     convertView.setLayoutParams(params);
+                    convertView.setTag(vh);
+                }else {
+                    vh= (ViewHolder) convertView.getTag();
                 }
-                view = (TextView) convertView.findViewById(R.id.text);
-                //img_point = (ImageView) convertView.findViewById(R.id.img_point);
+                vh.tv = (TextView) convertView.findViewById(R.id.text);
+                String s = bean.moth + "-" + bean.day;
 
-                view.setText("" + bean.day);
+                for (int i = 0; i < list_positionSearches_time.size(); i++) {
+                    String t = list_positionSearches_time.get(i);
+                    if (t.contains(s)){
+                        Log.e("HB",s);
+                        vh.dian.setVisibility(View.VISIBLE);
+                        break;
+                    }else {
+                        vh.dian.setVisibility(View.GONE);
+                    }
+                }
+                vh.tv.setText("" + bean.day);
                 if (bean.mothFlag != 0) {
-                    view.setTextColor(0xff999999);
+                    vh.tv.setTextColor(0xff999999);
                 } else {
-                    view.setTextColor(0xff333333);
+                    vh.tv.setTextColor(0xff333333);
                 }
                 return convertView;
+            }
+
+            class ViewHolder{
+                TextView tv;
+                ImageView dian,xian;
             }
         };
         mCalendarDateView.setAdapter(adapter);
@@ -186,15 +205,51 @@ public class RemindingActivity extends BaseActivity {
         mCalendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
+                LinearLayout linearLayout = (LinearLayout) view;
+
+
+                if (tv!=null){
+                    tv.setTextColor(Color.BLACK);
+
+                }
+                    String s = bean.moth + "-" + bean.day;
+
+                for (int i = 0; i < list_positionSearches_time.size(); i++) {
+                    String t = list_positionSearches_time.get(i);
+                    if (t.contains(s)){
+if (img_line!=null){
+
+    img_line.setVisibility(View.GONE);
+}
+                        if (img_point!=null){
+
+                            img_point.setVisibility(View.VISIBLE);
+                        }
+                        img_point = (ImageView) linearLayout.getChildAt(1);
+                        img_line = (ImageView) linearLayout.getChildAt(2);
+
+                            img_line.setVisibility(View.VISIBLE);
+                            img_point.setVisibility(View.GONE);
+
+                        break;
+                    }else {
+                    }
+                }
+
                 //日历上方显示的时间
                 mTitle.setText(bean.year + "-" + getDisPlayNumber(bean.moth) + "-" + getDisPlayNumber(bean.day));
+                tv = (TextView) linearLayout.getChildAt(0);
 
-                img_line = (ImageView) view.findViewById(R.id.img_line);
+                tv.setTextColor(Color.WHITE);
+
+
+
 //                if (list_positionSearches.size()>0){
 //                    img_line.setVisibility(View.VISIBLE);
 //                }else {
 //                    img_line.setVisibility(View.GONE);
 //                }
+
                 String time = mTitle.getText().toString();
                 notifyAdapter(time);
             }

@@ -133,16 +133,15 @@ public class AddTheTransactionActivity extends BaseActivity {
                 if (trim == null && trim.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     ContentValues cv = new ContentValues();
                     cv.put("name", trim);
                     cv.put("time", date);
 
                     ttdbsqlite.Addtransaction(cv);
 
-                    startActivity(RemindingActivity.class, true);
-//                    Intent intent1 = getIntent();
+                    startActivity(RemindingActivity.class, false);
+   //                Intent intent1 = getIntent();
+    //                intent1.putExtra()
 //                    //String tq5 = intent1.getStringExtra("tq5");
 //                    int mHour = intent1.getExtras().getInt("mHour");
 //                    int mMinute = intent1.getExtras().getInt("mMinute");
