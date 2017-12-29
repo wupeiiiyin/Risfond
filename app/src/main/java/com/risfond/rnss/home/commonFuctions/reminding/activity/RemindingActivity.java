@@ -206,21 +206,23 @@ public class RemindingActivity extends BaseActivity {
 
                     for (int i = 0; i < list_positionSearches_time.size(); i++) {
                         String t = list_positionSearches_time.get(i);
-                        if (t.contains(s)){
-                            if (img_line!=null){
-                                img_point.setVisibility(View.GONE);
-                                img_line.setVisibility(View.VISIBLE);
-                            }
-                            if (img_point!=null){
+                        if (t.contains(s)) {
+                            if (img_line != null) {
                                 img_point.setVisibility(View.VISIBLE);
+                                img_line.setVisibility(View.GONE);
+                                if (img_line == null){
+                                    img_point.setVisibility(View.GONE);
+                                    img_line.setVisibility(View.GONE);
+                                }
+                            }
+                            if (img_point != null) {
                                 img_line.setVisibility(View.GONE);
                             }
                             img_point = (ImageView) view.findViewById(R.id.img_point);
                             img_line = (ImageView) view.findViewById(R.id.img_line);
-//                            img_point = (ImageView) linearLayout.getChildAt(1);
-//                            img_line = (ImageView) linearLayout.getChildAt(2);
-                                img_line.setVisibility(View.VISIBLE);
-                                img_point.setVisibility(View.GONE);
+
+                            img_line.setVisibility(View.VISIBLE);
+                            img_point.setVisibility(View.VISIBLE);
                             break;
                         }
                 }
@@ -232,9 +234,16 @@ public class RemindingActivity extends BaseActivity {
                 img_line = (ImageView) linearLayout.getChildAt(2);
 
                 tv.setTextColor(Color.WHITE);
+                if (img_point == null){
+                    img_point.setVisibility(View.GONE);
+                    img_line.setVisibility(View.GONE);
+                }
+                if (img_line == null){
+                    img_point.setVisibility(View.GONE);
+                    img_line.setVisibility(View.GONE);
+                }
                 img_line.setVisibility(View.VISIBLE);
                 img_point.setVisibility(View.GONE);
-
 
                 String time = mTitle.getText().toString();
                 notifyAdapter(time);
@@ -319,10 +328,10 @@ public class RemindingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_reminding_addaffairs:
-                startActivity(AddTheTransactionActivity.class, false);
+                startActivity(AddTheTransactionActivity.class, true);
                 break;
             case R.id.imageView:
-                startActivity(AddTheTransactionActivity.class, false);
+                startActivity(AddTheTransactionActivity.class, true);
                 break;
         }
     }
