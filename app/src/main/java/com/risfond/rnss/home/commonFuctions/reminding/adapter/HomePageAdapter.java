@@ -82,6 +82,7 @@ public class HomePageAdapter extends BaseAdapter {
     view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             Intent intent = new Intent(context, DetailsTimeActivity.class);
             intent.putExtra("key",123);
             context.startActivity(intent);

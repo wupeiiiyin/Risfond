@@ -143,14 +143,6 @@ public class RemindingActivity extends BaseActivity {
             tvRemindingContext.setVisibility(View.VISIBLE);     //文字显示
         }
 
-        //item的详情
-        listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
-
 
         tvTitle.setText("事务提醒");
 
@@ -205,42 +197,43 @@ public class RemindingActivity extends BaseActivity {
         mCalendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
-                LinearLayout linearLayout = (LinearLayout) view;
-
+                RelativeLayout linearLayout = (RelativeLayout) view;
 
                 if (tv!=null){
                     tv.setTextColor(Color.BLACK);
-
                 }
                     String s = bean.moth + "-" + bean.day;
 
-                for (int i = 0; i < list_positionSearches_time.size(); i++) {
-                    String t = list_positionSearches_time.get(i);
-                    if (t.contains(s)){
-if (img_line!=null){
-
-    img_line.setVisibility(View.GONE);
-}
-                        if (img_point!=null){
-
-                            img_point.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < list_positionSearches_time.size(); i++) {
+                        String t = list_positionSearches_time.get(i);
+                        if (t.contains(s)){
+                            if (img_line!=null){
+                                img_point.setVisibility(View.GONE);
+                                img_line.setVisibility(View.VISIBLE);
+                            }
+                            if (img_point!=null){
+                                img_point.setVisibility(View.VISIBLE);
+                                img_line.setVisibility(View.GONE);
+                            }
+                            img_point = (ImageView) view.findViewById(R.id.img_point);
+                            img_line = (ImageView) view.findViewById(R.id.img_line);
+//                            img_point = (ImageView) linearLayout.getChildAt(1);
+//                            img_line = (ImageView) linearLayout.getChildAt(2);
+                                img_line.setVisibility(View.VISIBLE);
+                                img_point.setVisibility(View.GONE);
+                            break;
                         }
-                        img_point = (ImageView) linearLayout.getChildAt(1);
-                        img_line = (ImageView) linearLayout.getChildAt(2);
-
-                            img_line.setVisibility(View.VISIBLE);
-                            img_point.setVisibility(View.GONE);
-
-                        break;
-                    }else {
-                    }
                 }
 
                 //日历上方显示的时间
                 mTitle.setText(bean.year + "-" + getDisPlayNumber(bean.moth) + "-" + getDisPlayNumber(bean.day));
                 tv = (TextView) linearLayout.getChildAt(0);
+                img_point = (ImageView) linearLayout.getChildAt(1);
+                img_line = (ImageView) linearLayout.getChildAt(2);
 
                 tv.setTextColor(Color.WHITE);
+                img_line.setVisibility(View.VISIBLE);
+                img_point.setVisibility(View.GONE);
 
 
                 String time = mTitle.getText().toString();
@@ -254,6 +247,7 @@ if (img_line!=null){
     }
 
     public void notifyAdapter(String time){
+
         times.clear();
         descs.clear();
         for (int i = 0; i < list_positionSearches_time.size(); i++) {
@@ -269,6 +263,9 @@ if (img_line!=null){
         if (flag){
             flag=false;
             Adapter.addAll(descs,times);
+//            img_line.setVisibility(View.VISIBLE);
+//            img_point.setVisibility(View.GONE);
+
             listRemindingItem.setVisibility(View.VISIBLE);
             llRemingAffairs.setVisibility(View.VISIBLE);
             tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
@@ -283,6 +280,9 @@ if (img_line!=null){
             according = tvItemnumber.getText().toString();
 
         }else {
+//            img_line.setVisibility(View.GONE);
+//            img_point.setVisibility(View.VISIBLE);
+
             listRemindingItem.setVisibility(View.GONE);
             llRemingAffairs.setVisibility(View.GONE);
             tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏

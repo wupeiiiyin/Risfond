@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,10 @@ import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.broadcastreceiver.AlarmReceiver;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -71,7 +76,8 @@ public class RemindingTimeActivity extends BaseActivity {
     private String beginTime;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-
+    //private String message;
+    private SharedPreferences remind;
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding_time;
@@ -80,9 +86,64 @@ public class RemindingTimeActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("提醒时间");
+        //EventBus.getDefault().register(this);
         //        Intent intent = getIntent();
         //        String year_month_day = intent.getStringExtra("year_month_day");
         //        tvTimeTq0.setText(year_month_day);
+        remind = getSharedPreferences("remind", MODE_PRIVATE);
+        String time_tp = remind.getString("time_tp", "");
+        if (time_tp.length()>0){
+            if (time_tp.equals("不提醒")){
+                imgTimeTq0.setVisibility(View.VISIBLE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
+            }else if(time_tp.equals("提前5分钟")){
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.VISIBLE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
+            }else if(time_tp.equals("提前15分钟")){
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.VISIBLE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
+            }else if(time_tp.equals("提前30分钟")){
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.VISIBLE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.GONE);
+            }else if(time_tp.equals("提前1小时")){
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.VISIBLE);
+                imgTimeTq240.setVisibility(View.GONE);
+            }else if(time_tp.equals("提前1天")){
+                imgTimeTq0.setVisibility(View.GONE);
+                imgTimeTq5.setVisibility(View.GONE);
+                imgTimeTq15.setVisibility(View.GONE);
+                imgTimeTq30.setVisibility(View.GONE);
+                imgTimeTq60.setVisibility(View.GONE);
+                imgTimeTq240.setVisibility(View.VISIBLE);
+            }
+        }else{
+            imgTimeTq0.setVisibility(View.VISIBLE);
+            imgTimeTq5.setVisibility(View.GONE);
+            imgTimeTq15.setVisibility(View.GONE);
+            imgTimeTq30.setVisibility(View.GONE);
+            imgTimeTq60.setVisibility(View.GONE);
+            imgTimeTq240.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -92,57 +153,62 @@ public class RemindingTimeActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void getMsg(MessageEvent messageEvent){
+//        //这个msg就是传过来的值  ok
+//        tvTimeTq0.setText(messageEvent.getMessage().toString());
+//        message = messageEvent.getMessage();
+//        Log.e("CQQQQQ",message+"-------------");
+//    }现在就存完了
+
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @OnClick({R.id.ll_time_tq0, R.id.ll_time_tq5, R.id.ll_time_tq15, R.id.ll_time_tq30, R.id.ll_time_tq60, R.id.ll_time_tq240})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_time_tq0:
+            case R.id.ll_time_tq0://不提醒
                 imgTimeTq0.setVisibility(View.VISIBLE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-
-//                tvTimeTq0.setTextColor(Color.BLUE);
-//                tvTimeTq0.setTextColor();
+                String tvtiemqt0 = tvTimeTq0.getText().toString();
+                remind.edit().putString("time_tp",tvtiemqt0).commit();
                 break;
-            case R.id.ll_time_tq5:
+            case R.id.ll_time_tq5://提前5分钟
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.VISIBLE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-                Intent intent = getIntent();
-                String time = intent.getStringExtra("selectedtime");
-                Log.e("aaaaa",time);
-                    String[] split = time.split(":");
-                    int mHour = Integer.parseInt(split[0]);
-                    int mMinute = Integer.parseInt(split[1]);
+                String tvtiemqt5 = tvTimeTq5.getText().toString();
+                //这里接收传来的时间数据
+                remind.edit().putString("time_tp",tvtiemqt5).commit();
 
-                    long l = millionSeconds - System.currentTimeMillis();
-                    int day = (int) (l / 1000 / 60 / 60 / 24);
-
-                    startRemind(mHour, mMinute, day);
-
-//                    Intent intent1 = new Intent();
-//                    String tq5 = "提前5分钟";
-//                    intent1.putExtra("tq5", tq5);
-//                    intent1.putExtra("mHour", mHour);
-//                    intent1.putExtra("mMinute", mMinute);
-//                    intent1.putExtra("day", day);
-
+//
+//                Intent intent = getIntent();
+//                String time = intent.getStringExtra("beginTime");
+//                Log.e("aaaaa",time+"=====================================");
+//                String[] split = time.split("\\s+");
+//                Log.e("aaaaa",split+"=========++++++++++++++=============");
+//                    int mHour = Integer.parseInt(split[0]);
+//                    int mMinute = Integer.parseInt(split[1]);
+//                    long l = millionSeconds - System.currentTimeMillis();
+//                    int day = (int) (l / 1000 / 60 / 60 / 24);
+//                    startRemind(mHour, mMinute, day);
                 break;
             case R.id.ll_time_tq15:
 //                tvTimeTq15.setTextColor(Color.BLUE);
-
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.VISIBLE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
+                String tvtiemqt15 = tvTimeTq15.getText().toString();
+                remind.edit().putString("time_tp",tvtiemqt15).commit();
                 break;
             case R.id.ll_time_tq30:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -151,6 +217,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq30.setVisibility(View.VISIBLE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
+                String tvtiemqt30 = tvTimeTq30.getText().toString();
+                remind.edit().putString("time_tp",tvtiemqt30).commit();
                 break;
             case R.id.ll_time_tq60:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -159,6 +227,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.VISIBLE);
                 imgTimeTq240.setVisibility(View.GONE);
+                String tvtiemqt60 = tvTimeTq60.getText().toString();
+                remind.edit().putString("time_tp",tvtiemqt60).commit();
                 break;
             case R.id.ll_time_tq240:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -167,6 +237,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.VISIBLE);
+                String tvtiemqt240 = tvTimeTq240.getText().toString();
+                remind.edit().putString("time_tp",tvtiemqt240).commit();
                 break;
         }
     }
@@ -241,4 +313,10 @@ public class RemindingTimeActivity extends BaseActivity {
         Toast.makeText(this, "关闭了提醒", Toast.LENGTH_SHORT).show();
 
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+//    }
 }

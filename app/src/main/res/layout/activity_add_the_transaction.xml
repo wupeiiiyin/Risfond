@@ -19,8 +19,9 @@
             android:textColor="@color/color_white"
             android:textSize="16sp"
             android:text="保存"
+            android:layout_marginBottom="35px"
             android:id="@+id/tv_addthetransaction_commit"
-            android:padding="5dp"
+
             android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -255,6 +256,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:hint="提前五分钟  "
+            android:id="@+id/tv_tq5"
             android:drawableRight="@mipmap/iconmoregray"
             />
     </LinearLayout>
