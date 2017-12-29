@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
@@ -37,6 +38,8 @@ import com.risfond.rnss.home.commonFuctions.reminding.wheelview.JudgeDate;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.ScreenInfo;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -57,7 +60,8 @@ public class AddTheTransactionActivity extends BaseActivity {
     LinearLayout llAddthetransactionReminding;
     @BindView(R.id.tv_addthetransaction_commit)
     TextView tvAddthetransactionCommit;
-
+    @BindView(R.id.tv_tq5)
+    TextView tvTq5;
 
     private WheelMain wheelMainDate;
     private TransactiondatabaseSQL ttdbsqlite;
@@ -69,6 +73,7 @@ public class AddTheTransactionActivity extends BaseActivity {
     private String beginTime;
     private String datatime;
     private int year,month,day,hours,minute;
+    private SharedPreferences remind;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -85,6 +90,23 @@ public class AddTheTransactionActivity extends BaseActivity {
         tvTitle.setText("添加事务");
         ButterKnife.bind(this);
         c = ttdbsqlite.checktransaction();
+        remind = getSharedPreferences("remind", MODE_PRIVATE);
+        echodata();
+    }
+    public void echodata(){
+        String time_tp = remind.getString("time_tp", "");
+        if (time_tp.length()>0){
+            tvTq5.setText(time_tp);
+        }else{
+            tvTq5.setText("不提醒");//ok了
+        }//把这个封装个方法
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        echodata();//ok了
+
     }
 
     @OnClick({R.id.ll_addthetransaction_reminding, R.id.ll_addthetransaction_time, R.id.tv_addthetransaction_commit})
@@ -94,60 +116,66 @@ public class AddTheTransactionActivity extends BaseActivity {
             case R.id.ll_addthetransaction_reminding:
                 //雷达图,统计图
                 //startActivity(ContionActivity.class, false);
-                //PopupWindow
                 //showBottoPopupWindow();
-
                 //系统自带
                 DatePickerDialog dialog1 = new DatePickerDialog(AddTheTransactionActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        //当前选择的日期
-                        date = year + "-" + Integer.parseInt(monthOfYear + 1 + "") + "-" + dayOfMonth;
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    //日期选择器
+                    date = year + "-" + Integer.parseInt(monthOfYear + 1 + "") + "-" + dayOfMonth;
 
-                        TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time = hourOfDay + ":" + minute;
-                                tvTimeDisplay.setText(date +" "+ time);
-                            }
-                        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
-                        //显示
-                        dialog.show();
-                    }
-                }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    //时间选择器
+                    TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            time = hourOfDay + ":" + minute;
+                            tvTimeDisplay.setText(date +" "+ time);
+                            Log.e("CQQQQ",tvTimeDisplay.getText().toString());
+
+                            String mTvTimeDisplay = tvTimeDisplay.getText().toString();
+                            EventBus.getDefault().post(new MessageEvent(mTvTimeDisplay));
+
+
+//                            String mTvTimeDisplay = tvTimeDisplay.getText().toString();
+//                            Intent intent = new Intent(AddTheTransactionActivity.this,RemindingActivity.class);
+//                            intent.putExtra("mTvTimeDisplay",mTvTimeDisplay);
+//                            startActivity(intent);
+                        }
+                    }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+                    dialog.show();
+                }
+            }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                 //通过Calendar获得当前年、月、日
                 dialog1.show();
                 break;
+
+
+
             case R.id.ll_addthetransaction_time:
-                Intent intent = new Intent();
-                intent.putExtra("datatime", datatime);
-//                intent.putExtra("date", date);
-                intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
-                AddTheTransactionActivity.this.startActivity(intent);
+                //tvTq5.setText();
+                startActivity(RemindingTimeActivity.class, false);
                 break;
+
+
             //添加
             case R.id.tv_addthetransaction_commit:
                 String trim = editAddthetransactionContent.getText().toString();
                 String date = tvTimeDisplay.getText().toString();
-                if (date == null||date.equals("")||date.equals("请选择时间")){
+
+                String datetime = tvTimeDisplay.getText().toString();
+                Intent intenttime = new Intent();
+                intenttime.putExtra("datetime",datetime);
+
+                if (date == null&&date.equals("")&&date.equals("请选择时间")){
                     Toast.makeText(getApplicationContext(), "日期未选择", Toast.LENGTH_SHORT).show();
                 }
                 if (trim == null && trim.equals("")) {
                     Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     ContentValues cv = new ContentValues();
                     cv.put("name", trim);
                     cv.put("time", date);
 
                     ttdbsqlite.Addtransaction(cv);
-
-                    startActivity(RemindingActivity.class, true);
-//                    Intent intent1 = getIntent();
-//                    //String tq5 = intent1.getStringExtra("tq5");
-//                    int mHour = intent1.getExtras().getInt("mHour");
-//                    int mMinute = intent1.getExtras().getInt("mMinute");
-//                    int day = intent1.getExtras().getInt("day");
-//                    startRemind(mHour,mMinute,day);
+                    startActivity(RemindingActivity.class, false);
                     break;
                 }
         }
@@ -156,19 +184,12 @@ public class AddTheTransactionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("AddTheTransaction Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
+                .setName("AddTheTransaction Page")
                 .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
@@ -202,6 +223,7 @@ public class AddTheTransactionActivity extends BaseActivity {
                 ActionBar.LayoutParams.WRAP_CONTENT);
         final ScreenInfo screenInfoDate = new ScreenInfo(this);
         wheelMainDate = new WheelMain(menuView, true);
+        backgroundAlpha(3f);
         wheelMainDate.screenheight = screenInfoDate.getHeight();
         String time = DateUtils.currentMonth().toString();
         Calendar calendar = Calendar.getInstance();
@@ -219,7 +241,6 @@ public class AddTheTransactionActivity extends BaseActivity {
         minute = calendar.get(Calendar.MINUTE);
 
         wheelMainDate.initDateTimePicker(year, month, day, hours,minute);
-
         //mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setFocusable(true);
@@ -227,41 +248,31 @@ public class AddTheTransactionActivity extends BaseActivity {
 
         mPopupWindow.showAtLocation(tv_center, Gravity.CENTER, 0, 0);
         mPopupWindow.setOnDismissListener(new poponDismissListener());
-//        backgroundAlpha(0.6f);
 
         TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
         TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
-//        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
-//        tv_pop_title.setText("选择起始时间");
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 mPopupWindow.dismiss();
-//                backgroundAlpha(1f);
             }
         });
         //确定
         tv_ensure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                String mTime = year+"-"+month+"-"+day;
+                String mTime = year+"-"+month+"-"+day; //年-月-日
                 beginTime = wheelMainDate.getTime().toString();
+                //Log.e("CCCCC",beginTime);  //正确的值
                 datatime=DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm);
-
-                //年月日
-                //tvTimeDisplay.setText(mTime);
+                //年月日//tvTimeDisplay.setText(mTime);
                 //年月日时分
-                Log.e("hhhhhhh",datatime);
                 tvTimeDisplay.setText(datatime);
                 mPopupWindow.dismiss();
                 //传递时间
-                String selectedtime = tvTimeDisplay.getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra("selectedtime",selectedtime);
-                intent.setClass(AddTheTransactionActivity.this, RemindingTimeActivity.class);
-                AddTheTransactionActivity.this.startActivity(intent);
-
-//                backgroundAlpha(1f);
+                intent.putExtra("beginTime",beginTime);
+//                startActivity(intent);
 //                try {
 //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
 //                    long millionSeconds = sdf.parse(wheelMainDate.getTime2()).getTime();//毫秒
@@ -279,7 +290,7 @@ public class AddTheTransactionActivity extends BaseActivity {
     class poponDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
-//            backgroundAlpha(1f);
+            backgroundAlpha(1f);
         }
     }
     public void backgroundAlpha(float bgAlpha) {

@@ -3,6 +3,7 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.baidu.platform.comapi.map.M;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.adapter.HomePageAdapter;
@@ -27,9 +26,6 @@ import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarUtil;
 import com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarView;
 import com.risfond.rnss.home.commonFuctions.reminding.utils.CommonAdapter;
 import com.risfond.rnss.home.commonFuctions.reminding.utils.Data;
-import com.risfond.rnss.home.commonFuctions.reminding.utils.ViewHolder;
-import com.risfond.rnss.home.commonFuctions.reminding.view.SwipeMenuLayout;
-import com.risfond.rnss.message.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +87,8 @@ public class RemindingActivity extends BaseActivity {
     private Map<String,Object> map;
     private Cursor c;
     private List<Integer> ids = new ArrayList<>();
+    private TextView tv;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -108,7 +106,7 @@ public class RemindingActivity extends BaseActivity {
             String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
             String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
 
-            Log.e("ccccc",time);
+//            Log.e("ccccc",time);
             list_positionSearches_time.add(time);
             list_positionSearches.add(cursorString1);
             ids.add(id);
@@ -145,39 +143,52 @@ public class RemindingActivity extends BaseActivity {
             tvRemindingContext.setVisibility(View.VISIBLE);     //文字显示
         }
 
-        //item的详情
-        listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(RemindingActivity.this, "item"+i, Toast.LENGTH_SHORT).show();
-                //CharSequence text = getText(i);
-
-                startActivity(DetailsTimeActivity.class, false);
-            }
-        });
-
 
         tvTitle.setText("事务提醒");
 
         //日历适配器
         CaledarAdapter adapter = new CaledarAdapter() {
+
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarBean bean) {
+                ViewHolder vh;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
+                    vh=new ViewHolder();
+                    vh.tv= (TextView) convertView.findViewById(R.id.text);
+                    vh.dian= (ImageView) convertView.findViewById(R.id.img_point);
+                    vh.xian= (ImageView) convertView.findViewById(R.id.img_line);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(px(60), px(48));
                     convertView.setLayoutParams(params);
+                    convertView.setTag(vh);
+                }else {
+                    vh= (ViewHolder) convertView.getTag();
                 }
-                view = (TextView) convertView.findViewById(R.id.text);
-                //img_point = (ImageView) convertView.findViewById(R.id.img_point);
+                vh.tv = (TextView) convertView.findViewById(R.id.text);
+                String s = bean.moth + "-" + bean.day;
 
-                view.setText("" + bean.day);
+                for (int i = 0; i < list_positionSearches_time.size(); i++) {
+                    String t = list_positionSearches_time.get(i);
+                    if (t.contains(s)){
+                        Log.e("HB",s);
+                        vh.dian.setVisibility(View.VISIBLE);
+                        break;
+                    }else {
+                        vh.dian.setVisibility(View.GONE);
+                    }
+                }
+                vh.tv.setText("" + bean.day);
                 if (bean.mothFlag != 0) {
-                    view.setTextColor(0xff999999);
+                    vh.tv.setTextColor(0xff999999);
                 } else {
-                    view.setTextColor(0xff333333);
+                    vh.tv.setTextColor(0xff333333);
                 }
                 return convertView;
+            }
+
+            class ViewHolder{
+                TextView tv;
+                ImageView dian,xian;
             }
         };
         mCalendarDateView.setAdapter(adapter);
@@ -186,15 +197,45 @@ public class RemindingActivity extends BaseActivity {
         mCalendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
+                RelativeLayout linearLayout = (RelativeLayout) view;
+
+                if (tv!=null){
+                    tv.setTextColor(Color.BLACK);
+                }
+                    String s = bean.moth + "-" + bean.day;
+
+                    for (int i = 0; i < list_positionSearches_time.size(); i++) {
+                        String t = list_positionSearches_time.get(i);
+                        if (t.contains(s)){
+                            if (img_line!=null){
+                                img_point.setVisibility(View.GONE);
+                                img_line.setVisibility(View.VISIBLE);
+                            }
+                            if (img_point!=null){
+                                img_point.setVisibility(View.VISIBLE);
+                                img_line.setVisibility(View.GONE);
+                            }
+                            img_point = (ImageView) view.findViewById(R.id.img_point);
+                            img_line = (ImageView) view.findViewById(R.id.img_line);
+//                            img_point = (ImageView) linearLayout.getChildAt(1);
+//                            img_line = (ImageView) linearLayout.getChildAt(2);
+                                img_line.setVisibility(View.VISIBLE);
+                                img_point.setVisibility(View.GONE);
+                            break;
+                        }
+                }
+
                 //日历上方显示的时间
                 mTitle.setText(bean.year + "-" + getDisPlayNumber(bean.moth) + "-" + getDisPlayNumber(bean.day));
+                tv = (TextView) linearLayout.getChildAt(0);
+                img_point = (ImageView) linearLayout.getChildAt(1);
+                img_line = (ImageView) linearLayout.getChildAt(2);
 
-                img_line = (ImageView) view.findViewById(R.id.img_line);
-//                if (list_positionSearches.size()>0){
-//                    img_line.setVisibility(View.VISIBLE);
-//                }else {
-//                    img_line.setVisibility(View.GONE);
-//                }
+                tv.setTextColor(Color.WHITE);
+                img_line.setVisibility(View.VISIBLE);
+                img_point.setVisibility(View.GONE);
+
+
                 String time = mTitle.getText().toString();
                 notifyAdapter(time);
             }
@@ -206,6 +247,7 @@ public class RemindingActivity extends BaseActivity {
     }
 
     public void notifyAdapter(String time){
+
         times.clear();
         descs.clear();
         for (int i = 0; i < list_positionSearches_time.size(); i++) {
@@ -221,6 +263,9 @@ public class RemindingActivity extends BaseActivity {
         if (flag){
             flag=false;
             Adapter.addAll(descs,times);
+//            img_line.setVisibility(View.VISIBLE);
+//            img_point.setVisibility(View.GONE);
+
             listRemindingItem.setVisibility(View.VISIBLE);
             llRemingAffairs.setVisibility(View.VISIBLE);
             tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
@@ -235,6 +280,9 @@ public class RemindingActivity extends BaseActivity {
             according = tvItemnumber.getText().toString();
 
         }else {
+//            img_line.setVisibility(View.GONE);
+//            img_point.setVisibility(View.VISIBLE);
+
             listRemindingItem.setVisibility(View.GONE);
             llRemingAffairs.setVisibility(View.GONE);
             tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏
@@ -265,44 +313,6 @@ public class RemindingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
-
-
-
-//        commonAdapter = new CommonAdapter<Data>(this, map, R.layout.item_list_againdetail) {
-//
-//            @Override
-//            public void convert(final ViewHolder holder, final Data data, final int position, View convertView) {
-//                List<String> list = (List<String>) map.get("list_positionSearches");
-//                List<String> list1 = (List<String>) map.get("list_positionSearches_time");
-//                final List<Integer> id = (List<Integer>) map.get("id");
-//                holder.setText(R.id.tv_item_content,list.get(position) );
-//                holder.setText(R.id.tv_item_time,list1.get(position) );
-//                //可以根据自己需求设置一些选项(这里设置了IOS阻塞效果以及item的依次左滑、右滑菜单)
-//                ((SwipeMenuLayout) holder.getConvertView()).setIos(true).setLeftSwipe(position % 2 == 0 ? true : false);
-//                holder.setOnClickListener(R.id.layout, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(RemindingActivity.this, DetailsTimeActivity.class);
-//                        intent.putExtra("data", data);
-//                        startActivity(intent);
-//                    }
-//                });
-//                holder.setOnClickListener(R.id.btn_delete, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(RemindingActivity.this, "点击了删除选项", Toast.LENGTH_SHORT).show();
-//                        //在ListView里，点击侧滑菜单上的选项时，如果想让侧滑菜单同时关闭，调用这句话
-//                        ((SwipeMenuLayout) holder.getConvertView()).quickClose();
-//                        //删除操作
-//                        ttdbsqlite.deletetransaction(id.get(position));
-//                        map.remove(position);
-//                        notifyDataSetChanged();
-//                    }
-//                });
-//            }
-//        };
-//        listRemindingItem.setAdapter(commonAdapter);
     }
 
     @OnClick({R.id.tv_reminding_addaffairs, R.id.imageView})

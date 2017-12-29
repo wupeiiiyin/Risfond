@@ -243,4 +243,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/background</item>
     </style>
+    <style name="calendar_view" >
+        <item name="android:textColor">@color/color_blue</item>
+    </style>
 </resources>
