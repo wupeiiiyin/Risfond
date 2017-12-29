@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
 
     @BindView(R.id.ll_detailstime_onclick)
     RelativeLayout llDetailstimeOnclick;
+    private TransactiondatabaseSQL ttdbsqlite;
     @Override
     public int getContentViewResId() {
         return R.layout.activity_details_time;
@@ -39,28 +42,52 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.modifyanddelete,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.update:
+//                ttdbsqlite.updatetransaction();
+                startActivity(AddTheTransactionActivity.class, false);
+                break;
+            case R.id.delete:
+
+//                ttdbsqlite.deletetransaction();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("日程");
         llDetailstimeOnclick.setOnClickListener(this);
+
         Intent intent = getIntent();
-        intent.getStringExtra("key");
-        //int key = intent.getIntExtra("key", 0);
-        Log.e("HB",key+"");
-//        String time=intent.getStringExtra("time12");
-//        String searches=intent.getStringExtra("searches");
-//        Log.e("HB",time);
-//        Log.e("HB",searches);
+        String tv_itemcontent = intent.getStringExtra("tv_itemcontent");
+        String tv_itemtime = intent.getStringExtra("tv_itemtime");
+        tvDetailstimeContent.setText(tv_itemcontent);
+        tvDetailstimeTimedate.setText(tv_itemtime);
+
+
+
+
+
+        ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
     }
 
-    public void sett(String ss,String sss){
-        tvDetailstimeContent.setText(ss);
-    }
+//    public void sett(String ss,String sss){
+//        tvDetailstimeContent.setText(ss);
+//    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_detailstime_onclick:
-
                 startActivity(RemindingTimeActivity.class, false);
                 break;
         }

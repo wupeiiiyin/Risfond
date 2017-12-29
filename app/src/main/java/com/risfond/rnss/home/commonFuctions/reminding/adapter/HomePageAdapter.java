@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.home.commonFuctions.reminding.activity.DetailsTimeActivity;
@@ -28,6 +29,8 @@ public class HomePageAdapter extends BaseAdapter {
     private List<Integer> ids;
     private TransactiondatabaseSQL ttdbsqlite;
 
+
+    private TextView tv_item_content,tv_item_time,tv_item_hand,tv_item_foot;
     public HomePageAdapter(List<String> list,Context context,List<String> list2,List<Integer> ids,TransactiondatabaseSQL ttdbsqlite) {
         this.list = list;
         this.context = context;
@@ -65,12 +68,14 @@ public class HomePageAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
+
         view = LayoutInflater.from(context).inflate(R.layout.item_list_againdetail,null);
-        TextView tv_item_content = (TextView) view.findViewById(R.id.tv_item_content);
-        TextView tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
+        tv_item_content = (TextView) view.findViewById(R.id.tv_item_content);
+        tv_item_time = (TextView) view.findViewById(R.id.tv_item_time);
+
         Button btn_delete = (Button) view.findViewById(R.id.btn_delete);
-        TextView tv_item_hand = (TextView) view.findViewById(R.id.tv_item_hand);
-        TextView tv_item_foot = (TextView) view.findViewById(R.id.tv_item_foot);
+        tv_item_hand = (TextView) view.findViewById(R.id.tv_item_hand);
+        tv_item_foot = (TextView) view.findViewById(R.id.tv_item_foot);
 
         if (i==0){
             tv_item_hand.setVisibility(View.INVISIBLE);
@@ -83,8 +88,9 @@ public class HomePageAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
 
-            Intent intent = new Intent(context, DetailsTimeActivity.class);
+            Intent intent = new Intent();
             intent.putExtra("key",123);
+
             context.startActivity(intent);
         }
     });
@@ -104,8 +110,13 @@ public class HomePageAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(context, DetailsTimeActivity.class);
+                String s = list.get(i);
+                String s1 = list2.get(i);
+                tv_item_content.setText(s);
+                tv_item_time.setText(s1);
+                Intent intent = new Intent(context, DetailsTimeActivity.class);
+                intent.putExtra("tv_itemcontent",s);
+                intent.putExtra("tv_itemtime",s1);
                 context.startActivity(intent);
             }
         });

@@ -132,7 +132,7 @@
             android:id="@+id/ll_reminding_reference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#F5F5F5">
+            android:background="#FFFFFF">
 
             <LinearLayout
                 android:id="@+id/ll_reming_affairs"
@@ -175,7 +175,7 @@
                 android:divider="@null"/>
 
             <TextView
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="45dp"
                 android:drawableTop="@mipmap/iconaffairs"
                 android:id="@+id/tv_reminding_context"
                 android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_marginTop="130dp"
-                android:background="#FFFFFF"
+                android:background="#F5F5F5"
                 android:text="添加今日事务"
                 android:textColor="#4FA8E3"/>
 
