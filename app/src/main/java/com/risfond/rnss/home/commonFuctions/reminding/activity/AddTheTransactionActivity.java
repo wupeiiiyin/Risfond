@@ -188,7 +188,7 @@ public class AddTheTransactionActivity extends BaseActivity {
                     cv.put("name", trim);
                     cv.put("time", date);
                     ttdbsqlite.Addtransaction(cv);
-                    startActivity(RemindingActivity.class, true);
+                    startActivity(RemindingActivity.class, false);
                     break;
                 }
 
