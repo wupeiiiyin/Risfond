@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by lenovo on 2017/7/22.
@@ -50,7 +51,8 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
 
     //删除
     public void deletetransaction(int i){
-        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(i)});
+        int delete = db.delete(TAB_NAME, "_id=?", new String[]{String.valueOf(i)});
+        Log.e("HB",delete+"");
     }
     public void updatetransaction(ContentValues c,int i ){
         db.update(TAB_NAME,c,"_id=?",new String[]{String.valueOf(i)});

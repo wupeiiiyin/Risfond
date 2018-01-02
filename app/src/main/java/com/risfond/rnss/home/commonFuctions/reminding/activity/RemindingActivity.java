@@ -199,12 +199,13 @@ public class RemindingActivity extends BaseActivity {
         listRemindingItem.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                //id
                 int item = (int) Adapter.getItem(position);
                 Log.e("idddddddddddd",item+"");
                 ttdbsqlite.deletetransaction(item);
-                Adapter.notifyDataSetChanged();
                 times.remove(position);
                 descs.remove(position);
+                Adapter.notifyDataSetChanged();
                 return false;
             }
         });

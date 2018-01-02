@@ -21,9 +21,9 @@ import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -259,7 +259,7 @@ public class RemindingTimeActivity extends BaseActivity {
         String[] split1 = split[1].split(":");
         mHour = Integer.parseInt(split1[0]);
         mMinute = Integer.parseInt(split1[1]);
-
+Log.e("HB","++++++++++++++++"+split[1]);
         //String s = time;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -267,28 +267,57 @@ public class RemindingTimeActivity extends BaseActivity {
         try {
             millionSeconds = sdf.parse(time).getTime();
             Log.e("ccccc","执行的hao miao zhi:"+millionSeconds);
+            Log.e("HB","++++++++++++++++"+System.currentTimeMillis());
             long l = millionSeconds - System.currentTimeMillis();
             Log.e("ccccc","l:"+l);
 
-            SimpleDateFormat sss = new SimpleDateFormat("hh:mm");
-            long millionSeconds2 = sss.parse(time.split(" ")[1]).getTime();
-            sss.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
-            String hms = sss.format(million);
-            Log.e("ccccc","测试时间:"+hms);
-            day = (int) ((l-million) / 1000 / 60 / 60 / 24);
-            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
-            mMinute = (int) ((millionSeconds2-million*60*60*1000) / 1000 / 60 );
+            int ss = 1000;
+            int mi = ss * 60;
+            int hh = mi * 60;
+            int dd = hh * 24;
 
 
-            Log.e("ccccc","时:"+mHour);
-            Log.e("ccccc","分:"+mMinute);
-            Log.e("ccccc","5分钟的是时间"+day);
-
+            day = (int) (l / dd);
+            day = Integer.parseInt(day < 10 ? "0" + day : "" + day); //天
+//            formatTime(millionSeconds-million);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+            Date date = new Date(millionSeconds - million);
+            String format = simpleDateFormat.format(date);
+            mHour=Integer.parseInt(Integer.parseInt(format.split(":")[0])< 10 ? "0" + format.split(":")[0] : "" + format.split(":")[0]);
+            mMinute=Integer.parseInt(Integer.parseInt(format.split(":")[1])< 10 ? "0" + format.split(":")[1] : "" + format.split(":")[1]);
+            Log.e("ccccc","format:     "+format);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
     }
+
+    public static String formatTime(long ms) {
+
+        int ss = 1000;
+        int mi = ss * 60;
+        int hh = mi * 60;
+        int dd = hh * 24;
+
+        long day = ms / dd;
+        long hour = (ms - day * dd) / hh;
+        long minute = (ms - day * dd - hour * hh) / mi;
+        long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+        long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+
+        String strDay = day < 10 ? "0" + day : "" + day; //天
+        String strHour = hour < 10 ? "0" + hour : "" + hour;//小时
+        String strMinute = minute < 10 ? "0" + minute : "" + minute;//分钟
+        String strSecond = second < 10 ? "0" + second : "" + second;//秒
+        String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
+        strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
+
+        Log.e("ccccc","天"+strDay);
+        Log.e("ccccc","shi"+strHour);
+        Log.e("ccccc","fen"+strMinute);
+        return strDay+" 天 "+strHour + " 小时 " + strMinute + " 分钟";
+    }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
