@@ -80,8 +80,6 @@ android {
             signingConfig signingConfigs.debug
         }
 
-
-
         release {
             buildConfigField "String", "buildTime", " \"${buildTime()}\" "
             buildConfigField "String", "EASEMOB_APPKEY", "\"1180170509115796#risfond\""

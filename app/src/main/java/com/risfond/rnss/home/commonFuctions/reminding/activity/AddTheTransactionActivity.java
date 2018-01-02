@@ -135,7 +135,7 @@ public class AddTheTransactionActivity extends BaseActivity {
                         //时间选择器
                         TimePickerDialog dialog = new TimePickerDialog(AddTheTransactionActivity.this, new TimePickerDialog.OnTimeSetListener() {
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time = hourOfDay + ":" + minute;
+                                time = getDisPlayNumber(hourOfDay) + ":" + getDisPlayNumber(minute);
                                 tvTimeDisplay.setText(date +" "+ time);
                                 Log.e("CQQQQ",tvTimeDisplay.getText().toString());
 

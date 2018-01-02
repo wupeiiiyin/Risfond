@@ -27,7 +27,7 @@ public class MyHomePageAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return list.get(i);
+        return ids.get(i);
     }
 
     @Override
@@ -52,16 +52,17 @@ public class MyHomePageAdapter extends BaseAdapter {
             holder.tv_item_foot.setVisibility(View.INVISIBLE);
         }
 
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent();
-                intent.putExtra("key", 123);
-
-                context.startActivity(intent);
-            }
-        });*/
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ttdbsqlite.deletetransaction(ids);
+//                notifyDataSetChanged();
+////                Intent intent = new Intent();
+////                intent.putExtra("key", 123);
+////                context.startActivity(intent);
+//            }
+//        });
 
         /*btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override

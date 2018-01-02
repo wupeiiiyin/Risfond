@@ -259,6 +259,7 @@ public class RemindingTimeActivity extends BaseActivity {
         String[] split1 = split[1].split(":");
         mHour = Integer.parseInt(split1[0]);
         mMinute = Integer.parseInt(split1[1]);
+
         //String s = time;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -275,14 +276,10 @@ public class RemindingTimeActivity extends BaseActivity {
             String hms = sss.format(million);
             Log.e("ccccc","测试时间:"+hms);
             day = (int) ((l-million) / 1000 / 60 / 60 / 24);
-            mHour = (int) ((day-million) / 1000 / 60 / 60);
-            mMinute = (int) ((mHour-million*60) / 1000 / 60 );
-//            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
-//            mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 );
-//            mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 / 60);
+            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
+            mMinute = (int) ((millionSeconds2-million*60*60*1000) / 1000 / 60 );
 
 
-//            Log.e("ccccc","测试时间2:"+mHour+":"+mMinute);
             Log.e("ccccc","时:"+mHour);
             Log.e("ccccc","分:"+mMinute);
             Log.e("ccccc","5分钟的是时间"+day);
@@ -323,9 +320,6 @@ public class RemindingTimeActivity extends BaseActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
@@ -333,16 +327,7 @@ public class RemindingTimeActivity extends BaseActivity {
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-//    }
 }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.home.commonFuctions.reminding.activity.DetailsTimeActivity;
@@ -56,7 +55,7 @@ public class HomePageAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
 
-        return list.get(i);
+        return ids.get(i);
 
     }
 
@@ -84,16 +83,16 @@ public class HomePageAdapter extends BaseAdapter {
             tv_item_foot.setVisibility(View.INVISIBLE);
         }
 
-    view.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            Intent intent = new Intent();
-            intent.putExtra("key",123);
-
-            context.startActivity(intent);
-        }
-    });
+//    view.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//
+//            Intent intent = new Intent();
+//            intent.putExtra("key",123);
+//
+//            context.startActivity(intent);
+//        }
+//    });
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
