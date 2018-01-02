@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.risfond.rnss.home.commonFuctions.reminding.utils.Data;
-
 /**
  * Created by lenovo on 2017/7/22.
  */

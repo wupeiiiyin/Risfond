@@ -54,6 +54,8 @@
             android:text="标题"
             android:textColor="@color/color_white"
             android:textSize="18sp"/>
+
+
     </LinearLayout>
 
     <LinearLayout

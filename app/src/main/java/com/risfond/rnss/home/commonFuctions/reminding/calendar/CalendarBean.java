@@ -53,7 +53,10 @@ public class CalendarBean {
     @Override
     public String toString() {
 //        String s=year+"/"+moth+"/"+day+"\t"+getDisplayWeek()+"\t农历"+":"+chinaMonth+"/"+chinaDay;
+
+
         String s=year+"/"+moth+"/"+day;
+
         return s;
     }
 }

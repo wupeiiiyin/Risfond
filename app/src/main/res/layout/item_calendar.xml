@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="48dp"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/text"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:gravity="center"
         android:layout_centerHorizontal="true"
         android:background="@drawable/background_item"
-        />
+        android:gravity="center"
+        android:textColor="@color/c_selector" />
+
     <ImageView
         android:id="@+id/img_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="3dp"
+        android:layout_height="3dp"
         android:layout_alignParentBottom="true"
-        android:src="@mipmap/point"/>
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/point"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/img_line"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="3dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/line"/>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/d_bg_sc_item" />
 </RelativeLayout>

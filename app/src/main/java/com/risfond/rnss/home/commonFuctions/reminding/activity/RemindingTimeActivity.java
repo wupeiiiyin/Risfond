@@ -2,9 +2,9 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,18 +12,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
-import com.risfond.rnss.home.commonFuctions.reminding.broadcastreceiver.AlarmReceiver;
 import com.risfond.rnss.home.commonFuctions.reminding.wheelview.WheelMain;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -78,6 +77,16 @@ public class RemindingTimeActivity extends BaseActivity {
     TextView tvTitle;
     //private String message;
     private SharedPreferences remind;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+    private String time;
+    private int day;
+    private int mMinute;
+    private int mHour;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding_time;
@@ -92,43 +101,43 @@ public class RemindingTimeActivity extends BaseActivity {
         //        tvTimeTq0.setText(year_month_day);
         remind = getSharedPreferences("remind", MODE_PRIVATE);
         String time_tp = remind.getString("time_tp", "");
-        if (time_tp.length()>0){
-            if (time_tp.equals("不提醒")){
+        if (time_tp.length() > 0) {
+            if (time_tp.equals("不提醒")) {
                 imgTimeTq0.setVisibility(View.VISIBLE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-            }else if(time_tp.equals("提前5分钟")){
+            } else if (time_tp.equals("提前5分钟")) {
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.VISIBLE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-            }else if(time_tp.equals("提前15分钟")){
+            } else if (time_tp.equals("提前15分钟")) {
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.VISIBLE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-            }else if(time_tp.equals("提前30分钟")){
+            } else if (time_tp.equals("提前30分钟")) {
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.VISIBLE);
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
-            }else if(time_tp.equals("提前1小时")){
+            } else if (time_tp.equals("提前1小时")) {
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.GONE);
                 imgTimeTq30.setVisibility(View.GONE);
                 imgTimeTq60.setVisibility(View.VISIBLE);
                 imgTimeTq240.setVisibility(View.GONE);
-            }else if(time_tp.equals("提前1天")){
+            } else if (time_tp.equals("提前1天")) {
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.GONE);
@@ -136,7 +145,7 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.VISIBLE);
             }
-        }else{
+        } else {
             imgTimeTq0.setVisibility(View.VISIBLE);
             imgTimeTq5.setVisibility(View.GONE);
             imgTimeTq15.setVisibility(View.GONE);
@@ -151,6 +160,13 @@ public class RemindingTimeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        Intent intent = getIntent();
+        time = intent.getStringExtra("mTvTimeDisplay");
+        Log.e("ccccc","add传来的:"+time);
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)
@@ -159,7 +175,7 @@ public class RemindingTimeActivity extends BaseActivity {
 //        tvTimeTq0.setText(messageEvent.getMessage().toString());
 //        message = messageEvent.getMessage();
 //        Log.e("CQQQQQ",message+"-------------");
-//    }现在就存完了
+//    }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -174,7 +190,7 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt0 = tvTimeTq0.getText().toString();
-                remind.edit().putString("time_tp",tvtiemqt0).commit();
+                remind.edit().putString("time_tp", tvtiemqt0).commit();
                 break;
             case R.id.ll_time_tq5://提前5分钟
                 imgTimeTq0.setVisibility(View.GONE);
@@ -185,22 +201,13 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt5 = tvTimeTq5.getText().toString();
                 //这里接收传来的时间数据
-                remind.edit().putString("time_tp",tvtiemqt5).commit();
 
-//
-//                Intent intent = getIntent();
-//                String time = intent.getStringExtra("beginTime");
-//                Log.e("aaaaa",time+"=====================================");
-//                String[] split = time.split("\\s+");
-//                Log.e("aaaaa",split+"=========++++++++++++++=============");
-//                    int mHour = Integer.parseInt(split[0]);
-//                    int mMinute = Integer.parseInt(split[1]);
-//                    long l = millionSeconds - System.currentTimeMillis();
-//                    int day = (int) (l / 1000 / 60 / 60 / 24);
-//                    startRemind(mHour, mMinute, day);
+                remind.edit().putString("time_tp", tvtiemqt5).commit();
+                //String tokenizer123
+
+                setTimeStart(300000);
                 break;
             case R.id.ll_time_tq15:
-//                tvTimeTq15.setTextColor(Color.BLUE);
                 imgTimeTq0.setVisibility(View.GONE);
                 imgTimeTq5.setVisibility(View.GONE);
                 imgTimeTq15.setVisibility(View.VISIBLE);
@@ -208,7 +215,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt15 = tvTimeTq15.getText().toString();
-                remind.edit().putString("time_tp",tvtiemqt15).commit();
+                remind.edit().putString("time_tp", tvtiemqt15).commit();
+                setTimeStart(900000);
                 break;
             case R.id.ll_time_tq30:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -218,7 +226,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt30 = tvTimeTq30.getText().toString();
-                remind.edit().putString("time_tp",tvtiemqt30).commit();
+                remind.edit().putString("time_tp", tvtiemqt30).commit();
+                setTimeStart(1800000);
                 break;
             case R.id.ll_time_tq60:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -228,7 +237,8 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.VISIBLE);
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt60 = tvTimeTq60.getText().toString();
-                remind.edit().putString("time_tp",tvtiemqt60).commit();
+                remind.edit().putString("time_tp", tvtiemqt60).commit();
+                setTimeStart(3600000);
                 break;
             case R.id.ll_time_tq240:
                 imgTimeTq0.setVisibility(View.GONE);
@@ -238,80 +248,93 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.VISIBLE);
                 String tvtiemqt240 = tvTimeTq240.getText().toString();
-                remind.edit().putString("time_tp",tvtiemqt240).commit();
+                remind.edit().putString("time_tp", tvtiemqt240).commit();
+                setTimeStart(86400000);
                 break;
         }
     }
 
-    /**
-     * 开启提醒
-     */
-    private void startRemind(int hour, int minute, int day) {
-        //得到日历实例，主要是为了下面的获取时间
-        final Calendar mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(System.currentTimeMillis());
+    public void setTimeStart(long million){
+        String[] split = time.split(" ");
+        String[] split1 = split[1].split(":");
+        mHour = Integer.parseInt(split1[0]);
+        mMinute = Integer.parseInt(split1[1]);
+        //String s = time;
 
-        //获取当前毫秒值
-        final long systemTime = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        long millionSeconds = 0;//毫秒
+        try {
+            millionSeconds = sdf.parse(time).getTime();
+            Log.e("ccccc","执行的hao miao zhi:"+millionSeconds);
+            long l = millionSeconds - System.currentTimeMillis();
+            Log.e("ccccc","l:"+l);
 
-        //是设置日历的时间，主要是让日历的年月日和当前同步
-        mCalendar.setTimeInMillis(System.currentTimeMillis());
-        // 这里时区需要设置一下，不然可能个别手机会有8个小时的时间差
-        mCalendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        //设置在几点提醒  设置的为13点
-        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
-        //设置在几分提醒  设置的为25分
-        mCalendar.set(Calendar.MINUTE, minute);
-        //下面这两个看字面意思也知道
-        mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND, 0);
-
-        //上面设置的就是13点25分的时间点
-
-        //获取上面设置的13点25分的毫秒值
-        final long selectTime = mCalendar.getTimeInMillis();
+            SimpleDateFormat sss = new SimpleDateFormat("hh:mm");
+            long millionSeconds2 = sss.parse(time.split(" ")[1]).getTime();
+            sss.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+            String hms = sss.format(million);
+            Log.e("ccccc","测试时间:"+hms);
+            day = (int) ((l-million) / 1000 / 60 / 60 / 24);
+            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
+            mMinute = (int) ((millionSeconds2-million*60*60*1000) / 1000 / 60 / 60);
 
 
-        // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
-        mCalendar.add(Calendar.DAY_OF_MONTH, day);
+//            Log.e("ccccc","测试时间2:"+mHour+":"+mMinute);
+            Log.e("ccccc","时:"+mHour);
+            Log.e("ccccc","分:"+mMinute);
+            Log.e("ccccc","5分钟的是时间"+day);
 
-        //AlarmReceiver.class为广播接受者
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        //得到AlarmManager实例
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        //**********注意！！下面的两个根据实际需求任选其一即可*********
-
-        /**
-         * 单次提醒
-         * mCalendar.getTimeInMillis() 上面设置的13点25分的时间点毫秒值
-         */
-        am.set(AlarmManager.RTC_WAKEUP, selectTime, pi);
-
-        //        /**
-        //         * 重复提醒
-        //         * 第一个参数是警报类型；下面有介绍
-        //         * 第二个参数网上说法不一，很多都是说的是延迟多少毫秒执行这个闹钟，但是我用的刷了MIUI的三星手机的实际效果是与单次提醒的参数一样，即设置的13点25分的时间点毫秒值
-        //         * 第三个参数是重复周期，也就是下次提醒的间隔 毫秒值 我这里是一天后提醒
-        //         */
-        //        am.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), (1000 * 60 * 60 * 24), pi);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
     /**
-     * 关闭提醒
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private void stopRemind() {
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("RemindingTime Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0,
-                intent, 0);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //取消警报
-        am.cancel(pi);
-        Toast.makeText(this, "关闭了提醒", Toast.LENGTH_SHORT).show();
+    @Override
+    public void back(View v) {
+        Log.e("ccccc","back:"+day+mHour+mMinute);
+        Intent intent = new Intent();
+        intent.putExtra("mDay",day);
+        intent.putExtra("mHour",mHour);
+        intent.putExtra("mMinute",mMinute);
+        setResult(2020,intent);
+        super.back(v);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
 //    @Override

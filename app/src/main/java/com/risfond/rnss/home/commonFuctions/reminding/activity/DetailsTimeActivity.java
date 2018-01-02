@@ -3,9 +3,6 @@ package com.risfond.rnss.home.commonFuctions.reminding.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,8 +11,6 @@ import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
 
 import butterknife.BindView;
-
-import static android.R.attr.key;
 
 public class DetailsTimeActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_title)
@@ -38,29 +33,8 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.modifyanddelete,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.update:
-//                ttdbsqlite.updatetransaction();
-                startActivity(AddTheTransactionActivity.class, false);
-                break;
-            case R.id.delete:
-
-//                ttdbsqlite.deletetransaction();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void init(Bundle savedInstanceState) {
