@@ -166,12 +166,12 @@
                     android:text=")"/>
             </LinearLayout>
 
-            <ListView
+            <com.baoyz.swipemenulistview.SwipeMenuListView
                 android:layout_below="@+id/ll_reming_affairs"
                 android:id="@+id/list_reminding_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F5F5F5"
+                android:background="#FFFFFF"
                 android:divider="@null"/>
 
             <TextView
@@ -196,6 +196,7 @@
                 android:textColor="#4FA8E3"/>
 
         </RelativeLayout>
+
     </com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarLayout>
         <ImageView
             android:id="@+id/imageView"
