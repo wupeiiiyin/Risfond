@@ -15,8 +15,6 @@ import butterknife.BindView;
 public class DetailsTimeActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_detailstime_timeclock)
-    TextView tvDetailstimeTimeclock;
     @BindView(R.id.tv_detailstime_timedate)
     TextView tvDetailstimeTimedate;
     @BindView(R.id.tv_detailstime_content)

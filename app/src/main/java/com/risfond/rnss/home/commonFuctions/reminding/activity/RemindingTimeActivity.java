@@ -275,9 +275,11 @@ public class RemindingTimeActivity extends BaseActivity {
             String hms = sss.format(million);
             Log.e("ccccc","测试时间:"+hms);
             day = (int) ((l-million) / 1000 / 60 / 60 / 24);
-            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
-            mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 );
-          //mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 / 60);
+            mHour = (int) ((day-million) / 1000 / 60 / 60);
+            mMinute = (int) ((mHour-million*60) / 1000 / 60 );
+//            mHour = (int) ((millionSeconds2-million) / 1000 / 60 / 60);
+//            mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 );
+//            mMinute = (int) ((millionSeconds2-million*60) / 1000 / 60 / 60);
 
 
 //            Log.e("ccccc","测试时间2:"+mHour+":"+mMinute);
