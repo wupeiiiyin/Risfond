@@ -30,12 +30,7 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-//    public Cursor checkTime(){
-//        String status = "available";
-//        Cursor c = db.query(TAB_NAME, columns, KEY_STATUS +"=?",
-//                new String[] {status}, null, null, KEY_NAME);
-//        return 0;
-//    }
+
 
     //查
     public Cursor checktransaction(){

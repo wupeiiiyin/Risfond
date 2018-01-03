@@ -52,9 +52,6 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
         ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
     }
 
-//    public void sett(String ss,String sss){
-//        tvDetailstimeContent.setText(ss);
-//    }
 
     @Override
     public void onClick(View view) {
