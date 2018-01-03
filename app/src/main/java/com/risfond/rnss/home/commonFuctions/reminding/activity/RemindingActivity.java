@@ -41,8 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.umeng.analytics.pro.dk.i;
-
 public class RemindingActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -205,7 +203,7 @@ public class RemindingActivity extends BaseActivity {
                     case 0:
                         //侧滑删除的操作.
                         ttdbsqlite.deletetransaction(ids.get(position));
-                        ttdbsqlite.deletetransaction(ids.get(i));
+//                        ttdbsqlite.deletetransaction(ids.get(i));
 //                        List list= (ArrayList) map.get("list_positionSearches");
 //                        List list2= (ArrayList) map.get("list_positionSearches_time");
                         times.remove(position);
@@ -213,6 +211,15 @@ public class RemindingActivity extends BaseActivity {
                         Adapter.notifyDataSetChanged();
                         break;
                 }
+
+
+                //id
+                int item = (int) Adapter.getItem(position);
+                Log.e("idddddddddddd",item+"");
+                ttdbsqlite.deletetransaction(item);
+                times.remove(position);
+                descs.remove(position);
+                Adapter.notifyDataSetChanged();
                 return false;
             }
         });

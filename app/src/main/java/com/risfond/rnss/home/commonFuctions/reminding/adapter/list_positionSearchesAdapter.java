@@ -49,6 +49,7 @@ public class list_positionSearchesAdapter extends BaseAdapter {
             holder = new ViewHolder();
             /**得到各个控件的对象*/
             holder.tv_item_content = (TextView) convertView.findViewById(R.id.tv_item_content);
+
             convertView.setTag(holder);//绑定ViewHolder对象
         }
         else{

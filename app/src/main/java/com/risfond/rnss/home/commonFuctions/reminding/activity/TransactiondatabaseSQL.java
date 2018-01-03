@@ -46,22 +46,16 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     //增
     public void Addtransaction(ContentValues contentValues){
         db.insert(TAB_NAME,null,contentValues);
-        Log.e("sss","增加111");
-
     }
 
 
     //删除
     public void deletetransaction(int i){
-//        SQLiteDatabase db1 = getWritableDatabase();.
-//        db1.close();
-        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(i)});
-
+        int delete = db.delete(TAB_NAME, "_id=?", new String[]{String.valueOf(i)});
+        Log.e("HB",delete+"");
     }
     public void updatetransaction(ContentValues c,int i ){
-//        SQLiteDatabase db1 = getWritableDatabase();
         db.update(TAB_NAME,c,"_id=?",new String[]{String.valueOf(i)});
-//        db1.close();
     }
 
     public synchronized void close(){
@@ -71,4 +65,9 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         super.close();
     }
 
+
+
+//    public void deletetransaction(List<Integer> ids) {
+//        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(ids)});
+//    }
 }
