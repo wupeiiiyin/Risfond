@@ -42,7 +42,6 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         db.insert(TAB_NAME,null,contentValues);
     }
 
-
     //删除
     public void deletetransaction(int i){
         int delete = db.delete(TAB_NAME, "_id=?", new String[]{String.valueOf(i)});

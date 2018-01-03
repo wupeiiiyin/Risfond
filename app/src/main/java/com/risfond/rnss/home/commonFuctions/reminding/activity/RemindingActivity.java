@@ -83,7 +83,6 @@ public class RemindingActivity extends BaseActivity {
     List<String> descs = new ArrayList<>();
     private int day;
     private String according;
-
     private CommonAdapter<Data> commonAdapter;
     private Map<String, Object> map;
     private Cursor c;
@@ -98,7 +97,6 @@ public class RemindingActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-
         ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
         c = ttdbsqlite.checktransaction();
         c.moveToFirst();
@@ -188,19 +186,10 @@ public class RemindingActivity extends BaseActivity {
                     case 0:
                         //侧滑删除的操作.
                         ttdbsqlite.deletetransaction(ids.get(position));
-                        times.remove(position);
-                        descs.remove(position);
+                        map.remove(position);
                         Adapter.notifyDataSetChanged();
                         break;
                 }
-
-
-                //id
-                int item = (int) Adapter.getItem(position);
-                ttdbsqlite.deletetransaction(item);
-                times.remove(position);
-                descs.remove(position);
-                Adapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -357,6 +346,4 @@ public class RemindingActivity extends BaseActivity {
                 break;
         }
     }
-
 }
-

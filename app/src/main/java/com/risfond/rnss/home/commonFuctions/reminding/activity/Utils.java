@@ -36,7 +36,6 @@ import android.view.WindowManager;
         return (int) (dipValue * scale + 0.5f);
     }
 
-
     //获取显示版本
     public static String getVersionName(Context context) {
         try {

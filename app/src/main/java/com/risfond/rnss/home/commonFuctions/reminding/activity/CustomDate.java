@@ -9,8 +9,6 @@ import java.io.Serializable;
  */
 
 public class CustomDate implements Serializable {
-
-
     private static final long serialVersionUID = 1L;
     public int year;
     public int month;

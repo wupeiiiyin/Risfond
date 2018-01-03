@@ -106,7 +106,7 @@ public class AddTheTransactionActivity extends BaseActivity {
         switch (view.getId()) {
             //日期
             case R.id.ll_addthetransaction_reminding:
-                //雷达图,统计图
+                //雷达图,统计图ContionActivity
                 //startActivity(ContionActivity.class, false);
 
                 //系统自带
@@ -128,9 +128,6 @@ public class AddTheTransactionActivity extends BaseActivity {
                 //通过Calendar获得当前年、月、日
                 dialog1.show();
                 break;
-
-
-
             case R.id.ll_addthetransaction_time:
                 String mTvTimeDisplay = tvTimeDisplay.getText().toString();
                 Intent intent = new Intent(this,RemindingTimeActivity.class);
@@ -150,19 +147,14 @@ public class AddTheTransactionActivity extends BaseActivity {
                 }else {
                     startRemind(mHour, mMinute, mDay);
                 }
-                if (trim == null && trim.equals("")) {
-                    Toast.makeText(getApplicationContext(), "添加的内容不能为空", Toast.LENGTH_SHORT).show();
-                } else {
-                    ContentValues cv = new ContentValues();
-                    cv.put("name", trim);
-                    cv.put("time", date);
-                    ttdbsqlite.Addtransaction(cv);
-                    startActivity(RemindingActivity.class, false);
-                    break;
-                }
 
-
-
+                ContentValues cv = new ContentValues();
+                cv.put("name", trim);
+                cv.put("time", date);
+                ttdbsqlite.Addtransaction(cv);
+                startActivity(RemindingActivity.class, false);
+                finish();
+                break;
         }
     }
 

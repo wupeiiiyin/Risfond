@@ -33,7 +33,6 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("日程");
@@ -44,10 +43,6 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
         String tv_itemtime = intent.getStringExtra("tv_itemtime");
         tvDetailstimeContent.setText(tv_itemcontent);
         tvDetailstimeTimedate.setText(tv_itemtime);
-
-
-
-
 
         ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
     }

@@ -282,7 +282,6 @@ public class RemindingTimeActivity extends BaseActivity {
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
-
     @Override
     public void back(View v) {
         //返回操作
