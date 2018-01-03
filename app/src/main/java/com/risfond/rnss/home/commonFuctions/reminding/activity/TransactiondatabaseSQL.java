@@ -59,10 +59,4 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         }
         super.close();
     }
-
-
-
-//    public void deletetransaction(List<Integer> ids) {
-//        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(ids)});
-//    }
 }
