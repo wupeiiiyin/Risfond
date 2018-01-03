@@ -49,6 +49,7 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         int delete = db.delete(TAB_NAME, "_id=?", new String[]{String.valueOf(i)});
         Log.e("HB",delete+"");
     }
+
     public void updatetransaction(ContentValues c,int i ){
         db.update(TAB_NAME,c,"_id=?",new String[]{String.valueOf(i)});
     }
