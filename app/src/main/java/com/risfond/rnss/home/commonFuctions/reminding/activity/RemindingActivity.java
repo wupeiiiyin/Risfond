@@ -310,7 +310,6 @@ public class RemindingActivity extends BaseActivity {
             tvAffairsright.setVisibility(View.GONE);
             tvRemindingAddaffairs.setVisibility(View.VISIBLE);
             tvRemindingContext.setVisibility(View.VISIBLE);
-
         }
     }
 
