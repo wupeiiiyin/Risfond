@@ -59,7 +59,6 @@ public class RemindingActivity extends BaseActivity {
 
     @BindView(R.id.list_reminding_item)
     SwipeMenuListView listRemindingItem;
-//    ListView listRemindingItem;
 
     @BindView(R.id.ll_reming_affairs)
     LinearLayout llRemingAffairs;
@@ -70,11 +69,10 @@ public class RemindingActivity extends BaseActivity {
     TextView tvItemnumber;
     @BindView(R.id.tv_affairsright)
     TextView tvAffairsright;
-    //    private HomePageAdapter yAdapter;
+
     private MyHomePageAdapter Adapter;
-    private boolean isHasNum = true;//记录是否加载有数据
-    private List<String> list_positionSearches = new ArrayList();  //内容
-    private List<String> list_positionSearches_time = new ArrayList(); //时间
+    private List<String> list_positionSearches = new ArrayList();
+    private List<String> list_positionSearches_time = new ArrayList();
 
     private TransactiondatabaseSQL ttdbsqlite;
 
@@ -85,7 +83,6 @@ public class RemindingActivity extends BaseActivity {
     List<String> descs = new ArrayList<>();
     private int day;
     private String according;
-
     private CommonAdapter<Data> commonAdapter;
     private Map<String, Object> map;
     private Cursor c;
@@ -100,7 +97,6 @@ public class RemindingActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-
         ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
         c = ttdbsqlite.checktransaction();
         c.moveToFirst();
@@ -120,31 +116,24 @@ public class RemindingActivity extends BaseActivity {
         map.put("list_positionSearches_time", list_positionSearches_time);
         map.put("list_positionSearches", list_positionSearches);
         map.put("id", ids);
-
-
-//        int size = list_positionSearches.size();
-//        tvItemnumber.setText(size + "");
-
         if (list_positionSearches.size() > 0) {//-1
-            listRemindingItem.setVisibility(View.VISIBLE);      //ListView显示
+            listRemindingItem.setVisibility(View.VISIBLE);
             llRemingAffairs.setVisibility(View.VISIBLE);
-            tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
-            tvItemnumber.setVisibility(View.VISIBLE);           //数量  显示
-            tvAffairsright.setVisibility(View.VISIBLE);         // ) 显示
-            tvRemindingAddaffairs.setVisibility(View.GONE);     //占位图片隐藏
-            tvRemindingContext.setVisibility(View.GONE);        //文字隐藏
-
-//            Adapter = new HomePageAdapter(list_positionSearches this, list_positionSearches_time, ids, ttdbsqlite);
+            tvAffairsleft.setVisibility(View.VISIBLE);
+            tvItemnumber.setVisibility(View.VISIBLE);
+            tvAffairsright.setVisibility(View.VISIBLE);
+            tvRemindingAddaffairs.setVisibility(View.GONE);
+            tvRemindingContext.setVisibility(View.GONE);
             Adapter = new MyHomePageAdapter(list_positionSearches, this, list_positionSearches_time, ids, ttdbsqlite);
             listRemindingItem.setAdapter(Adapter);
         } else if (list_positionSearches.size() < 0) {
-            listRemindingItem.setVisibility(View.GONE);         //ListView隐藏
+            listRemindingItem.setVisibility(View.GONE);
             llRemingAffairs.setVisibility(View.GONE);
-            tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏
-            tvItemnumber.setVisibility(View.GONE);              //数量  隐藏
-            tvAffairsright.setVisibility(View.GONE);            // ) 隐藏
-            tvRemindingAddaffairs.setVisibility(View.VISIBLE);  //占位图片显示
-            tvRemindingContext.setVisibility(View.VISIBLE);     //文字显示
+            tvAffairsleft.setVisibility(View.GONE);
+            tvItemnumber.setVisibility(View.GONE);
+            tvAffairsright.setVisibility(View.GONE);
+            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
+            tvRemindingContext.setVisibility(View.VISIBLE);
         }
 
 
@@ -157,15 +146,11 @@ public class RemindingActivity extends BaseActivity {
         mCalendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
-//                img_point = (ImageView) view.findViewById(R.id.img_point);
-//                img_line = (ImageView) view.findViewById(R.id.img_line);
                 tv = (TextView) view.findViewById(R.id.text);
-
                 //日历上方显示的时间
                 mTitle.setText(bean.year + "-" + getDisPlayNumber(bean.moth) + "-" + getDisPlayNumber(bean.day));
                 String time = mTitle.getText().toString();
                 notifyAdapter(time);
-
             }
         });
         int[] data = CalendarUtil.getYMD(new Date());
@@ -175,10 +160,8 @@ public class RemindingActivity extends BaseActivity {
 
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
-
             @Override
             public void create(SwipeMenu menu) {
-                // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
                 deleteItem.setTitle("删除");
                 deleteItem.setTitleSize(16);
@@ -199,18 +182,19 @@ public class RemindingActivity extends BaseActivity {
         listRemindingItem.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                //id
-                int item = (int) Adapter.getItem(position);
-                Log.e("idddddddddddd",item+"");
-                ttdbsqlite.deletetransaction(item);
-                times.remove(position);
-                descs.remove(position);
-                Adapter.notifyDataSetChanged();
+                switch (index) {
+                    case 0:
+                        //侧滑删除的操作.
+                        ttdbsqlite.deletetransaction(ids.get(position));
+                        map.remove(position);
+                        Adapter.notifyDataSetChanged();
+                        break;
+                }
                 return false;
             }
         });
 
-        //点击条目的操作.
+
         listRemindingItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -307,9 +291,9 @@ public class RemindingActivity extends BaseActivity {
 
             listRemindingItem.setVisibility(View.VISIBLE);
             llRemingAffairs.setVisibility(View.VISIBLE);
-            tvAffairsleft.setVisibility(View.VISIBLE);          //我的事务( 显示
-            tvItemnumber.setVisibility(View.VISIBLE);           //数量  显示
-            tvAffairsright.setVisibility(View.VISIBLE);         // ) 显示
+            tvAffairsleft.setVisibility(View.VISIBLE);
+            tvItemnumber.setVisibility(View.VISIBLE);
+            tvAffairsright.setVisibility(View.VISIBLE);
             tvRemindingAddaffairs.setVisibility(View.GONE);
             tvRemindingContext.setVisibility(View.GONE);
 
@@ -321,9 +305,9 @@ public class RemindingActivity extends BaseActivity {
         } else {
             listRemindingItem.setVisibility(View.GONE);
             llRemingAffairs.setVisibility(View.GONE);
-            tvAffairsleft.setVisibility(View.GONE);             //我的事务( 隐藏
-            tvItemnumber.setVisibility(View.GONE);              //数量  隐藏
-            tvAffairsright.setVisibility(View.GONE);            // ) 隐藏
+            tvAffairsleft.setVisibility(View.GONE);
+            tvItemnumber.setVisibility(View.GONE);
+            tvAffairsright.setVisibility(View.GONE);
             tvRemindingAddaffairs.setVisibility(View.VISIBLE);
             tvRemindingContext.setVisibility(View.VISIBLE);
 
@@ -362,12 +346,4 @@ public class RemindingActivity extends BaseActivity {
                 break;
         }
     }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        list_positionSearches.clear();
-//        //list_positionSearches.addAll(ttdbsqlite.quereData());
-//        Adapter.notifyDataSetChanged();
-//    }
 }
-

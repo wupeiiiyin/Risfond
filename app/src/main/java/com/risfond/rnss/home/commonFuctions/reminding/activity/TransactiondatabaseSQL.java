@@ -30,12 +30,6 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-//    public Cursor checkTime(){
-//        String status = "available";
-//        Cursor c = db.query(TAB_NAME, columns, KEY_STATUS +"=?",
-//                new String[] {status}, null, null, KEY_NAME);
-//        return 0;
-//    }
 
     //查
     public Cursor checktransaction(){
@@ -48,12 +42,12 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         db.insert(TAB_NAME,null,contentValues);
     }
 
-
     //删除
     public void deletetransaction(int i){
         int delete = db.delete(TAB_NAME, "_id=?", new String[]{String.valueOf(i)});
         Log.e("HB",delete+"");
     }
+
     public void updatetransaction(ContentValues c,int i ){
         db.update(TAB_NAME,c,"_id=?",new String[]{String.valueOf(i)});
     }
@@ -64,10 +58,4 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
         }
         super.close();
     }
-
-
-
-//    public void deletetransaction(List<Integer> ids) {
-//        db.delete(TAB_NAME,"_id=?",new String[]{String.valueOf(ids)});
-//    }
 }

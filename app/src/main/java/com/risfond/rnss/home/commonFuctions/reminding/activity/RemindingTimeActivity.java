@@ -69,13 +69,8 @@ public class RemindingTimeActivity extends BaseActivity {
     TextView tvTimeTq60;
     @BindView(R.id.tv_time_tq240)
     TextView tvTimeTq240;
-    private long millionSeconds;
-    //响铃
-    private WheelMain wheelMainDate;
-    private String beginTime;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    //private String message;
     private SharedPreferences remind;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -95,10 +90,6 @@ public class RemindingTimeActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         tvTitle.setText("提醒时间");
-        //EventBus.getDefault().register(this);
-        //        Intent intent = getIntent();
-        //        String year_month_day = intent.getStringExtra("year_month_day");
-        //        tvTimeTq0.setText(year_month_day);
         remind = getSharedPreferences("remind", MODE_PRIVATE);
         String time_tp = remind.getString("time_tp", "");
         if (time_tp.length() > 0) {
@@ -166,16 +157,8 @@ public class RemindingTimeActivity extends BaseActivity {
 
         Intent intent = getIntent();
         time = intent.getStringExtra("mTvTimeDisplay");
-        Log.e("ccccc","add传来的:"+time);
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void getMsg(MessageEvent messageEvent){
-//        //这个msg就是传过来的值  ok
-//        tvTimeTq0.setText(messageEvent.getMessage().toString());
-//        message = messageEvent.getMessage();
-//        Log.e("CQQQQQ",message+"-------------");
-//    }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -200,11 +183,7 @@ public class RemindingTimeActivity extends BaseActivity {
                 imgTimeTq60.setVisibility(View.GONE);
                 imgTimeTq240.setVisibility(View.GONE);
                 String tvtiemqt5 = tvTimeTq5.getText().toString();
-                //这里接收传来的时间数据
-
                 remind.edit().putString("time_tp", tvtiemqt5).commit();
-                //String tokenizer123
-
                 setTimeStart(300000);
                 break;
             case R.id.ll_time_tq15:
@@ -259,17 +238,12 @@ public class RemindingTimeActivity extends BaseActivity {
         String[] split1 = split[1].split(":");
         mHour = Integer.parseInt(split1[0]);
         mMinute = Integer.parseInt(split1[1]);
-Log.e("HB","++++++++++++++++"+split[1]);
-        //String s = time;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         long millionSeconds = 0;//毫秒
         try {
             millionSeconds = sdf.parse(time).getTime();
-            Log.e("ccccc","执行的hao miao zhi:"+millionSeconds);
-            Log.e("HB","++++++++++++++++"+System.currentTimeMillis());
             long l = millionSeconds - System.currentTimeMillis();
-            Log.e("ccccc","l:"+l);
 
             int ss = 1000;
             int mi = ss * 60;
@@ -279,7 +253,6 @@ Log.e("HB","++++++++++++++++"+split[1]);
 
             day = (int) (l / dd);
             day = Integer.parseInt(day < 10 ? "0" + day : "" + day); //天
-//            formatTime(millionSeconds-million);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
             Date date = new Date(millionSeconds - million);
             String format = simpleDateFormat.format(date);
@@ -292,31 +265,6 @@ Log.e("HB","++++++++++++++++"+split[1]);
 
     }
 
-    public static String formatTime(long ms) {
-
-        int ss = 1000;
-        int mi = ss * 60;
-        int hh = mi * 60;
-        int dd = hh * 24;
-
-        long day = ms / dd;
-        long hour = (ms - day * dd) / hh;
-        long minute = (ms - day * dd - hour * hh) / mi;
-        long second = (ms - day * dd - hour * hh - minute * mi) / ss;
-        long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
-
-        String strDay = day < 10 ? "0" + day : "" + day; //天
-        String strHour = hour < 10 ? "0" + hour : "" + hour;//小时
-        String strMinute = minute < 10 ? "0" + minute : "" + minute;//分钟
-        String strSecond = second < 10 ? "0" + second : "" + second;//秒
-        String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
-        strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
-
-        Log.e("ccccc","天"+strDay);
-        Log.e("ccccc","shi"+strHour);
-        Log.e("ccccc","fen"+strMinute);
-        return strDay+" 天 "+strHour + " 小时 " + strMinute + " 分钟";
-    }
 
 
     /**
@@ -334,10 +282,9 @@ Log.e("HB","++++++++++++++++"+split[1]);
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
-
     @Override
     public void back(View v) {
-        Log.e("ccccc","back:"+day+mHour+mMinute);
+        //返回操作
         Intent intent = new Intent();
         intent.putExtra("mDay",day);
         intent.putExtra("mHour",mHour);

@@ -290,7 +290,6 @@
         <service android:name=".home.commonFuctions.reminding.receiver.MusicTimeService" />
 
         <activity android:name=".home.commonFuctions.reminding.activity.ContionActivity" />
-        <activity android:name=".home.commonFuctions.reminding.activity.TimeTransactionActivity" />
         <activity android:name=".home.commonFuctions.reminding.activity.DetailsTimeActivity"></activity>
     </application>
 
