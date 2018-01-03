@@ -31,7 +31,6 @@ public class TransactiondatabaseSQL extends SQLiteOpenHelper{
 
     }
 
-
     //查
     public Cursor checktransaction(){
         Cursor query = db.query(TAB_NAME, null, null, null, null, null, null);
