@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/color_blue"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_back"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:onClick="back"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_resume_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_home_search"
+        android:drawableLeft="@mipmap/home_search"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="请输入关键字"
+        android:textColor="@color/color_resume_input_bg"
+        android:textSize="12sp"/>
+
+</LinearLayout>

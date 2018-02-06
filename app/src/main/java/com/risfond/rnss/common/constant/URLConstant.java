@@ -187,4 +187,8 @@ public class URLConstant {
     public static final String URL_RESUME_SEARCHALL3 = URL_TOP + "Resume/ResumeSearch3";
     /*成功案例H5*/
     public static final String URL_SUCCESSCASE__H5 = H5_URL_TOP + "SuccessfulCase/Dashboard";
+    /* 业绩任务完成率*/
+    public static final String URL_GETPERFORMANCE_PERCENTAGE = URL_TOP + "user/GetPerformancePercentage";
+    /*回款 入职 签约 数据接口*/
+    public static final String URL_RETURNMONEY = URL_TOP + "Operation/ReturnedMoney";
 }

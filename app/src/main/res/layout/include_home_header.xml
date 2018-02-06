@@ -3,95 +3,93 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_blue"
+    android:background="@drawable/bg_cicle_bead"
+    android:layout_margin="@dimen/dp_20"
     android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/ll_resume_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@mipmap/resume_search"/>
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/home_header_jl"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="简历"
-            android:textColor="@color/color_white"
-            android:textSize="14dp"/>
+            style="@style/home_header"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_my_custom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@mipmap/my_custom"/>
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/home_header_customer"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="客户"
-            android:textColor="@color/color_white"
-            android:textSize="14sp"/>
+            style="@style/home_header"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_my_position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@mipmap/my_position"/>
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/home_header_position"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="职位"
-            android:textColor="@color/color_white"
-            android:textSize="14sp"/>
+            style="@style/home_header"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_call_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@mipmap/call_phone"/>
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/home_header_phone"/>
 
         <TextView
             android:id="@+id/textView7"
@@ -99,8 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text="电话"
-            android:textColor="@color/color_white"
-            android:textSize="14sp"/>
+            style="@style/home_header"/>
     </LinearLayout>
 
 </LinearLayout>

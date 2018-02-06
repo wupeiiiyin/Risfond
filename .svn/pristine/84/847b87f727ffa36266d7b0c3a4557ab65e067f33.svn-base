@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cities>
+
+    <province name="01,北京,BEIJING">
+        <city>0101,东城区,DONGCHENG</city>
+        <city>0102,西城区,XICHENG</city>
+        <city>0103,崇文区,CHONGWENQU</city>
+        <city>0104,宣武区,XUANWUQU</city>
+        <city>0105,朝阳区,CHAOYANG</city>
+        <city>0106,丰台区,FENGTAIQU</city>
+        <city>0107,石景山区,SHIJINGSHANQU</city>
+        <city>0108,海淀区,HAIDIANQU</city>
+        <city>0109,门头沟区,MENTOUGOUQU</city>
+        <city>0110,房山区,FANGSHANQU</city>
+        <city>0111,通州区,TONGZHOUQU</city>
+        <city>0112,顺义区,SHUNYIQU</city>
+        <city>0113,昌平区,CHANGPINGQU</city>
+        <city>0114,大兴区,DAXINGQU</city>
+        <city>0115,怀柔区,HUAIROUQU</city>
+        <city>0116,平谷区,PINGGUQU</city>
+        <city>0117,密云县,MIYUNXIAN</city>
+        <city>0118,延庆县,YANQINGXIAN</city>
+    </province>
+
+    <province name="02,天津,TIANJIN">
+        <city>0201,和平区,HEPINGQU</city>
+        <city>0202,河东区,HEDONGQU</city>
+        <city>0203,河西区,HEXIQU</city>
+        <city>0204,南开区,NANKAIQU</city>
+        <city>0205,河北区,HEBEIQU</city>
+        <city>0206,红桥区,HONGQIAOQU</city>
+        <city>0207,东丽区,DONGLIQU</city>
+        <city>0208,西青区,XIQINGQU</city>
+        <city>0209,津南区,JINNANQU</city>
+        <city>0210,北辰区,BEICHENQU</city>
+        <city>0211,武清区,WUQINGQU</city>
+        <city>0212,宝坻区,BAOCHIQU</city>
+        <city>0213,滨海新区,BINHAIXINQU</city>
+        <city>0214,宁河县,NINGHEXIAN</city>
+        <city>0215,静海县,JINGHAIXIAN</city>
+        <city>0216,蓟县,JIXIAN</city>
+    </province>
+
+    <province name="03,河北,HEBEI">
+        <city>0301,石家庄,SHIJIAZHUANG</city>
+        <city>0302,唐山,TANGSHAN</city>
+        <city>0303,秦皇岛,QINHUANGDAO</city>
+        <city>0304,邯郸,HANDAN</city>
+        <city>0305,邢台,XINGTAI</city>
+        <city>0306,保定,BAODING</city>
+        <city>0307,张家口,ZHANGJIAKOU</city>
+        <city>0308,承德,CHENGDE</city>
+        <city>0309,沧州,CANGZHOU</city>
+        <city>0310,廊坊,LANGFANG</city>
+        <city>0311,衡水,HENGSHUI</city>
+    </province>
+
+    <province name="04,山西,SHANXI">
+        <city>0401,太原,TAIYUAN</city>
+        <city>0402,大同,DATONG</city>
+        <city>0403,阳泉,YANGQUAN</city>
+        <city>0404,长治,ZHANGZHI</city>
+        <city>0405,晋城,JINCHENG</city>
+        <city>0406,朔州,SHUOZHOU</city>
+        <city>0407,晋中,JINZHONG</city>
+        <city>0408,运城,YUNCHENG</city>
+        <city>0409,忻州,XINZHOU</city>
+        <city>0410,临汾,LINFEN</city>
+        <city>0411,吕梁,LVLIANG</city>
+    </province>
+
+    <province name="05,内蒙,NEIMENG">
+        <city>0501,呼和浩特,HUHEHAOTE</city>
+        <city>0502,包头,BAOTOU</city>
+        <city>0503,乌海,WUHAI</city>
+        <city>0504,赤峰,CHIFENG</city>
+        <city>0505,通辽,TONGLIAO</city>
+        <city>0506,鄂尔多斯,EERDUOSI</city>
+        <city>0507,呼伦贝尔,HULUNBEIER</city>
+        <city>0508,巴彦淖尔,BAYANNAOER</city>
+        <city>0509,乌兰察布,WULANCHABU</city>
+        <city>0510,兴安盟,XINGANMENG</city>
+        <city>0511,锡林郭勒盟,XILINGUOLEMENG</city>
+        <city>0512,阿拉善盟,ALASHANMENG</city>
+    </province>
+
+    <province name="06,辽宁,LIAONING">
+        <city>0601,沈阳,SHENYANG</city>
+        <city>0602,大连,DALIAN</city>
+        <city>0603,鞍山,ANSHAN</city>
+        <city>0604,抚顺,FUSHUN</city>
+        <city>0605,本溪,BENXI</city>
+        <city>0606,丹东,DANDONG</city>
+        <city>0607,锦州,JINZHOU</city>
+        <city>0608,营口,YINGKOU</city>
+        <city>0609,阜新,FUXIN</city>
+        <city>0610,辽阳,LIAOYANG</city>
+        <city>0611,盘锦,PANJIN</city>
+        <city>0612,铁岭,TIELING</city>
+        <city>0613,朝阳,CHAOYANG</city>
+        <city>0614,葫芦岛,HULUDAO</city>
+    </province>
+
+    <province name="07,吉林省,JILINSHENG">
+        <city>0701,长春,ZHANGCHUN</city>
+        <city>0702,吉林,JILIN</city>
+        <city>0703,四平,SIPING</city>
+        <city>0704,辽源,LIAOYUAN</city>
+        <city>0705,通化,TONGHUA</city>
+        <city>0706,白山,BAISHAN</city>
+        <city>0707,松原,SONGYUAN</city>
+        <city>0708,白城,BAICHENG</city>
+        <city>0709,延边州,YANBIANZHOU</city>
+    </province>
+
+    <province name="08,黑龙江,HEILONGJIANG">
+        <city>0801,哈尔滨,HAERBIN</city>
+        <city>0802,齐齐哈尔,QIQIHAER</city>
+        <city>0803,鸡西,JIXI</city>
+        <city>0804,鹤岗,HEGANG</city>
+        <city>0805,双鸭山,SHUANGYASHAN</city>
+        <city>0806,大庆,DAQING</city>
+        <city>0807,伊春,YICHUN</city>
+        <city>0808,佳木斯,JIAMUSI</city>
+        <city>0809,七台河,QITAIHE</city>
+        <city>0810,牡丹江,MUDANJIANG</city>
+        <city>0811,黑河,HEIHE</city>
+        <city>0812,绥化,SUIHUA</city>
+        <city>0813,大兴安岭地区,DAXINGANLINGDIQU</city>
+    </province>
+
+    <province name="09,上海,SHANGHAI">
+        <city>0901,黄浦区,HUANGPUQU</city>
+        <city>0902,卢湾区,LUWANQU</city>
+        <city>0903,徐汇区,XUHUIQU</city>
+        <city>0904,长宁区,ZHANGNINGQU</city>
+        <city>0905,静安区,JINGANQU</city>
+        <city>0906,普陀区,PUTUOQU</city>
+        <city>0907,闸北区,ZHABEIQU</city>
+        <city>0908,虹口区,HONGKOUQU</city>
+        <city>0909,杨浦区,YANGPUQU</city>
+        <city>0910,闵行区,MINXINGQU</city>
+        <city>0911,宝山区,BAOSHANQU</city>
+        <city>0912,嘉定区,JIADINGQU</city>
+        <city>0913,浦东新区,PUDONGXINQU</city>
+        <city>0914,金山区,JINSHANQU</city>
+        <city>0915,松江区,SONGJIANGQU</city>
+        <city>0916,青浦区,QINGPUQU</city>
+        <city>0917,奉贤区,FENGXIANQU</city>
+        <city>0918,崇明县,CHONGMINGXIAN</city>
+    </province>
+
+    <province name="10,江苏,JIANGSU">
+        <city>1001,南京,NANJING</city>
+        <city>1002,无锡,WUXI</city>
+        <city>1003,徐州,XUZHOU</city>
+        <city>1004,常州,CHANGZHOU</city>
+        <city>1005,苏州,SUZHOU</city>
+        <city>1006,南通,NANTONG</city>
+        <city>1007,连云港,LIANYUNGANG</city>
+        <city>1008,淮安,HUAIAN</city>
+        <city>1009,盐城,YANCHENG</city>
+        <city>1010,扬州,YANGZHOU</city>
+        <city>1011,镇江,ZHENJIANG</city>
+        <city>1012,泰州,TAIZHOU</city>
+        <city>1013,宿迁,SUQIAN</city>
+    </province>
+
+    <province name="11,浙江,ZHEJIANG">
+        <city>1101,杭州,HANGZHOU</city>
+        <city>1102,宁波,NINGBO</city>
+        <city>1103,温州,WENZHOU</city>
+        <city>1104,嘉兴,JIAXING</city>
+        <city>1105,湖州,HUZHOU</city>
+        <city>1106,绍兴,SHAOXING</city>
+        <city>1107,金华,JINHUA</city>
+        <city>1108,衢州,QUZHOU</city>
+        <city>1109,舟山,ZHOUSHAN</city>
+        <city>1110,台州,TAIZHOU</city>
+        <city>1111,丽水,LISHUI</city>
+    </province>
+
+    <province name="12,安徽,ANHUI">
+        <city>1201,合肥,HEFEI</city>
+        <city>1202,芜湖,WUHU</city>
+        <city>1203,蚌埠,BANGBU</city>
+        <city>1204,淮南,HUAINAN</city>
+        <city>1205,马鞍山,MAANSHAN</city>
+        <city>1206,淮北,HUAIBEI</city>
+        <city>1207,铜陵,TONGLING</city>
+        <city>1208,安庆,ANQING</city>
+        <city>1209,黄山,HUANGSHAN</city>
+        <city>1210,滁州,CHUZHOU</city>
+        <city>1211,阜阳,FUYANG</city>
+        <city>1212,宿州,SUZHOU</city>
+        <city>1213,巢湖,CHAOHU</city>
+        <city>1214,六安,LIUAN</city>
+        <city>1215,亳州,BOZHOU</city>
+        <city>1216,池州,CHIZHOU</city>
+        <city>1217,宣城,XUANCHENG</city>
+    </province>
+
+    <province name="13,福建,FUJIAN">
+        <city>1301,福州,FUZHOU</city>
+        <city>1302,厦门,SHAMEN</city>
+        <city>1303,莆田,PUTIAN</city>
+        <city>1304,三明,SANMING</city>
+        <city>1305,泉州,QUANZHOU</city>
+        <city>1306,漳州,ZHANGZHOU</city>
+        <city>1307,南平,NANPING</city>
+        <city>1308,龙岩,LONGYAN</city>
+        <city>1309,宁德,NINGDE</city>
+    </province>
+
+    <province name="14,江西,JIANGXI">
+        <city>1401,南昌,NANCHANG</city>
+        <city>1402,景德镇,JINGDEZHEN</city>
+        <city>1403,萍乡,PINGXIANG</city>
+        <city>1404,九江,JIUJIANG</city>
+        <city>1405,新余,XINYU</city>
+        <city>1406,鹰潭,YINGTAN</city>
+        <city>1407,赣州,GANZHOU</city>
+        <city>1408,吉安,JIAN</city>
+        <city>1409,宜春,YICHUN</city>
+        <city>1410,抚州,FUZHOU</city>
+        <city>1411,上饶,SHANGRAO</city>
+    </province>
+
+    <province name="15,山东,SHANDONG">
+        <city>1501,济南,JINAN</city>
+        <city>1502,青岛,QINGDAO</city>
+        <city>1503,淄博,ZIBO</city>
+        <city>1504,枣庄,ZAOZHUANG</city>
+        <city>1505,东营,DONGYING</city>
+        <city>1506,烟台,YANTAI</city>
+        <city>1507,潍坊,WEIFANG</city>
+        <city>1508,惠济区,HUIJIQU</city>
+        <city>1509,泰安,TAIAN</city>
+        <city>1510,威海,WEIHAI</city>
+        <city>1511,日照,RIZHAO</city>
+        <city>1512,莱芜,LAIWU</city>
+        <city>1513,临沂,LINYI</city>
+        <city>1514,德州,DEZHOU</city>
+        <city>1515,聊城,LIAOCHENG</city>
+        <city>1516,滨州,BINZHOU</city>
+        <city>1517,菏泽,HEZE</city>
+    </province>
+
+    <province name="16,河南,HENAN">
+        <city>1601,郑州,ZHENGZHOU</city>
+        <city>1602,开封,KAIFENG</city>
+        <city>1603,洛阳,LUOYANG</city>
+        <city>1604,平顶山,PINGDINGSHAN</city>
+        <city>1605,安阳,ANYANG</city>
+        <city>1606,鹤壁,HEBI</city>
+        <city>1607,新乡,XINXIANG</city>
+        <city>1608,焦作,JIAOZUO</city>
+        <city>1609,濮阳,PUYANG</city>
+        <city>1610,许昌,XUCHANG</city>
+        <city>1611,漯河,LUOHE</city>
+        <city>1612,三门峡,SANMENXIA</city>
+        <city>1613,南阳,NANYANG</city>
+        <city>1614,商丘,SHANGQIU</city>
+        <city>1615,信阳,XINYANG</city>
+        <city>1616,周口,ZHOUKOU</city>
+        <city>1617,驻马店,ZHUMADIAN</city>
+        <city>1618,河南省直辖县,HENANSHENGZHIXIAXIAN</city>
+    </province>
+
+    <province name="17,湖北,HUBEI">
+        <city>1701,武汉,WUHAN</city>
+        <city>1702,黄石,HUANGSHI</city>
+        <city>1703,十堰,SHIYAN</city>
+        <city>1704,宜昌,YICHANG</city>
+        <city>1705,襄樊,XIANGFAN</city>
+        <city>1706,鄂州,EZHOU</city>
+        <city>1707,荆门,JINGMEN</city>
+        <city>1708,孝感,XIAOGAN</city>
+        <city>1709,荆州,JINGZHOU</city>
+        <city>1710,黄冈,HUANGGANG</city>
+        <city>1711,咸宁,XIANNING</city>
+        <city>1712,随州,SUIZHOU</city>
+        <city>1713,恩施州,ENSHIZHOU</city>
+        <city>1714,湖北省直辖县,HUBEISHENGZHIXIAXIAN</city>
+    </province>
+
+    <province name="18,湖南,HUNAN">
+        <city>1801,长沙,ZHANGSHA</city>
+        <city>1802,株洲,ZHUZHOU</city>
+        <city>1803,湘潭,XIANGTAN</city>
+        <city>1804,衡阳,HENGYANG</city>
+        <city>1805,邵阳,SHAOYANG</city>
+        <city>1806,岳阳,YUEYANG</city>
+        <city>1807,常德,CHANGDE</city>
+        <city>1808,张家界,ZHANGJIAJIE</city>
+        <city>1809,益阳,YIYANG</city>
+        <city>1810,郴州,CHENZHOU</city>
+        <city>1811,永州,YONGZHOU</city>
+        <city>1812,怀化,HUAIHUA</city>
+        <city>1813,娄底,LOUDI</city>
+        <city>1814,湘西州,XIANGXIZHOU</city>
+    </province>
+
+    <province name="19,广东,GUANGDONG">
+        <city>1901,广州,GUANGZHOU</city>
+        <city>1902,韶关,SHAOGUAN</city>
+        <city>1903,深圳,SHENZHEN</city>
+        <city>1904,珠海,ZHUHAI</city>
+        <city>1905,汕头,SHANTOU</city>
+        <city>1906,佛山,FOSHAN</city>
+        <city>1907,江门,JIANGMEN</city>
+        <city>1908,湛江,ZHANJIANG</city>
+        <city>1909,茂名,MAOMING</city>
+        <city>1910,肇庆,ZHAOQING</city>
+        <city>1911,惠州,HUIZHOU</city>
+        <city>1912,梅州,MEIZHOU</city>
+        <city>1913,汕尾,SHANWEI</city>
+        <city>1914,河源,HEYUAN</city>
+        <city>1915,阳江,YANGJIANG</city>
+        <city>1916,清远,QINGYUAN</city>
+        <city>1917,东莞,DONGGUAN</city>
+        <city>1918,中山,ZHONGSHAN</city>
+        <city>1919,潮州,CHAOZHOU</city>
+        <city>1920,揭阳,JIEYANG</city>
+        <city>1921,云浮,YUNFU</city>
+    </province>
+
+    <province name="20,广西,GUANGXI">
+        <city>2001,南宁,NANNING</city>
+        <city>2002,柳州,LIUZHOU</city>
+        <city>2003,桂林,GUILIN</city>
+        <city>2004,梧州,WUZHOU</city>
+        <city>2005,北海,BEIHAI</city>
+        <city>2006,防城港,FANGCHENGGANG</city>
+        <city>2007,钦州,QINZHOU</city>
+        <city>2008,贵港,GUIGANG</city>
+        <city>2009,玉林,YULIN</city>
+        <city>2010,百色,BAISE</city>
+        <city>2011,贺州,HEZHOU</city>
+        <city>2012,河池,HECHI</city>
+        <city>2013,来宾,LAIBIN</city>
+        <city>2014,崇左,CHONGZUO</city>
+    </province>
+
+    <province name="21,海南,HAINAN">
+        <city>2101,海口,HAIKOU</city>
+        <city>2102,三亚,SANYA</city>
+        <city>2103,海南省直辖县,HAINANSHENGZHIXIAXIAN</city>
+    </province>
+
+    <province name="22,重庆,ZHONGQING">
+        <city>2201,万州区,WANZHOUQU</city>
+        <city>2202,涪陵区,FULINGQU</city>
+        <city>2203,渝中区,YUZHONGQU</city>
+        <city>2204,大渡口区,DADUKOUQU</city>
+        <city>2205,江北区,JIANGBEIQU</city>
+        <city>2206,沙坪坝区,SHAPINGBAQU</city>
+        <city>2207,九龙坡区,JIULONGPOQU</city>
+        <city>2208,南岸区,NANANQU</city>
+        <city>2209,北碚区,BEIBEIQU</city>
+        <city>2210,万盛区,WANSHENGQU</city>
+        <city>2211,双桥区,SHUANGQIAOQU</city>
+        <city>2212,渝北区,YUBEIQU</city>
+        <city>2213,巴南区,BANANQU</city>
+        <city>2214,黔江区,QIANJIANGQU</city>
+        <city>2215,长寿区,ZHANGSHOUQU</city>
+        <city>2216,江津区,JIANGJINQU</city>
+        <city>2217,合川区,HECHUANQU</city>
+        <city>2218,永川区,YONGCHUANQU</city>
+        <city>2219,南川区,NANCHUANQU</city>
+        <city>2220,綦江县,QIJIANGXIAN</city>
+        <city>2221,潼南县,TONGNANXIAN</city>
+        <city>2222,铜梁县,TONGLIANGXIAN</city>
+        <city>2223,大足县,DAZUXIAN</city>
+        <city>2224,荣昌县,RONGCHANGXIAN</city>
+        <city>2225,璧山县,BISHANXIAN</city>
+        <city>2226,梁平县,LIANGPINGXIAN</city>
+        <city>2227,城口县,CHENGKOUXIAN</city>
+        <city>2228,丰都县,FENGDOUXIAN</city>
+        <city>2229,垫江县,DIANJIANGXIAN</city>
+        <city>2230,武隆县,WULONGXIAN</city>
+        <city>2231,忠县,ZHONGXIAN</city>
+        <city>2232,开县,KAIXIAN</city>
+        <city>2233,云阳县,YUNYANGXIAN</city>
+        <city>2234,奉节县,FENGJIEXIAN</city>
+        <city>2235,巫山县,WUSHANXIAN</city>
+        <city>2236,巫溪县,WUXIXIAN</city>
+        <city>2237,石柱县,SHIZHUXIAN</city>
+        <city>2238,秀山县,XIUSHANXIAN</city>
+        <city>2239,酉阳县,YOUYANGXIAN</city>
+        <city>2240,彭水县,PENGSHUIXIAN</city>
+    </province>
+
+    <province name="23,四川,SICHUAN">
+        <city>2301,成都,CHENGDOU</city>
+        <city>2302,自贡,ZIGONG</city>
+        <city>2303,攀枝花,PANZHIHUA</city>
+        <city>2304,泸州,LUZHOU</city>
+        <city>2305,德阳,DEYANG</city>
+        <city>2306,绵阳,MIANYANG</city>
+        <city>2307,广元,GUANGYUAN</city>
+        <city>2308,遂宁,SUINING</city>
+        <city>2309,内江,NEIJIANG</city>
+        <city>2310,乐山,LESHAN</city>
+        <city>2311,南充,NANCHONG</city>
+        <city>2312,眉山,MEISHAN</city>
+        <city>2313,宜宾,YIBIN</city>
+        <city>2314,广安,GUANGAN</city>
+        <city>2315,达州,DAZHOU</city>
+        <city>2316,雅安,YAAN</city>
+        <city>2317,巴中,BAZHONG</city>
+        <city>2318,资阳,ZIYANG</city>
+        <city>2319,阿坝州,ABAZHOU</city>
+        <city>2320,甘孜州,GANZIZHOU</city>
+        <city>2321,凉山州,LIANGSHANZHOU</city>
+    </province>
+
+    <province name="24,贵州,GUIZHOU">
+        <city>2401,贵阳,GUIYANG</city>
+        <city>2402,六盘水,LIUPANSHUI</city>
+        <city>2403,遵义,ZUNYI</city>
+        <city>2404,安顺,ANSHUN</city>
+        <city>2405,铜仁地区,TONGRENDIQU</city>
+        <city>2406,黔西南州,QIANXINANZHOU</city>
+        <city>2407,毕节地区,BIJIEDIQU</city>
+        <city>2408,黔东南州,QIANDONGNANZHOU</city>
+        <city>2409,黔南州,QIANNANZHOU</city>
+    </province>
+
+    <province name="25,云南,YUNNAN">
+        <city>2501,昆明,KUNMING</city>
+        <city>2502,曲靖,QUJING</city>
+        <city>2503,玉溪,YUXI</city>
+        <city>2504,保山,BAOSHAN</city>
+        <city>2505,昭通,ZHAOTONG</city>
+        <city>2506,丽江,LIJIANG</city>
+        <city>2507,普洱,PUER</city>
+        <city>2508,临沧,LINCANG</city>
+        <city>2509,楚雄州,CHUXIONGZHOU</city>
+        <city>2510,红河州,HONGHEZHOU</city>
+        <city>2511,文山州,WENSHANZHOU</city>
+        <city>2512,西双版纳州,XISHUANGBANNAZHOU</city>
+        <city>2513,大理州,DALIZHOU</city>
+        <city>2514,德宏州,DEHONGZHOU</city>
+        <city>2515,怒江州,NUJIANGZHOU</city>
+        <city>2516,迪庆州,DIQINGZHOU</city>
+    </province>
+
+    <province name="26,西藏,XIZANG">
+        <city>2601,拉萨,LASA</city>
+        <city>2602,昌都地区,CHANGDOUDIQU</city>
+        <city>2603,山南地区,SHANNANDIQU</city>
+        <city>2604,日喀则地区,RIKAZEDIQU</city>
+        <city>2605,那曲地区,NEIQUDIQU</city>
+        <city>2606,阿里地区,ALIDIQU</city>
+        <city>2607,林芝地区,LINZHIDIQU</city>
+    </province>
+
+    <province name="27,陕西,SHANXI">
+        <city>2701,西安,XIAN</city>
+        <city>2702,铜川,TONGCHUAN</city>
+        <city>2703,宝鸡,BAOJI</city>
+        <city>2704,咸阳,XIANYANG</city>
+        <city>2705,渭南,WEINAN</city>
+        <city>2706,延安,YANAN</city>
+        <city>2707,汉中,HANZHONG</city>
+        <city>2708,榆林,YULIN</city>
+        <city>2709,安康,ANKANG</city>
+        <city>2710,商洛,SHANGLUO</city>
+    </province>
+
+    <province name="28,甘肃,GANSU">
+        <city>2801,兰州,LANZHOU</city>
+        <city>2802,嘉峪关,JIAYUGUAN</city>
+        <city>2803,金昌,JINCHANG</city>
+        <city>2804,白银,BAIYIN</city>
+        <city>2805,天水,TIANSHUI</city>
+        <city>2806,武威,WUWEI</city>
+        <city>2807,张掖,ZHANGYE</city>
+        <city>2808,平凉,PINGLIANG</city>
+        <city>2809,酒泉,JIUQUAN</city>
+        <city>2810,庆阳,QINGYANG</city>
+        <city>2811,定西,DINGXI</city>
+        <city>2812,陇南,LONGNAN</city>
+        <city>2813,临夏州,LINXIAZHOU</city>
+        <city>2814,甘南州,GANNANZHOU</city>
+    </province>
+
+    <province name="29,青海,QINGHAI">
+        <city>2901,西宁,XINING</city>
+        <city>2902,海东地区,HAIDONGDIQU</city>
+        <city>2903,海北州,HAIBEIZHOU</city>
+        <city>2904,黄南州,HUANGNANZHOU</city>
+        <city>2905,海南州,HAINANZHOU</city>
+        <city>2906,果洛州,GUOLUOZHOU</city>
+        <city>2907,玉树州,YUSHUZHOU</city>
+        <city>2908,海西州,HAIXIZHOU</city>
+    </province>
+
+    <province name="30,宁夏,NINGXIA">
+        <city>3001,银川,YINCHUAN</city>
+        <city>3002,石嘴山,SHIZUISHAN</city>
+        <city>3003,吴忠,WUZHONG</city>
+        <city>3004,固原,GUYUAN</city>
+        <city>3005,中卫,ZHONGWEI</city>
+    </province>
+
+    <province name="31,新疆,XINJIANG">
+        <city>3101,乌鲁木齐,WULUMUQI</city>
+        <city>3102,克拉玛依,KELAMAYI</city>
+        <city>3103,吐鲁番地区,TULUFANDIQU</city>
+        <city>3104,哈密地区,HAMIDIQU</city>
+        <city>3105,昌吉州,CHANGJIZHOU</city>
+        <city>3106,博尔塔拉州,BOERTALAZHOU</city>
+        <city>3107,巴音郭楞州,BAYINGUOLENGZHOU</city>
+        <city>3108,阿克苏地区,AKESUDIQU</city>
+        <city>3109,克孜勒苏州,KEZILESUZHOU</city>
+        <city>3110,喀什地区,KASHENDIQU</city>
+        <city>3111,和田地区,HETIANDIQU</city>
+        <city>3112,伊犁州,YILIZHOU</city>
+        <city>3113,塔城地区,TACHENGDIQU</city>
+        <city>3114,阿勒泰地区,ALETAIDIQU</city>
+        <city>3115,新疆自治区直辖县,XINJIANGZIZHIQUZHIXIAXIAN</city>
+    </province>
+
+    <province name="90,港澳台,GANGAOTAI">
+        <city>9001,香港,XIANGGANG</city>
+        <city>9002,澳门,AOMEN</city>
+        <city>9003,台湾,TAIWAN</city>
+    </province>
+
+    <province name="91,国际,GUOJI">
+        <city>9101,美国旧金山,MEIGUOJIUJINSHAN</city>
+        <city>9102,日本东京,RIBENDONGJING</city>
+        <city>9103,英国伦敦,YINGGUOLUNDUN</city>
+        <city>9104,金边,JINBIAN</city>
+    </province>
+</Cities>

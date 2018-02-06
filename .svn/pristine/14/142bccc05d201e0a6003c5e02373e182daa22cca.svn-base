@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_mine_text_click"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp"
+    android:paddingTop="13dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_invoice_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="朱蕾 · 杭州公司"
+                    android:maxWidth="240dp"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_invoice_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="14dp"
+                    android:src="@mipmap/l1" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_invoice_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="2017.07.03"
+                android:textColor="@color/color_home_gray_text"
+                android:textSize="11sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_invoice_yuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_invoice_money"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="2dp"
+                android:text="元"
+                android:textColor="@color/color_home_gray_text"
+                android:textSize="6.5sp" />
+
+
+            <TextView
+                android:id="@+id/tv_invoice_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/tv_invoice_yuan"
+                android:text="15,000"
+                android:textColor="@color/color_operate_platform_txt"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rl_invoice"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_invoice_stype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="发票类型："
+                        android:textColor="@color/color_home_gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_stype_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_invoice_stype"
+                        android:text="专业发票"
+                        android:textColor="@color/color_customer_black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_invoice"
+                    android:layout_marginTop="9dp">
+
+                    <TextView
+                        android:id="@+id/tv_invoice_salary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="回款状态："
+                        android:textColor="@color/color_home_gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_salary_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_invoice_salary"
+                        android:text="已到账"
+                        android:textColor="@color/color_customer_black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_toRightOf="@+id/rl_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rl_invoice_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_invoice_stype_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="开票人："
+                        android:textColor="@color/color_home_gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_stype_person_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_invoice_stype_person"
+                        android:text="朱蕾"
+                        android:textColor="@color/color_customer_black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_invoice_person"
+                    android:layout_marginTop="9dp">
+
+                    <TextView
+                        android:id="@+id/tv_salary_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="到账周期："
+                        android:textColor="@color/color_home_gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_salary_person_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_salary_person"
+                        android:text="20天"
+                        android:textColor="@color/color_customer_black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_home_stoke" />
+
+        <TextView
+            android:id="@+id/tv_invoice_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="北京京东世纪贸易有限公司"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/color_customer_black"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

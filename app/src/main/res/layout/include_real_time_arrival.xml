@@ -4,7 +4,7 @@
     android:id="@+id/ll_time_arrival"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_white"
+    android:background="@drawable/bg_cicle_bead"
     android:orientation="vertical"
     android:paddingTop="10dp">
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.risfond.rnss.R;
 import com.risfond.rnss.entry.Login;
 
 import java.util.ArrayList;
@@ -503,6 +504,32 @@ public class SPUtil {
 
         }
         return strs;
+    }
+
+    /**
+     * 保存用户的个人签名
+     *
+     * @param context
+     * @param signature
+     * @return
+     */
+    public static boolean saveUserSignature(Context context, String signature) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("user_signature", signature);
+        return editor.commit();
+    }
+
+    /**
+     * 获取保存的个人签名
+     *
+     * @param context
+     * @return
+     */
+    public static String loadUserSignature(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String string = sp.getString("user_signature", "让每一个为梦想奋斗的人,更幸福的生活!");
+        return string;
     }
 
 }

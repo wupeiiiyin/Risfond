@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white_real"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.risfond.rnss.register.activity.RegisterFirstActivity">
+
+    <include layout="@layout/include_title_register"/>
+
+    <include layout="@layout/include_line_gray_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_weight="2"
+            android:background="@color/color_resume_blue_txt"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:gravity="center"
+                android:text="@string/register_step2"
+                android:textColor="@color/color_home_black_text"
+                android:textSize="18sp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="所属公司"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择公司"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="中文姓名"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_name_cn"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请和身份证姓名保持一致"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="6"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="英文姓名"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_name_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="@string/register_digest_en_name"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入英文姓名"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="身份证号"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_idcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="0123456789X"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入身份证号"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="18"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="出生年月"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="星座"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_constellation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="性别"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="民族"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_nation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="婚姻"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_marriage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="生育"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_bear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="户口性质"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_property"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="户籍地址"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

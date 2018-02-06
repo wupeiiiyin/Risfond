@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white_real"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <com.androidkun.xtablayout.XTabLayout
+            android:id="@+id/tab_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:xTabDisplayNum="2"
+            app:xTabDividerWidthWidthText="false"
+            app:xTabIndicatorColor="@color/color_title_in"
+            app:xTabIndicatorHeight="2dp"
+            app:xTabMode="fixed"
+            app:xTabSelectedTextColor="@color/color_title_in"
+            app:xTabSelectedTextSize="15sp"
+            app:xTabTextColor="@color/color_home_gray_text"
+            app:xTabTextSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_home_stoke"/>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_order_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

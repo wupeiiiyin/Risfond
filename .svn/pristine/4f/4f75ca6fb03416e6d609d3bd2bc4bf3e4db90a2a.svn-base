@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.risfond.rnss">
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.BIND_VOICE_INTERACTION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="com.hyphenate.chatuidemo.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.hyphenate.chatuidemo.permission.MIPUSH_RECEIVE"/>
+
+    <application
+        android:name=".application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 设置环信应用的AppKey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1180170509115796#risfond"/>
+        <!-- 设置友盟统计AppKey -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5951cbcbcae7e75f94000b17"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Risfond"/>
+
+        <!-- 声明SDK所需的service SDK核心功能 -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true"/>
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
+                <data android:scheme="package"/>
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- shareSdk -->
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="1fb7a4d021943"/>
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="47ae81a45e1527257464cf910fc97068"/>
+
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:multiprocess="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name=".login.activity.WelcomeActivity"
+            android:theme="@style/welcomeTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login.activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/loginTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+        <activity
+            android:name=".message.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/mainTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".mine.activity.AboutActivity"
+            android:theme="@style/mainTheme">
+        </activity>
+        <activity android:name=".search.activity.SearchActivity">
+        </activity>
+        <activity android:name=".contacts.activity.ContactsInfoActivity">
+        </activity>
+        <activity android:name=".contacts.activity.CompanyListActivity">
+        </activity>
+        <activity
+            android:name=".chat.activity.ChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".chat.activity.Chat2Activity"
+            android:launchMode="singleTask">
+        </activity>
+
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"/>
+        <!-- 查看视频页面 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"/>
+        <!-- 下载文件 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"/>
+        <activity
+            android:name="com.donkingliang.imageselector.ImageSelectorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".chat.activity.Chat3Activity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".group.activity.AddGroupActivity"/>
+        <activity
+            android:name="com.hyphenate.easeui.ui.ImageViewActivity"
+            android:theme="@style/ImageTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.hyphenate.easeui.ui.ShowImageViewPagerActivity"
+            android:theme="@style/ImageTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <meta-data
+            android:name="com.donkingliang.imageselector.utils.MyGlideModule"
+            android:value="GlideModule"/>
+
+        <activity android:name=".chat.activity.GroupListActivity">
+        </activity>
+        <activity
+            android:name=".home.resume.activity.ResumeSearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".home.resume.activity.ResumeSearchResultActivity">
+        </activity>
+        <activity android:name=".home.resume.activity.ResumeDetailActivity">
+        </activity>
+        <activity android:name=".home.resume.activity.ExpAndProWebViewActivity">
+        </activity>
+        <activity android:name=".home.customer.activity.CustomerSearchActivity">
+        </activity>
+        <activity android:name=".home.customer.activity.CustomerSearchResultActivity">
+        </activity>
+        <activity android:name=".home.customer.activity.CustomDetailActivity">
+        </activity>
+        <activity android:name=".home.customer.activity.CustomDetailActivity2">
+        </activity>
+        <activity android:name=".home.position.activity.PositionSearchActivity">
+        </activity>
+        <activity android:name=".home.position.activity.PositionSearchResultActivity">
+        </activity>
+        <activity android:name=".home.position.activity.PositionDetailActivity">
+        </activity>
+        <activity android:name=".home.position.activity.RecommendListActivity">
+        </activity>
+        <activity android:name=".home.position.activity.RecommendInfoActivity">
+        </activity>
+        <activity
+            android:name=".home.call.activity.CallActivity"
+            android:theme="@style/callDialog"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+        <activity android:name=".home.call.activity.AreaListActivity">
+        </activity>
+        <activity android:name=".home.homesearch.activity.HomeSearchActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.publicCustomer.activity.PublicCustomerActivity"/>
+        <activity android:name=".home.commonFuctions.publicCustomer.activity.PublicCustomerSearchActivity"/>
+        <activity android:name=".home.commonFuctions.referencemanage.activity.ReferenceManageActivity"/>
+        <activity android:name=".home.commonFuctions.referencemanage.activity.ReferenceManageSearchResultActivity"/>
+        <activity android:name=".mine.activity.EvaluateViewActivity"/>
+        <activity android:name=".home.commonFuctions.invoiceManage.activity.InvoiceManageActivity"/>
+        <activity android:name=".home.commonFuctions.invoiceManage.activity.InvoiceManageSearchActivity"/>
+        <activity android:name=".home.commonFuctions.invoiceManage.activity.InvoiceDetailActivity"/>
+        <activity android:name=".home.commonFuctions.performanceManage.activity.PerformanceManageActivity"/>
+        <activity android:name=".home.commonFuctions.performanceManage.activity.PerformanceManageSearchActivity"/>
+        <activity android:name=".home.commonFuctions.myEvaluation.activity.EvalutionManageActivity"/>
+        <activity android:name=".home.commonFuctions.myEvaluation.activity.EvalutionManageSearchActivity"/>
+        <activity android:name=".home.commonFuctions.myAttenDance.activity.MyAttendanceActivity"/>
+        <activity android:name=".home.commonFuctions.myAttenDance.activity.LeaveRequstActivity"/>
+        <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseActivity"/>
+        <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseResultActivity"/>
+        <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseDetailActivity"/>
+        <activity
+            android:name=".scan.ScanActivity"
+            android:theme="@style/scanTheme">
+        </activity>
+        <activity android:name=".home.commonFuctions.myCourse.activity.MyCourseActivity"/>
+        <activity android:name=".home.commonFuctions.myCourse.activity.MyCourseSearchActivity"/>
+        <activity
+            android:name=".home.commonFuctions.myCourse.activity.MyCourseDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".home.resume.activity.RecommendPeopleActivity"
+            android:theme="@style/whiteTheme">
+        </activity>
+        <activity
+            android:name=".home.resume.activity.RecommendPeopleNextActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustNothing">
+        </activity>
+        <activity
+            android:name=".home.resume.activity.RecommendPeopleSearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustNothing">
+        </activity>
+        <activity
+            android:name=".home.position.activity.ProcessNextActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustNothing">
+        </activity>
+        <activity
+            android:name=".common.activity.URLWebViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustNothing">
+        </activity>
+        <activity
+            android:name=".home.customer.activity.ReturnFollowActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".home.commonFuctions.publicCustomer.activity.ClientApplicationActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".home.commonFuctions.dynamics.activity.DynamicsActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.dynamics.activity.DynamicsSearchActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.dynamics.activity.PublishingDynamicsActivity">
+        </activity>
+        <activity android:name=".contacts.activity.MyCustomerActivity">
+        </activity>
+        <activity android:name=".contacts.activity.MyCustomerHRActivity">
+        </activity>
+        <activity
+            android:name=".register.activity.RegisterFirstActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".register.activity.RegisterSecondActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".register.activity.RegisterThirdActivity"
+            android:theme="@style/whiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".home.commonFuctions.workorder.activity.WorkOrderActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.workorder.activity.WorkOrderDetailActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.workorder.activity.OrderPeopleSelectActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.news.activity.NewsMainActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.news.activity.NewsSearchActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.news.activity.NewsDetailActivity">
+        </activity>
+        <activity android:name=".home.resume.activity.ResumeQuickSearchActivity">
+        </activity>
+        <activity android:name=".home.resume.activity.ResumeOhterWholeActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseMainActivity">
+        </activity>
+        <activity android:name=".home.commonFuctions.reminding.activity.RemindingActivity">
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.risfond.rnss.home.commonFuctions.reminding.activity.RemindingActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#F5F5F5"></View>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_one_yearday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="2017/12/20"
+                android:textColor="#2D2D2D"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@+id/ll_one_yearday"
+            android:id="@+id/ll_two_week"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="日"
+                android:textColor="#6D6D6D"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="一"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="二"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="三"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="四"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="五"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#6D6D6D"
+                android:text="六"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F5F5F5"
+        >
+
+        <com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarDateView
+            android:id="@+id/calendarDateView"
+            android:layout_width="match_parent"
+            android:background="#FFFFFF"
+            android:layout_height="wrap_content"
+            />
+
+        <RelativeLayout
+            android:id="@+id/ll_reminding_reference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#F5F5F5">
+
+            <LinearLayout
+                android:id="@+id/ll_reming_affairs"
+                android:layout_marginTop="38px"
+                android:layout_marginBottom="20px"
+                android:layout_width="match_parent"
+                android:background="#F5F5F5"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_affairsleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="我的事务("/>
+                <TextView
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_affairsleft"
+                    android:id="@+id/tv_itemnumber"
+                    android:text=" 6 "/>
+                <TextView
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_itemnumber"
+                    android:id="@+id/tv_affairsright"
+                    android:text=")"/>
+            </LinearLayout>
+
+            <ListView
+                android:layout_below="@+id/ll_reming_affairs"
+                android:id="@+id/list_reminding_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F5F5F5"
+                android:divider="@null"/>
+
+            <TextView
+                android:layout_marginTop="25dp"
+                android:drawableTop="@mipmap/iconaffairs"
+                android:id="@+id/tv_reminding_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="这一天暂无事务"
+                android:textColor="#B4B4B4"
+                android:layout_marginBottom="58px"/>
+            <TextView
+                android:id="@+id/tv_reminding_addaffairs"
+                android:layout_width="324px"
+                android:layout_height="80px"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginTop="130dp"
+                android:background="#FFFFFF"
+                android:text="添加今日事务"
+                android:textColor="#4FA8E3"/>
+
+        </RelativeLayout>
+    </com.risfond.rnss.home.commonFuctions.reminding.calendar.CalendarLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52px"
+            android:layout_marginRight="28px"
+            android:layout_gravity="end"
+            android:padding="5dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/buttonplus"/>
+</LinearLayout>
+

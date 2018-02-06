@@ -3,13 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@color/color_white">
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@drawable/bg_cicle_bead"
+    android:orientation="vertical"
+    android:padding="3dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/comm_func"
+        android:drawablePadding="@dimen/dp_5"
+        android:layout_margin="@dimen/dp_5"
+        android:text="常用功能"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gv_application_project"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="4" />
+        android:numColumns="4"/>
 
 </LinearLayout>

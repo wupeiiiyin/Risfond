@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/resume_bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.risfond.rnss.widget.MyRoundImageView
+            android:id="@+id/iv_colleague"
+            android:layout_width="111dp"
+            android:layout_height="91dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ease_default_avatar"/>
+
+        <ImageView
+            android:id="@+id/iv_medal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/gold_medal"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_margin="1dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
+            android:text="990,100"
+            android:textColor="@color/color_operate_platform_txt"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:id="@+id/yuan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="元"
+            android:textColor="@color/color_mine_gray_text"
+            android:textSize="7dp"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="张楠楠"
+            android:textColor="@color/color_black"
+            android:textSize="10dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

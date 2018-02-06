@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp_15"
+              android:layout_marginLeft="@dimen/dp_15"
+              android:layout_marginRight="@dimen/dp_15"
+              android:background="@drawable/bg_cicle_bead"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/performance"
+        android:drawablePadding="@dimen/dp_5"
+        android:padding="@dimen/dp_15"
+        android:text="回款数据"/>
+
+    <LinearLayout
+        android:background="@drawable/home_round_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_payment_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingLeft="@dimen/dp_15"
+            android:text="今日"
+            android:textColor="@color/home_payment_selector"
+            android:textSize="@dimen/text_size_14"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/dp_15"
+            android:background="@color/color_quick_resume_text"/>
+
+        <TextView
+            android:id="@+id/tv_payment_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingLeft="@dimen/dp_15"
+            android:text="本周"
+            android:textColor="@color/home_payment_selector"
+            android:textSize="@dimen/text_size_14"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_receive_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="¥0"
+        android:textColor="@color/orange_FF7A21"
+        android:textSize="@dimen/text_size_28"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/dp_15"
+        android:text="汇款金额(万)"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="@dimen/text_size_16"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_entry_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/orange_FF7A21"
+                android:textSize="@dimen/text_size_20"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="入职人数(人)"
+                android:textColor="@color/color_quick_resume_text"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@color/color_quick_resume_text"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_new_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/orange_FF7A21"
+                android:textSize="@dimen/text_size_20"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="签约客户(家)"
+                android:textColor="@color/color_quick_resume_text"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

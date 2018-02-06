@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevInfor>
+	<!--要分享微信小应用程序时用userName,path-->
+    <Wechat
+        Id="1"
+        SortId="1"
+        AppId="wxfc17f58ebd079930"
+        AppSecret="5cee5a9c5648c9749e8bd3cdb04c1798"
+		userName="gh_afb25ac019c9"
+		path="/page/API/pages/share/share"
+        BypassApproval="false"
+        Enable="true" />
+    
+    <WechatMoments
+        Id="2"
+        SortId="2"
+        AppId="wxfc17f58ebd079930"
+        AppSecret="5cee5a9c5648c9749e8bd3cdb04c1798"
+        BypassApproval="false"
+        Enable="true" />
+        
+
+</DevInfor>

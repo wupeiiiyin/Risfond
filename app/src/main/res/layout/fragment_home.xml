@@ -3,47 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white_real"
+    android:background="@color/color_little_grey"
     android:orientation="vertical"
     tools:context="com.risfond.rnss.home.fragment.HomeFragment">
 
-    <ScrollView
+    <com.risfond.rnss.widget.ScrollInterceptScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_blue"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <include layout="@layout/include_home_header"/>
+            <include
+                android:id="@+id/home_header"
+                layout="@layout/include_home_header_name"/>
 
-            <include layout="@layout/include_application_project"/>
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/color_home_stoke"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_header"
+                android:background="@color/transparent"
+                android:orientation="vertical"
+                android:translationY="-30dp">
 
-            <include layout="@layout/include_operation_platform"/>
+                <include layout="@layout/include_home_header"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/color_home_stoke"/>
+                <include layout="@layout/include_transactional_reminding"/>
 
-            <include layout="@layout/include_real_time_arrival"/>
+                <include layout="@layout/include_application_project"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/color_home_stoke"/>
+                <include layout="@layout/include_performance_progress"/>
 
-            <include layout="@layout/include_new_colleague"/>
+                <include
+                    android:id="@+id/include_receive_payment"
+                    layout="@layout/include_payment"
+                    android:visibility="gone"/>
 
-        </LinearLayout>
-    </ScrollView>
+
+                <include
+                    layout="@layout/include_operation_platform"
+                    android:visibility="gone"/>
+
+                <include
+                    layout="@layout/include_real_time_arrival"
+                    android:visibility="gone"/>
+
+                <include
+                    layout="@layout/include_new_colleague"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.risfond.rnss.widget.ScrollInterceptScrollView>
 
 </LinearLayout>

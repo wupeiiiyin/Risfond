@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -101,5 +102,62 @@ public class TimeUtil {
         Date d = new Date(System.currentTimeMillis());
         sf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         return sf.format(d);
+    }
+
+    /**
+     * 获取当前时间的年份
+     *
+     * @return 年份
+     */
+    public static int getYear() {
+        Calendar calendar = GregorianCalendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * 获取当前时间的月份
+     *
+     * @return 月份
+     */
+    public static int getMonth() {
+        Calendar calendar = GregorianCalendar.getInstance();
+        return calendar.get(Calendar.MONTH);
+    }
+
+    /**
+     * 获取当前季度
+     * @return
+     */
+    public static int getQuarter() {
+        if (getMonth() <= 3) {
+            return 1;
+        } else if(getMonth()>3&&getMonth()<=6) {
+            return 2;
+        }else if(getMonth()>6&&getMonth()<=9) {
+            return 3;
+        } else if(getMonth()>9&&getMonth()<=12) {
+            return 4;
+        }
+        return 1;
+    }
+
+    /**
+     * 获取中午或者下午
+     *
+     * @return
+     */
+    public static String getAPM() {
+        String apmStr = "上午";
+        long time = System.currentTimeMillis();
+        Calendar mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(time);
+
+        int apm = mCalendar.get(Calendar.AM_PM);
+        if (apm == 0) {
+            return apmStr;
+        } else {
+            apmStr = "下午";
+            return apmStr;
+        }
     }
 }

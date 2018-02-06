@@ -52,7 +52,7 @@ public class DetailsTimeActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_detailstime_onclick:
-                startActivity(RemindingTimeActivity.class, false);
+//                startActivity(RemindingTimeActivity.class, false);
                 break;
         }
     }

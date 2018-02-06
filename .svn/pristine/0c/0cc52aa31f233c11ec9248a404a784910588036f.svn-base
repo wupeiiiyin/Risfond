@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_white"
+    android:fitsSystemWindows="true">
+
+    <include android:id="@+id/title"
+        layout="@layout/include_title_white" />
+
+    <com.risfond.rnss.widget.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_below="@+id/title"
+        android:layout_marginBottom="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/color_home_back">
+
+            <include layout="@layout/include_leave_header"/>
+
+            <include layout="@layout/include_leave_body"/>
+
+        </LinearLayout>
+    </com.risfond.rnss.widget.MyScrollview>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_white">
+
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/button_blue"
+            android:text="提交"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_leave_selector"/>
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_empty_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/color_white"
+        android:layout_below="@+id/title"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/color_home_gray_text"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

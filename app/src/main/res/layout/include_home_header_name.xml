@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tool="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/color_blue"
+              android:orientation="vertical"
+              android:paddingBottom="30dp"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/tv_header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Bob,下午好"
+        android:textColor="@color/background"
+        android:textSize="18sp"
+        tool:text="Bob,下午好"/>
+
+    <TextView
+        android:id="@+id/tv_signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/personal_signature"
+        android:textColor="@color/background"/>
+
+    <TextView
+        android:id="@+id/tv_edit_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/hiconcompile"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:text="编辑签名"
+        android:textColor="@color/background"/>
+</LinearLayout>

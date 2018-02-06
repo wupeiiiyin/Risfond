@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_mine_text_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <CheckBox
+        android:id="@+id/cb_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:button="@null"
+        android:clickable="false"
+        android:drawableRight="@drawable/bg_city"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_user_photo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ease_default_avatar"/>
+
+    <TextView
+        android:id="@+id/type_person"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="person"
+        android:textColor="@color/color_mine_black_text"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_en_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="("
+            android:textColor="@color/color_mine_black_text"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/type_person_en"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+
+            android:paddingRight="5dp"
+            android:text="nick"
+            android:textColor="@color/color_mine_black_text"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+
+            android:paddingRight="5dp"
+            android:text=")"
+            android:textColor="@color/color_mine_black_text"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/type_person_position"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical|right"
+        android:paddingRight="15dp"
+        android:text="技术"
+        android:textColor="@color/color_mine_gray_text"
+        android:textSize="16sp"/>
+
+</LinearLayout>

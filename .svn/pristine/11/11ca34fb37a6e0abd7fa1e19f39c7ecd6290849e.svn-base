@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_white"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_title_white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:background="@color/color_grey">
+
+        <View
+            android:id="@+id/line"
+            style="@style/edit_line"/>
+
+        <ScrollView
+            android:id="@+id/sc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/line"
+            android:layout_marginBottom="60dp"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:id="@+id/rl_leave_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingBottom="10dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="10dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/we_media_publish_content_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_leave_reason"
+                    android:background="@color/color_white"
+                    android:minHeight="160dp">
+
+                    <EditText
+                        android:id="@+id/et_leave_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="@null"
+                        android:hint="请输入要添加的内容（必填）"
+                        android:imeOptions="actionDone"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/color_home_black_text"
+                        android:textColorHint="@color/text_dimgray"
+                        android:textSize="15sp"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_leave_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical"
+                    android:text="回访记录"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="15sp"/>
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <View
+            style="@style/edit_line"
+            android:layout_below="@+id/sc"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_grey"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/button_blue"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_leave_selector"
+            android:text="提交"/>
+    </RelativeLayout>
+
+</RelativeLayout>

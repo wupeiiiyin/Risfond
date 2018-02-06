@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">锐仕方达</string>
+
+    <string name="connect_exit">下线通知</string>
+    <string name="connect_conflict">帐号已在其他设备登录</string>
+    <string name="connect_removed">帐号已被删除</string>
+    <string name="connect_forbidden">帐号被服务器限制连接</string>
+    <string name="connect_time_out">登录过期，请重新登录</string>
+
+    <string name="str_recorder_normal">按住 说话</string>
+    <string name="str_recorder_recording">松开 结束</string>
+    <string name="str_recorder_want_cancel">松开手指,取消发送</string>
+
+    <string name="soft_update_no">已经是最新版本</string>
+    <string name="soft_update_title">软件更新</string>
+    <string name="soft_update_info">检测到新版本，立即更新吗</string>
+    <string name="soft_update_update_btn">更新</string>
+    <string name="soft_update_later">稍后更新</string>
+    <string name="soft_updating">正在更新</string>
+    <string name="soft_update_cancel">取消</string>
+
+    <string name="to_expand_hint">... 查看更多</string>
+    <string name="to_shrink_hint">收起</string>
+
+
+    <string name="timepicker_year">年</string>
+    <string name="timepicker_month">月</string>
+    <string name="timepicker_day">日</string>
+    <string name="timepicker_hour">时</string>
+    <string name="timepicker_min">分</string>
+    <string name="timepicker_title">选择时间</string>
+    <string name="timepicker_finish">确认</string>
+    <string name="timepicker_title_default">设置</string>
+
+    <string-array name="list">
+        <item>事假</item>
+        <item>病假</item>
+        <item>年假</item>
+        <item>婚假</item>
+        <item>产假</item>
+        <item>其他</item>
+    </string-array>
+
+    <string name="recommend_people">推荐人选</string>
+    <string name="process_tip1">客户面试： 只有客户真正对人选进行了面试，并撰写不少于30字的面试反馈信息后才能算绩效</string>
+    <string name="process_tip2">客户发OFFER：包含口头、书面、电子的同意录用确认信息，撰写不少于30个字的offer内容信息，且入职年薪【不能为空】或【暂定】！</string>
+    <string name="process_tip3">成功入职：人选去企业报道开始正式上班，并撰写不少于30个字的入职沟通反馈信息，且入职年薪【不能为空】或【暂定】！</string>
+
+    <string-array name="clent_applation_list">
+        <item>1.我对该公司比较熟悉，有信心服务好他们</item>
+        <item>2.我对这个行业很熟悉，有信心服务好他们</item>
+        <item>3.最近手里客户不多了，尝试接触储备客户</item>
+        <item>4.团队规模人数增加了，想拓展更多的客户</item>
+        <item>5.想挑战更高的业绩量，需要增加客户数量</item>
+        <item>6.老客户招聘量暂停了，需要新签约点客户</item>
+        <item>7.对这个行业很感兴趣，想拓展一下新行业</item>
+        <item>8.我认识该企业内部人，有很好的人脉关系</item>
+        <item>9.之前我接触过该公司，可以转给我试一试</item>
+        <item>10.打听到他们有新需求，转给我接触一下</item>
+        <item>11.其他</item>
+    </string-array>
+
+    <string name="login_register"><u>新员工注册</u></string>
+    <string name="login_tip">验证码将通过短信和邮件的方式发送<font color="#008DFF">手机端及工作邮箱</font></string>
+    <string name="regist_title1">新员工注册<font color="#999999">（1/3）</font></string>
+    <string name="regist_title2">新员工注册<font color="#999999">（2/3）</font></string>
+    <string name="regist_title3">新员工注册<font color="#999999">（3/3）</font></string>
+    <string name="register_step1">“请输入联系方式”\n方便我们更了解你</string>
+    <string name="register_step2">“请输入个人信息”</string>
+    <string name="register_step3">“请输入学业情况&amp;工作经历”</string>
+
+    <string name="register_next">下一步</string>
+    <string name="register_finish">完成</string>
+
+    <string name="register_digest_en_name">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <string name="expand">全文</string>
+    <string name="collapse">收起</string>
+    <string name="authentication_go">点击认证</string>
+    <string name="authentication_success">已认证</string>
+
+</resources>

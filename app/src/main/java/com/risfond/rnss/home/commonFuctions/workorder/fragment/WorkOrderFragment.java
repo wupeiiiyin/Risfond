@@ -113,7 +113,11 @@ public class WorkOrderFragment extends BaseFragment implements ResponseCallBack,
             public void run() {
                 if (refreshViewOrder.isRefresh()) {
                     workOrderLists.clear();
-                    list.clear();
+                    if (list == null) {
+                        list = new ArrayList<WorkOrderList>();
+                    } else {
+                        list.clear();
+                    }
                     tempList.clear();
                     refreshViewOrder.setPullLoadMoreCompleted();
                 } else if (refreshViewOrder.isLoadMore()) {

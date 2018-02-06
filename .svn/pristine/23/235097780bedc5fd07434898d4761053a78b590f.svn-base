@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/dialog_recharge_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="111dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/huojian" />
+
+            <RelativeLayout
+                android:id="@+id/positiveButton"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_alignParentRight="true"
+                android:padding="14dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@mipmap/ficonclosegray" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="新版本升级"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="#323232"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_title_time"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="V1.11   06-17  18:00"
+            android:textColor="@color/text_dimgray"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/tv_recharge_message"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.1"
+                    android:scrollbars="vertical"
+                    android:focusable="true"
+                    android:maxLines="8"
+                    android:text="· RNSS系统扫码登陆：
+通过APP扫描二维码登陆RNSS系统
+· 发票管理：
+通过APP查看发票申请的审核状况，以及发票详情
+· 绩效审核：
+通过APP查看绩效申请的审核情况"
+                    android:textColor="#323232"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/negativeButton"
+                    android:layout_width="135dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_button_update"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="确认更新"
+                    android:textColor="@color/color_white_real"
+                    android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

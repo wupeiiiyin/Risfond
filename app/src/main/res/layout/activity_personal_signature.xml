@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_title"/>
+
+    <EditText
+        android:id="@+id/et_personal_sign"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_cicle_bead"
+        android:gravity="top"
+        android:hint="请输入您的个性签名(限制36个字)"
+        android:maxLength="36"
+        android:padding="@dimen/dp_10"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_change_signature"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_15"
+        android:background="@color/success_blue"
+        android:text="提交"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/text_size_20"/>
+</LinearLayout>

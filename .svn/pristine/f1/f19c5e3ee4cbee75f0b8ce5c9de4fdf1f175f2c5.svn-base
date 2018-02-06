@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.risfond.rnss.home.resume.activity.ResumeDetailActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_recommend_management"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_home_back"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"/>
+
+</LinearLayout>

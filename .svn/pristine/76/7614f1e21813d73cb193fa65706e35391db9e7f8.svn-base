@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FDEDEE"
+        android:drawableLeft="@drawable/ease_login_error_icon"
+        android:drawablePadding="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="网络连接不可用"
+        android:visibility="gone"/>
+
+    <include layout="@layout/include_search"/>
+
+    <include layout="@layout/include_line_gray_horizontal"/>
+
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/rv_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂时没有新消息"
+        android:textColor="@color/color_mine_gray_text"
+        android:textSize="16sp"/>
+
+
+</LinearLayout>

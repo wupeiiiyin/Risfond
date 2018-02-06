@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white_real"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.risfond.rnss.register.activity.RegisterFirstActivity">
+
+    <include layout="@layout/include_title_register"/>
+
+    <include layout="@layout/include_line_gray_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/color_resume_blue_txt"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:gravity="center"
+                android:text="@string/register_step3"
+                android:textColor="@color/color_home_black_text"
+                android:textSize="18sp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="最高学历"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择最高学历"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="毕业学校"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入毕业学校"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="6"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="专业"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_major"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入专业"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="毕业时间"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_graduation_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/more"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择毕业时间"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="上一家公司名称"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_last_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入公司名称"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/hcircle"
+                    android:drawablePadding="10dp"
+                    android:text="上一份职位名称"
+                    android:textColor="@color/color_home_black_text"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/et_last_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入职位名称"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_resume_blue_txt"
+                    android:textColorHint="@color/color_login_input_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_home_stoke"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

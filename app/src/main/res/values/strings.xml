@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">锐仕方达</string>
+    <string name="personal_signature">让每一个为梦想奋斗的人,更幸福的生活!</string>
 
     <string name="connect_exit">下线通知</string>
     <string name="connect_conflict">帐号已在其他设备登录</string>

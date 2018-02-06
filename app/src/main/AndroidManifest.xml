@@ -191,6 +191,7 @@
         <activity android:name=".home.position.activity.PositionDetailActivity" />
         <activity android:name=".home.position.activity.RecommendListActivity" />
         <activity android:name=".home.position.activity.RecommendInfoActivity" />
+        <activity android:name=".home.signature.SignatureActivity"/>
         <activity
             android:name=".home.call.activity.CallActivity"
             android:theme="@style/callDialog"
@@ -281,9 +282,9 @@
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
 
         <receiver android:name=".home.commonFuctions.reminding.broadcastreceiver.TimeBroReceiver" />
 

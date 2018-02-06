@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_search"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colo_bg_login"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_enterprise_groups"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:drawableLeft="@mipmap/groups"
+            android:drawablePadding="12dp"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:text="我的群组"
+            android:textColor="@color/color_home_black_text"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/tv_my_customer"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:drawableLeft="@mipmap/iconcustomer"
+            android:drawablePadding="12dp"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:text="我的客户"
+            android:textColor="@color/color_home_black_text"
+            android:textSize="17sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#f0f0f0"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_enterprise_address_list"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:drawableLeft="@mipmap/address_list"
+            android:drawablePadding="12dp"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:text="通讯录"
+            android:textColor="@color/color_home_black_text"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/tv_headquarters_company"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_mine_text_click"
+            android:drawableLeft="@mipmap/headquarters"
+            android:drawablePadding="12dp"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:text="北京公司"
+            android:textColor="@color/color_home_black_text"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/include_line_gray_horizontal"/>
+
+</LinearLayout>

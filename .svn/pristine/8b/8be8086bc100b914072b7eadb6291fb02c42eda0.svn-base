@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white_real"
+    android:padding="14dp">
+
+    <CheckBox
+        android:id="@+id/cb_people"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:button="@null"
+        android:clickable="false"
+        android:drawableRight="@drawable/bg_city"/>
+
+    <TextView
+        android:id="@+id/tv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/cb_people"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="220dp"
+        android:text="高级UI设计师/UX设计师"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_position"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/cb_people"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="220dp"
+        android:text="高级UI设计师/UX设计师"
+        android:textColor="@color/color_home_black_text"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/cb_people"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="220dp"
+        android:text="2016.02.03"
+        android:textColor="@color/color_customer_black"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="#235688"
+        android:textColor="@color/color_resume_blue_txt"
+        android:textSize="12sp"/>
+
+
+</RelativeLayout>

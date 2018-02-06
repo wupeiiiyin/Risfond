@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.risfond.rnss.widget.CircleImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/head_portrait"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_marginRight="5dp"
+    android:src="@mipmap/person_default">
+
+</com.risfond.rnss.widget.CircleImageView>

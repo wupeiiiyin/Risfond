@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/forget_password_dlg_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/hrightblue"/>
+
+    <TextView
+        android:id="@+id/tv_forget_password_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="注册成功"
+        android:textColor="#4C4C4C"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_forget_password_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="请耐心等待\n已提交给HR审核"
+        android:textColor="@color/color_dynamics_gray"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_know_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/know_btn_bg"
+        android:paddingBottom="10dp"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:paddingTop="10dp"
+        android:text="确定"
+        android:textColor="@color/color_white_real"
+        android:textSize="18sp"/>
+</LinearLayout>
