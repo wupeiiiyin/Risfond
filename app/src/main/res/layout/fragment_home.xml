@@ -28,7 +28,7 @@
                 android:layout_below="@+id/home_header"
                 android:background="@color/transparent"
                 android:orientation="vertical"
-                android:translationY="-30dp">
+                android:translationY="-25dp">
 
                 <include layout="@layout/include_home_header"/>
 
