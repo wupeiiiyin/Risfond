@@ -53,6 +53,7 @@ public class URLConstant {
     public static final String URL_SEND_BY_ACCOUNT = URL_TOP + "message/SendByAccount";
     /* 账号或手机号登录接口URL*/
     public static final String URL_BLEND_LOGIN = URL_TOP + "user/blendlogin";
+    public static final String URL_BLEND_LOGINV3 = URL_TOP + "user/blendloginv3";
     /* 发送验证码接口URL*/
     public static final String URL_SEND_BY_BLEND = URL_TOP + "message/sendbyblend";
     /* 龙虎榜接口URL*/

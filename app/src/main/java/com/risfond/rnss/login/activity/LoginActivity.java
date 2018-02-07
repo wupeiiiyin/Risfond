@@ -26,6 +26,7 @@ import com.risfond.rnss.base.BaseActivity;
 import com.risfond.rnss.callback.ResponseCallBack;
 import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.em.EMHelper;
+import com.risfond.rnss.common.utils.AndroidUtils;
 import com.risfond.rnss.common.utils.CountDownTextViewUtil;
 import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.SPUtil;
@@ -161,6 +162,9 @@ public class LoginActivity extends BaseActivity implements ResponseCallBack, Cou
     private void requestLoginService() {
         request.put("account", account);
         request.put("code", pwd);
+        request.put("id", AndroidUtils.getIP(context));
+        request.put("systems",AndroidUtils.getSystemModel());
+        request.put("platforms","android");
         DialogUtil.getInstance().showLoadingDialog(context, "登录中...");
         iLogin.loginRequest(request, "", this);
 //        Log.i("TAG", URLConstant.URL_LOGIN+"=======================");

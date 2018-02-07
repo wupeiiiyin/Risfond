@@ -276,8 +276,8 @@
         <activity android:name=".home.resume.activity.ResumeOhterWholeActivity" />
         <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseMainActivity" />
         <activity android:name=".home.commonFuctions.reminding.activity.RemindingActivity" />
-        <activity android:name=".home.commonFuctions.reminding.activity.AddTheTransactionActivity" />
-        <activity android:name=".home.commonFuctions.reminding.activity.RemindingTimeActivity" />
+        <!--<activity android:name=".home.commonFuctions.reminding.activity.AddTheTransactionActivity" />-->
+        <!--<activity android:name=".home.commonFuctions.reminding.activity.RemindingTimeActivity" />-->
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

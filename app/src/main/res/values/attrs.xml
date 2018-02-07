@@ -79,4 +79,15 @@
         <attr name="android:textSize"/>
     </declare-styleable>
 
+    <declare-styleable name="DriverProgress">
+        <attr name="panel_radius" format="dimension"/>
+        <attr name="panel_width" format="dimension"/>
+        <attr name="panel_density" format="integer"/>
+        <attr name="panel_point_radius" format="dimension"/>
+        <attr name="panel_progress" format="integer" />
+        <attr name="panel_max" format="integer"/>
+        <attr name="indicator_radius" format="dimension"/>
+        <attr name="touchable" format="boolean" />
+    </declare-styleable>
+
 </resources>

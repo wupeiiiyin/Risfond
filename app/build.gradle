@@ -17,8 +17,8 @@ android {
         applicationId "com.risfond.rnss"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 32
-        versionName "3.6.0"
+        versionCode 33
+        versionName "3.6.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 

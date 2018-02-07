@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:custom="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
               android:layout_marginLeft="@dimen/dp_10"
               android:layout_marginRight="@dimen/dp_10"
+              android:layout_marginTop="@dimen/dp_10"
               android:background="@drawable/bg_cicle_bead"
               android:orientation="vertical"
               android:padding="@dimen/dp_10">
@@ -17,14 +18,68 @@
         android:drawablePadding="@dimen/dp_5"
         android:text="业绩完成率"/>
 
-    <com.risfond.rnss.widget.PanelView
-        android:id="@+id/rv_percent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.risfond.rnss.widget.ProgressView
+            android:id="@+id/pv_achievement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            custom:indicator_radius="10dp"
+            custom:panel_density="10"
+            custom:panel_max="100"
+            custom:panel_point_radius="3dp"
+            custom:panel_radius="75dp"
+            custom:panel_width="45dp"
+            custom:touchable="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_achievement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/pv_achievement"
+            android:layout_alignRight="@+id/pv_achievement"
+            android:layout_below="@+id/pv_achievement">
+
+            <TextView
+                android:id="@+id/tv_achievement_have"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@+id/pv_achievement"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/tv_achievement_nohave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="0(万)"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_achievement_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="50%"
-        android:textSize="18sp"
-        app:arcColor="@color/color_yellow"/>
+        android:gravity="center_horizontal"
+        android:text="0%"
+        android:padding="@dimen/dp_5"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="@color/text_blue"/>
+    <TextView
+        android:id="@+id/tv_achievement_rate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="完成率"
+        android:textColor="@color/color_quick_resume_text"/>
 
     <LinearLayout
         android:layout_width="match_parent"

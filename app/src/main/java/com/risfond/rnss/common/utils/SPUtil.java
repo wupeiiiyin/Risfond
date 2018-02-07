@@ -37,6 +37,7 @@ public class SPUtil {
         editor.putString("CharId", login.getCharId());
         editor.putString("TelNumber", login.getTelNumber());
         editor.putString("MobileNumber", login.getMobileNumber());
+        editor.putString("EName", login.getEName());
         editor.commit();//只有调用commit方法才会把传回来的参数保存在文件上
     }
 
@@ -90,6 +91,16 @@ public class SPUtil {
     public static String loadName(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("Name", "");
+    }
+
+    /**
+     * 获取英文名字
+     * @param context
+     * @return
+     */
+    public static String loadEnglishName(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("EName","");
     }
 
     /**

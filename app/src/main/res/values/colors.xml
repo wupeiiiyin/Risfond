@@ -85,4 +85,7 @@
     <color name="color3">#B0B0B0</color>
     <color name="color4">#666666</color>
     <color name="color5">#57C5E8</color>
+    <color name="panel_bottom_blue">#A0DDFF</color>
+    <color name="panel_progress_blue">#41B7E1</color>
+    <color name="panel_indicator_color">#8899AD</color>
 </resources>

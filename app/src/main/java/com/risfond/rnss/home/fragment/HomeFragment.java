@@ -59,6 +59,7 @@ import com.risfond.rnss.home.position.activity.PositionSearchActivity;
 import com.risfond.rnss.home.resume.activity.ResumeSearchActivity;
 import com.risfond.rnss.home.signature.SignatureActivity;
 import com.risfond.rnss.widget.PanelView;
+import com.risfond.rnss.widget.ProgressView;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -105,8 +106,16 @@ public class HomeFragment extends BaseFragment implements DynamicsUnReadCallback
     RecyclerView gvApplicationProject;
     @BindView(R.id.ll_trans_remind)
     LinearLayout ll_trans_remind;
-    @BindView(R.id.rv_percent)
-    PanelView rv_percent;
+    @BindView(R.id.pv_achievement)
+    ProgressView pv_achievement;
+    @BindView(R.id.tv_achievement_rate)
+    TextView tv_achievement_rate;
+    @BindView(R.id.tv_achievement_rate2)
+    TextView tv_achievement_rate2;
+    @BindView(R.id.tv_achievement_have)
+    TextView tv_achievement_have;
+    @BindView(R.id.tv_achievement_nohave)
+    TextView tv_achievement_no;
     @BindView(R.id.tv_completed)
     TextView tv_completed;
     @BindView(R.id.tv_incompleted)
@@ -158,7 +167,7 @@ public class HomeFragment extends BaseFragment implements DynamicsUnReadCallback
     @Override
     public void init(Bundle savedInstanceState) {
         context = getActivity();
-        tv_header_name.setText(SPUtil.loadName(context) + " , " + TimeUtil.getAPM() + "好!");
+        tv_header_name.setText(SPUtil.loadEnglishName(context) + " , " + TimeUtil.getAPM() + "好!");
         pictures = new ArrayList<HomeProjectInfo>();
 
         tv_signature.setText(SPUtil.loadUserSignature(context));
@@ -196,9 +205,7 @@ public class HomeFragment extends BaseFragment implements DynamicsUnReadCallback
         rvColleague.setAdapter(colleagueListAdapter);
         gvApplicationProject.setAdapter(mProjectListAdapter);
 
-        rv_percent.setArcWidth(100);
-        rv_percent.setText("0%");
-        rv_percent.setContext("完成率");
+        pv_achievement.setProgress(0);
         tv_payment_today.setSelected(true);
         tv_payment_week.setSelected(false);
         onItemProjectClick();
@@ -273,6 +280,9 @@ public class HomeFragment extends BaseFragment implements DynamicsUnReadCallback
         request4.put("StaffId", String.valueOf(SPUtil.loadId(context)));
         request4.put("AssessmentYear", String.valueOf(TimeUtil.getYear()));
         request4.put("AssessmentQuarter", String.valueOf(TimeUtil.getQuarter()));
+//        request4.put("StaffId", "6020");
+//        request4.put("AssessmentYear", "2017");
+//        request4.put("AssessmentQuarter", "4");
         iAchievement.iAchievementRequest(token, request4, URLConstant.URL_GETPERFORMANCE_PERCENTAGE, this);
 
         request1.put("StaffId", String.valueOf(SPUtil.loadId(context)));
@@ -380,12 +390,14 @@ public class HomeFragment extends BaseFragment implements DynamicsUnReadCallback
                         NumberFormat nf = NumberFormat.getPercentInstance();
                         try {
                             Number str = nf.parse(response.getData().getPercent());
-                            rv_percent.setPercent(Float.parseFloat(str.toString()) * 100);
+                            pv_achievement.setProgress(Float.parseFloat(str.toString()) * 100);
+                            tv_achievement_rate.setText(response.getData().getPercent());
+                            tv_achievement_rate2.setText(response.getData().getQuarterStr()+"完成率");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        rv_percent.setText(response.getData().getPercent());
-                        rv_percent.setContext(response.getData().getQuarterStr() + "完成率");
+                        tv_achievement_have.setText(response.getData().getPerformanceAmount());
+                        tv_achievement_no.setText(response.getData().getUnfinishedPerformance()+"(万)");
                         tv_completed.setText(response.getData().getPerformanceAmount());
                         tv_incompleted.setText(response.getData().getUnfinishedPerformance());
                     }

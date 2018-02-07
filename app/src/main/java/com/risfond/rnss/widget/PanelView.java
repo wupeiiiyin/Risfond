@@ -179,6 +179,7 @@ public class PanelView extends View {
         mTextColor = getResources().getColor(R.color.text_blue);
         mTextColor2 = getResources().getColor(R.color.color_quick_resume_text);
         p.setColor(mTextColor);
+        p.setStyle(Paint.Style.FILL);
         float txtLength = p.measureText(mText);
         canvas.drawText(mText, (mWidth - txtLength) / 2, rectBottomY, p);
 

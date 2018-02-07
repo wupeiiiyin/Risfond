@@ -22,7 +22,7 @@ public class LoginImpl implements ILogin {
     @Override
     public void loginRequest(Map<String, String> request, String token, final ResponseCallBack callBack) {
 
-        HttpUtil.getInstance().requestService(URLConstant.URL_BLEND_LOGIN, request, token, new ResponseListener() {
+        HttpUtil.getInstance().requestService(URLConstant.URL_BLEND_LOGINV3, request, token, new ResponseListener() {
             @Override
             public void onSuccess(String str) {
                 if (JsonUtil.isJson(str)) {

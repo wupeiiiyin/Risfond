@@ -17,6 +17,7 @@ public class Login {
     private int CompanyId;
     private String TelNumber = "";
     private String MobileNumber = "";
+    private String EName = "";
 
     public String getTelNumber() {
         return TelNumber;
@@ -104,5 +105,13 @@ public class Login {
 
     public void setCompanyId(int companyId) {
         CompanyId = companyId;
+    }
+
+    public String getEName() {
+        return EName;
+    }
+
+    public void setEName(String EName) {
+        this.EName = EName;
     }
 }
