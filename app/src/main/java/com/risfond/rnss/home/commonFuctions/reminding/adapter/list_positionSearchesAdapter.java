@@ -67,24 +67,3 @@ public class list_positionSearchesAdapter extends BaseAdapter {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
