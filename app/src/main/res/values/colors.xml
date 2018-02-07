@@ -23,8 +23,8 @@
     <color name="colo_bg_login">#F7F7F7</color>
     <color name="color_login_input_hint">#999999</color>
     <color name="color_login_input">#333333</color>
-    <color name="color_blue">#0066c3</color>
-    <color name="color_home_search">#0f5a9f</color>
+    <color name="color_blue">#0381E1</color>
+    <color name="color_home_search">#0066c3</color>
     <color name="color_bottom_menu_text">#636363</color>
     <color name="color_mine_bg">#eaeaea</color>
     <color name="color_mine_black_text">#333333</color>

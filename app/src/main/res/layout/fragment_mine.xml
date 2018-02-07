@@ -23,7 +23,6 @@
                 android:id="@+id/iv_person_photo"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="20dp"
                 android:src="@mipmap/person_default"
                 circleimageview:civ_border_color="#76ACDA"
                 circleimageview:civ_border_width="3dp"/>
