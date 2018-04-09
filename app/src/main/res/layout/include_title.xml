@@ -1,48 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_title_rootview"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:id="@+id/id_title_rootview"
     android:background="@color/color_blue"
     android:orientation="horizontal">
 
+
     <LinearLayout
         android:id="@+id/ll_back"
-        android:layout_width="40dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/color_blue"
         android:gravity="center_vertical"
         android:onClick="back"
-        android:paddingLeft="15dp"
+        android:orientation="horizontal"
         android:paddingRight="10dp">
+
+        <!--android:paddingLeft="15dp"-->
+
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/back"/>
+            android:paddingLeft="15dp"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="标题"
+            android:textColor="@color/color_white"
+            android:textSize="18sp" />
+
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:paddingLeft="25dp"
-        android:paddingRight="10dp"
-        android:text="标题"
-        android:textColor="@color/color_white"
-        android:textSize="18sp"/>
+    <!--android:paddingLeft="25dp"-->
+
+
+    -
+
     <LinearLayout
         android:id="@+id/ll_tv_img"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:visibility="gone">
+
+        <!--android:paddingLeft="20dp"-->
+
 
         <TextView
             android:id="@+id/tv_title_img"
@@ -53,19 +71,23 @@
             android:gravity="center"
             android:text="标题"
             android:textColor="@color/color_white"
-            android:textSize="18sp"/>
-
+            android:textSize="18sp" />
 
     </LinearLayout>
+
+
+    -
 
     <LinearLayout
         android:id="@+id/ll_home_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="14dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="gone">
+
+        <!--android:layout_marginLeft="14dp"-->
+
 
         <TextView
             android:id="@+id/tv_home_search"
@@ -79,28 +101,34 @@
             android:paddingLeft="13dp"
             android:text="搜索"
             android:textColor="@color/color_white"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/home_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
             android:layout_marginRight="10dp"
             android:padding="5dp"
-            android:src="@mipmap/scan_header"/>
+            android:src="@mipmap/scan_header" />
+
+        <!--android:layout_marginLeft="14dp"-->
+
 
         <ImageView
             android:id="@+id/home_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
             android:padding="5dp"
             android:src="@mipmap/more_header"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <!--android:layout_marginLeft="15dp"-->
+
 
     </LinearLayout>
 
+
+    -
 
     <LinearLayout
         android:id="@+id/ll_title_search"
@@ -116,8 +144,12 @@
             android:id="@+id/iv_title_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/biconsearch"/>
+            android:src="@mipmap/biconsearch" />
+
     </LinearLayout>
+
+
+    -
 
     <LinearLayout
         android:id="@+id/ll_title_share"
@@ -132,8 +164,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/hiconshare"/>
+            android:src="@mipmap/hiconshare" />
+
     </LinearLayout>
+
+
+    -
 
     <LinearLayout
         android:id="@+id/ll_right_text"
@@ -152,19 +188,145 @@
             android:gravity="center"
             android:text="标题"
             android:textColor="@color/color_white"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/id_title_right"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="6dp"
         android:gravity="center_vertical|right"
+        android:orientation="horizontal"
         android:paddingRight="10dp"
-        android:visibility="gone">
-    </LinearLayout>
+        android:visibility="gone" />
 
+
+    -
+
+    <LinearLayout
+        android:id="@+id/ll_home_heade_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <!--android:layout_marginLeft="14dp"-->
+
+
+        <TextView
+            android:id="@+id/tv_home_search_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_half_bottom_cicle_bead"
+            android:drawableLeft="@mipmap/ficonsearch"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="搜索"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/home_scan_scroll"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:src="@mipmap/saoyisao" />
+
+        <!--android:layout_marginLeft="14dp"-->
+
+
+        <ImageView
+            android:id="@+id/home_more_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@mipmap/more_header"
+            android:visibility="gone" />
+
+        <!--android:layout_marginLeft="15dp"-->
+
+
+    </LinearLayout>
+<LinearLayout
+    android:id="@+id/tonic_lin"
+    android:layout_width="wrap_content"
+    android:visibility="gone"
+    android:layout_alignParentRight="true"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/text_tonic_card"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="补卡审核"
+        android:textColor="@color/color_white"
+        android:textSize="18dp"
+
+       />
+    <TextView
+        android:id="@+id/tv_unread_number"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/voice_unread"
+        android:gravity="center"
+        android:textColor="@color/color_white"
+        android:textSize="12sp"
+        android:visibility="invisible"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_back_tit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_blue"
+        android:gravity="center_vertical"
+        android:onClick="back"
+        android:orientation="horizontal"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        >
+
+        <!--android:paddingLeft="15dp"-->
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/tv_title_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="标题"
+            android:textColor="@color/color_white"
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/delete_title"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:src="@mipmap/gicondelate"/>
+    </LinearLayout>
 </RelativeLayout>

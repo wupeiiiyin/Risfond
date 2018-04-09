@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_cicle_bead"
     android:layout_margin="@dimen/dp_10"
-    android:orientation="horizontal">
+    android:saveEnabled="true"
+    android:orientation="horizontal"
+  android:layout_marginTop="100dp"
+    >
 
     <LinearLayout
         android:id="@+id/ll_resume_search"
@@ -15,7 +18,9 @@
         android:layout_marginTop="@dimen/dp_15"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
 
         <ImageView
             android:layout_width="@dimen/dp_30"

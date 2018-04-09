@@ -2,7 +2,6 @@ package com.risfond.rnss.application;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.risfond.rnss.common.em.EMHelper;
 import com.risfond.rnss.common.utils.PropertiesUtil;
@@ -19,8 +18,13 @@ import java.util.Properties;
 public class MyApplication extends Application {
     public static Properties properties = null;
     private Context applicationContext;
-
     public static MyApplication instance;
+
+
+    //Android2.2版本以后的URL，之前的就不写了
+    public static String calanderURL = "content://com.android.calendar/calendars";
+    public static String calanderEventURL = "content://com.android.calendar/events";
+    public static String calanderRemiderURL = "content://com.android.calendar/reminders";
 
     public static MyApplication getMyInstance(){
         return instance;

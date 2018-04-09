@@ -167,7 +167,9 @@ public class LoginActivity extends BaseActivity implements ResponseCallBack, Cou
         request.put("platforms","android");
         DialogUtil.getInstance().showLoadingDialog(context, "登录中...");
         iLogin.loginRequest(request, "", this);
-//        Log.i("TAG", URLConstant.URL_LOGIN+"=======================");
+        Log.e("TAGAAA", URLConstant.URL_LOGIN+"=======================");
+        String s = account + pwd + AndroidUtils.getIP(context) + AndroidUtils.getSystemModel() + "android";
+        Log.e("TAG:", "requestLoginService: "+s );
     }
 
     /**

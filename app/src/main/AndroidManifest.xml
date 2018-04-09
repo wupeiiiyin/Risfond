@@ -33,6 +33,10 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <!-- //百度云权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application.MyApplication"
@@ -191,7 +195,7 @@
         <activity android:name=".home.position.activity.PositionDetailActivity" />
         <activity android:name=".home.position.activity.RecommendListActivity" />
         <activity android:name=".home.position.activity.RecommendInfoActivity" />
-        <activity android:name=".home.signature.SignatureActivity"/>
+        <activity android:name=".home.signature.SignatureActivity" />
         <activity
             android:name=".home.call.activity.CallActivity"
             android:theme="@style/callDialog"
@@ -276,22 +280,50 @@
         <activity android:name=".home.resume.activity.ResumeOhterWholeActivity" />
         <activity android:name=".home.commonFuctions.successCase.activity.SuccessCaseMainActivity" />
         <activity android:name=".home.commonFuctions.reminding.activity.RemindingActivity" />
-        <!--<activity android:name=".home.commonFuctions.reminding.activity.AddTheTransactionActivity" />-->
-        <!--<activity android:name=".home.commonFuctions.reminding.activity.RemindingTimeActivity" />-->
+         <activity android:name=".home.commonFuctions.reminding.activity.AddTheTransactionActivity" />
+         <activity android:name=".home.commonFuctions.reminding.activity.RemindingTimeActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
-        <!--<meta-data-->
-            <!--android:name="com.google.android.gms.version"-->
-            <!--android:value="@integer/google_play_services_version" />-->
+         <meta-data
+         android:name="com.google.android.gms.version"
+         android:value="@integer/google_play_services_version" />
 
         <receiver android:name=".home.commonFuctions.reminding.broadcastreceiver.TimeBroReceiver" />
 
         <service android:name=".home.commonFuctions.reminding.receiver.MusicTimeService" />
 
         <activity android:name=".home.commonFuctions.reminding.activity.ContionActivity" />
-        <activity android:name=".home.commonFuctions.reminding.activity.DetailsTimeActivity"></activity>
+        <activity android:name=".home.commonFuctions.reminding.activity.DetailsTimeActivity" />
+        <!--<activity android:name=".home.homesearch.activity.AddTheTransactionActivity" />-->
+        <activity
+            android:name=".home.homesearch.activity.Name_Card_ScannerActivity"
+            android:label="@string/title_activity_name__card__scanner"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".home.Bizreader_Activity.Bizreader_Activity" />
+        <activity android:name=".home.Bizreader_Activity.Bizreader_message_select_Activity" />
+        <activity android:name=".home.Bizreader_Activity.CardcaseActivity" />
+        <activity android:name=".home.Bizreader.Carddatails.Card_details_Activity" />
+        <activity android:name=".home.Bizreader_Activity.Main2Activity" />
+        <activity
+            android:name=".home.Bizreader_Activity.PopuoWin_Activity"
+            android:theme="@style/callDialog"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".home.Bizreader_Activity.Bizread_Edit_Activity" />
+        <activity
+            android:name=".home.Bizreader_Activity.PopupWin_phone_Activity"
+            android:theme="@style/popup"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".home.Bizreader_Activity.Bizreader_messag_Edit_Activity" />
+        <activity android:name=".home.Bizreader_Activity.Bizreader_edit11_Activity" />
+        <activity android:name=".home.Bizreader.fragment.Card_Frag_Activity" />
+        <activity android:name=".home.Bizreader_Activity.SsActivity" />
+        <activity
+            android:name=".home.Bizreader_Activity.PopupWin22_Activity"
+            android:theme="@style/popup"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".home.commonFuctions.myAttenDance.myatten.AttenCard_andit_Activity"></activity>
     </application>
 
 </manifest>

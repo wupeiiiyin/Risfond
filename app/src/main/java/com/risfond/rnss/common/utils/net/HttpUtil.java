@@ -2,9 +2,6 @@ package com.risfond.rnss.common.utils.net;
 
 import android.os.Environment;
 
-
-import com.risfond.rnss.common.utils.JsonUtil;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -17,10 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static android.R.attr.key;
 
 /**
  * Created by Abbott on 2017/3/24.

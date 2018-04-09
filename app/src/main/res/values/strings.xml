@@ -79,6 +79,10 @@
     <string name="collapse">收起</string>
     <string name="authentication_go">点击认证</string>
     <string name="authentication_success">已认证</string>
+    <string name="title_activity_name__card__scanner">Name_Card_ScannerActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

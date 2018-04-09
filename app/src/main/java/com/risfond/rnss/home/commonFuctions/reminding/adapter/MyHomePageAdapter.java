@@ -1,7 +1,6 @@
 package com.risfond.rnss.home.commonFuctions.reminding.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,51 +46,16 @@ public class MyHomePageAdapter extends BaseAdapter {
 
         if (i == 0) {
             holder.tv_item_hand.setVisibility(View.INVISIBLE);
+            holder.tv_item_foot.setVisibility(View.VISIBLE);
+
         }
-        if (i == list.size() - 1) {
-            holder.tv_item_foot.setVisibility(View.INVISIBLE);
-        }
-
-
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ttdbsqlite.deletetransaction(ids);
-//                notifyDataSetChanged();
-////                Intent intent = new Intent();
-////                intent.putExtra("key", 123);
-////                context.startActivity(intent);
-//            }
-//        });
-
-        /*btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ttdbsqlite.deletetransaction(ids.get(i));
-                if (getCount() == 0) {
-                    return;
-                } else {
-                    setDatas();
-                }
-
-            }
-        });*/
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = list.get(i);
-                String s1 = list2.get(i);
-                tv_item_content.setText(s);
-                tv_item_time.setText(s1);
-                Intent intent = new Intent(context, DetailsTimeActivity.class);
-                intent.putExtra("tv_itemcontent", s);
-                intent.putExtra("tv_itemtime", s1);
-                context.startActivity(intent);
-            }
-        });*/
-
+//        if (i == list.size() - 1) {
+//            holder.tv_item_foot.setVisibility(View.INVISIBLE);
+//        }
         holder.tv_item_content.setText(list.get(i) + "");//内容
-        holder.tv_item_time.setText(list2.get(i) + "");//时间
+        String s = list2.get(i);
+        String substring = s.substring(10);
+        holder.tv_item_time.setText(substring + "");//时间
 
         return view;
     }
@@ -117,27 +81,6 @@ public class MyHomePageAdapter extends BaseAdapter {
         this.list2 = list2;
         notifyDataSetChanged();
     }
-
-
-    public void setDatas() {
-        Cursor c;
-        c = ttdbsqlite.checktransaction();
-        c.moveToFirst();
-        list.clear();
-        list2.clear();
-        ids.clear();
-        while (c.moveToNext()) {
-            int id = c.getInt(c.getColumnIndex("_id"));
-            String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
-            String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
-
-            list2.add(time);
-            list.add(cursorString1);
-            ids.add(id);
-        }
-        notifyDataSetChanged();
-    }
-
     class ViewHolder {
         private TextView tv_item_content, tv_item_time, tv_item_hand, tv_item_foot;
 

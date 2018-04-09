@@ -3,6 +3,7 @@ package com.risfond.rnss.common.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.risfond.rnss.R;
 import com.risfond.rnss.entry.Login;
@@ -189,6 +190,7 @@ public class SPUtil {
      * @param context
      */
     public static String loadToken(Context context) {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("Token", "");
     }

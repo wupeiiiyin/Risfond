@@ -10,39 +10,45 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_blue"
-        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_back"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:onClick="back"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp">
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/back"/>
-        </LinearLayout>
 
         <TextView
             android:id="@+id/et_search"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/bg_home_search"
-            android:drawableLeft="@mipmap/home_search"
+            android:background="@drawable/bg_recommend_management_raly"
+            android:drawableLeft="@mipmap/ficonsearch"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="简历搜索（多个关键字用空格分隔）"
-            android:textColor="@color/color_resume_input_bg"
-            android:textSize="12sp"/>
+            android:textColor="@color/color_gray_black"
+            android:textSize="16dp"/>
 
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="back"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/color_blue"
+                android:textSize="18dp"
+                android:src="@mipmap/back"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:textSize="15sp"
+                android:textSize="34px"
                 android:textColor="@color/color_customer_black"
                 android:text="你可以搜索"/>
 
@@ -72,7 +78,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="17dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -80,9 +86,11 @@
                 android:id="@+id/tv_resume_search"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
+                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/aiconresume"
                 android:gravity="center_horizontal"
+                android:textColor="#646464"
+                android:textSize="13dp"
                 android:text="简历"/>
 
             <View
@@ -94,9 +102,10 @@
                 android:id="@+id/tv_customer_search"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
+                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/aiconcontact1"
                 android:gravity="center_horizontal"
+                android:textSize="13dp"
                 android:text="客户"/>
 
             <View
@@ -108,9 +117,10 @@
                 android:id="@+id/tv_position_search"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
+                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/aiconposition"
                 android:gravity="center_horizontal"
+                android:textSize="13dp"
                 android:text="职位"/>
 
             <View
@@ -122,9 +132,10 @@
                 android:id="@+id/tv_contacts_search"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
+                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/aiconcontact"
                 android:gravity="center_horizontal"
+                android:textSize="13dp"
                 android:text="联系人"/>
         </LinearLayout>
 
@@ -135,8 +146,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="13sp"
-            android:textColor="@color/color_customer_black"
+            android:textSize="14dp"
+            android:textColor="@color/color_gray_black"
             android:text="默认为简历搜索"/>
     </LinearLayout>
 

@@ -376,9 +376,6 @@ public class LeaveRequstActivity extends BaseActivity implements ResponseCallBac
                 .setSelectHour(date.get(3))
                 .setSelectMin(date.get(4));
 
-//        builder.setMaxYear(DateUtil.getYear());
-//        builder.setMaxMonth(DateUtil.getDateForString(DateUtil.getToday()).get(1));
-//        builder.setMaxDay(DateUtil.getDateForString(DateUtil.getToday()).get(2));
         dateDialog = builder.create();
         dateDialog.show();
     }

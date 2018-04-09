@@ -1,1 +1,1 @@
-include ':app', ':easeui', ':imageselector'
+include ':app', ':easeui', ':imageselector', ':ocr_ui', ':searchview', ':android-pickers'

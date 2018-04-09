@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.SwitchCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
@@ -21,11 +24,15 @@ import com.risfond.rnss.common.constant.URLConstant;
 import com.risfond.rnss.common.utils.AppManager;
 import com.risfond.rnss.common.utils.CallUtil;
 import com.risfond.rnss.common.utils.CommonUtil;
+import com.risfond.rnss.common.utils.DialogUtil;
 import com.risfond.rnss.common.utils.PropertiesUtil;
 import com.risfond.rnss.common.utils.SPUtil;
 import com.risfond.rnss.common.utils.ToastUtil;
 import com.risfond.rnss.common.utils.net.NetUtil;
 import com.risfond.rnss.entry.UserInfo;
+import com.risfond.rnss.home.Bizreader.fragment.Card_Frag_Activity;
+import com.risfond.rnss.home.Bizreader_Activity.CardcaseActivity;
+import com.risfond.rnss.home.Bizreader_Activity.Main2Activity;
 import com.risfond.rnss.home.commonFuctions.dynamics.activity.DynamicsActivity;
 import com.risfond.rnss.login.activity.LoginActivity;
 import com.risfond.rnss.message.activity.MainActivity;
@@ -34,14 +41,15 @@ import com.risfond.rnss.mine.activity.EvaluateViewActivity;
 import com.risfond.rnss.mine.modleImpl.UserInfoImpl;
 import com.risfond.rnss.mine.modleInterface.IUserInfo;
 import com.risfond.rnss.widget.CircleImageView;
-import com.risfond.rnss.common.utils.DialogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.os.Looper.getMainLooper;
@@ -87,6 +95,9 @@ public class MineFragment extends BaseFragment implements ResponseCallBack {
     TextView tvExit;
     @BindView(R.id.sw_close)
     SwitchCompat swClose;
+    @BindView(R.id.tv_Card)
+    TextView tvCard;
+    Unbinder unbinder;
 
     private Context context;
     private IUserInfo iUserInfo;
@@ -110,6 +121,8 @@ public class MineFragment extends BaseFragment implements ResponseCallBack {
                 SPUtil.saveCloseMsg(context, isChecked);
             }
         });
+//        LinearLayout ll_home = (LinearLayout) new MainActivity().findViewById(R.id.ll_home_heade_scroll);
+//        ll_home.setVisibility(View.GONE);
     }
 
     @Override
@@ -143,7 +156,7 @@ public class MineFragment extends BaseFragment implements ResponseCallBack {
     }
 
     @OnClick({R.id.iv_person_photo, R.id.tv_landline, R.id.tv_phone,
-            R.id.tv_my_dynamics, R.id.tv_about, R.id.tv_evaluate, R.id.tv_exit})
+            R.id.tv_my_dynamics, R.id.tv_about, R.id.tv_evaluate, R.id.tv_exit,R.id.tv_Card})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_person_photo://点击头像查看大图
@@ -178,6 +191,10 @@ public class MineFragment extends BaseFragment implements ResponseCallBack {
                         }
                     }
                 });
+                break;
+            case R.id.tv_Card:
+                startActivity(new Intent(getContext(), Card_Frag_Activity.class));
+//                startActivity(new Intent(getContext(), Main2Activity.class));
                 break;
             default:
                 break;
@@ -275,5 +292,19 @@ public class MineFragment extends BaseFragment implements ResponseCallBack {
     @Override
     public void onError(String str) {
         updateUI(str);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

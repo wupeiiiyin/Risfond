@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,11 +16,22 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.risfond.rnss.R;
 import com.risfond.rnss.base.BaseActivity;
+import com.risfond.rnss.common.constant.URLConstant;
+import com.risfond.rnss.common.utils.SPUtil;
+import com.risfond.rnss.common.utils.ToastUtil;
+import com.risfond.rnss.common.utils.net.HttpUtil;
+import com.risfond.rnss.common.utils.net.ResponseListener;
+import com.risfond.rnss.entry.DynamicsResponse;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.fragment.MyAskLeaveFragment;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.fragment.MyAttendanceFragment;
 import com.risfond.rnss.home.commonFuctions.myAttenDance.fragment.MyWentOutFragment;
+import com.risfond.rnss.home.commonFuctions.myAttenDance.myatten.AttenCard_andit_Activity;
+import com.risfond.rnss.home.commonFuctions.myAttenDance.myatten.myattenBean.Card_andit;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,9 +55,17 @@ public class MyAttendanceActivity extends BaseActivity {
     RelativeLayout mRlFloatView;
     @BindView(R.id.iv_button_leave)
     ImageView iv_button_leave;
+    @BindView(R.id.text_tonic_card)
+    TextView textTonicCard;
+    @BindView(R.id.tv_unread_number)
+    TextView tvUnreadNumber;
+    @BindView(R.id.tonic_lin)
+    LinearLayout tonicLin;
 
     private Context context;
     public static boolean isUpdate = false;
+    private String mToken;
+    private HashMap<String, String> request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +83,111 @@ public class MyAttendanceActivity extends BaseActivity {
         tvTitle.setVisibility(View.GONE);
         mllTvImg.setVisibility(View.VISIBLE);
         mtvTitleImg.setText("我的考勤");
-
+        initTonic();
         initFragment();
+    }
+
+    private void initTonic() {
+        mToken = SPUtil.loadToken(this);
+//        mToken = "hoEhUyjtvkOcmah2UeL7zg";
+//        mToken = "JxE2ji8d5Ees2bWZQlgW6xsQ";
+        request = new HashMap<>();
+        request.put("Staffid", String.valueOf(SPUtil.loadId(this)));
+//        request.put("Staffid", "2");
+//        request.put("Staffid", "4652");
+        HttpUtil.getInstance().requestService(URLConstant.AUDIT_AUTHORITY, request, mToken, new ResponseListener() {
+            @Override
+            public void onSuccess(String str) {
+                Log.e("TAG", "onSuccess:+绩效审核 " + str);
+                Gson gson = new Gson();
+                Card_andit card_andit = gson.fromJson(str, Card_andit.class);
+                final String message = card_andit.getMessage();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message.equals("有权限！")) {
+                            tonicLin.setVisibility(View.VISIBLE);
+                            initpricer();
+                            initTonicLisent();
+                        }
+                    }
+
+
+
+
+                });
+
+            }
+
+            @Override
+            public void onFailed(Throwable ex) {
+                Log.e("TAG", "onFailed:+绩效审核 :请求错误");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showShort(MyAttendanceActivity.this, "网络连接错误,请检查你的网络连接");
+                    }
+                });
+            }
+        });
+    }
+    private void initpricer() {
+                mToken = SPUtil.loadToken(this);
+//        mToken = "hoEhUyjtvkOcmah2UeL7zg";
+//        mToken = "JxE2ji8d5Ees2bWZQlgW6xsQ";
+        request = new HashMap<>();
+        request.put("Staffid", String.valueOf(SPUtil.loadId(this)));
+//        request.put("Staffid", "2");
+//        request.put("Staffid", "4652");
+        HttpUtil.getInstance().requestService(URLConstant.URL_GET_TOP_INTERACTION_V3, request, mToken, new ResponseListener() {
+            @Override
+            public void onSuccess(String str) {
+                Gson gson = new Gson();
+                DynamicsResponse dynamicsResponse = gson.fromJson(str, DynamicsResponse.class);
+                final int attendanceCount = dynamicsResponse.getAttendanceCount();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (attendanceCount!=0){
+                            tvUnreadNumber.setVisibility(View.VISIBLE);
+                            if (attendanceCount<=99){
+                                tvUnreadNumber.setText(attendanceCount+"");
+                            }else {
+                                tvUnreadNumber.setText("99+");
+                            }
+
+                        }else {
+                            tvUnreadNumber.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailed(Throwable ex) {
+
+            }
+        });
+    }
+    private void initTonicLisent() {
+        textTonicCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyAttendanceActivity.this, AttenCard_andit_Activity.class));
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(isUpdate){
+        if (isUpdate) {
             isUpdate = false;
             initFragment();
+
         }
+        initpricer();
     }
 
     private void initFragment() {
@@ -111,7 +225,7 @@ public class MyAttendanceActivity extends BaseActivity {
                 initmPopupWindowView();
                 popupwindow.showAsDropDown(v, 0, 5);
             }
-        }else if(v.getId() == R.id.iv_button_leave){
+        } else if (v.getId() == R.id.iv_button_leave) {
             LeaveRequstActivity.StartAction(context);
         }
     }

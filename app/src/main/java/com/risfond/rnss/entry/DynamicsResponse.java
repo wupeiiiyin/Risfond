@@ -29,6 +29,15 @@ public class DynamicsResponse {
     private Object Message;
     private int StatusCode;
     private List<Dynamics> Data;
+    private int AttendanceCount;
+
+    public int getAttendanceCount() {
+        return AttendanceCount;
+    }
+
+    public void setAttendanceCount(int attendanceCount) {
+        AttendanceCount = attendanceCount;
+    }
 
     public int getArticleCount() {
         return ArticleCount;

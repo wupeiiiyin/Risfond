@@ -1,10 +1,14 @@
 package com.risfond.rnss.home.commonFuctions.reminding.activity;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -89,7 +93,17 @@ public class RemindingActivity extends BaseActivity {
     private List<Integer> ids = new ArrayList<>();
     private TextView tv;
     private String TAG = "RemindingActivity";
+    private int id;
+    private String cursorString1;
 
+    private static String CALANDER_URL = "content://com.android.calendar/calendars";
+    private static String CALANDER_EVENT_URL = "content://com.android.calendar/events";
+    private static String CALANDER_REMIDER_URL = "content://com.android.calendar/reminders";
+
+    private static String CALENDARS_NAME = "test";
+    private static String CALENDARS_ACCOUNT_NAME = "test@gmail.com";
+    private static String CALENDARS_ACCOUNT_TYPE = "com.android.exchange";
+    private static String CALENDARS_DISPLAY_NAME = "测试账户";
     @Override
     public int getContentViewResId() {
         return R.layout.activity_reminding;
@@ -97,45 +111,14 @@ public class RemindingActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
-        c = ttdbsqlite.checktransaction();
-        c.moveToFirst();
+        initData();
+//        initadapter();
 
-        while (c.moveToNext()) {
-            int id = c.getInt(c.getColumnIndex("_id"));
-            String cursorString1 = c.getString(c.getColumnIndex("name"));//内容
-            String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
-            list_positionSearches_time.add(time);
-            list_positionSearches.add(cursorString1);
-            ids.add(id);
-        }
-        for (int i = 0; i < list_positionSearches_time.size(); i++) {
-            Log.i(TAG, "***init: " + list_positionSearches_time.get(i));
-        }
-        map = new HashMap<>();
-        map.put("list_positionSearches_time", list_positionSearches_time);
-        map.put("list_positionSearches", list_positionSearches);
-        map.put("id", ids);
-        if (list_positionSearches.size() > 0) {//-1
-            listRemindingItem.setVisibility(View.VISIBLE);
-            llRemingAffairs.setVisibility(View.VISIBLE);
-            tvAffairsleft.setVisibility(View.VISIBLE);
-            tvItemnumber.setVisibility(View.VISIBLE);
-            tvAffairsright.setVisibility(View.VISIBLE);
-            tvRemindingAddaffairs.setVisibility(View.GONE);
-            tvRemindingContext.setVisibility(View.GONE);
-            Adapter = new MyHomePageAdapter(list_positionSearches, this, list_positionSearches_time, ids, ttdbsqlite);
-            listRemindingItem.setAdapter(Adapter);
-        } else if (list_positionSearches.size() < 0) {
-            listRemindingItem.setVisibility(View.GONE);
-            llRemingAffairs.setVisibility(View.GONE);
-            tvAffairsleft.setVisibility(View.GONE);
-            tvItemnumber.setVisibility(View.GONE);
-            tvAffairsright.setVisibility(View.GONE);
-            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
-            tvRemindingContext.setVisibility(View.VISIBLE);
-        }
 
+    }
+
+    private void initData() {
+        initadapter();
 
         tvTitle.setText("事务提醒");
 
@@ -174,6 +157,7 @@ public class RemindingActivity extends BaseActivity {
                 deleteItem.setWidth(dp2px(90));
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
             }
         };
 
@@ -185,9 +169,31 @@ public class RemindingActivity extends BaseActivity {
                 switch (index) {
                     case 0:
                         //侧滑删除的操作.
+                        if (ttdbsqlite!=null){
                         ttdbsqlite.deletetransaction(ids.get(position));
                         map.remove(position);
-                        Adapter.notifyDataSetChanged();
+                        if (list_positionSearches!=null&&list_positionSearches.size()!=0){
+                            deleteCalendarEvent(getApplicationContext(),list_positionSearches.get(position));
+                            mCalendarDateView.setAdapter(new MyCaledarAdapter());
+
+                            initadapter();
+                            notifyAdapter(time);
+//                            initData();
+                        }
+                        }else {
+                            initadapter();
+                            listRemindingItem.setVisibility(View.GONE);
+                            llRemingAffairs.setVisibility(View.GONE);
+                            tvAffairsleft.setVisibility(View.GONE);
+                            tvItemnumber.setVisibility(View.GONE);
+                            tvAffairsright.setVisibility(View.GONE);
+                            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
+                            tvRemindingContext.setVisibility(View.VISIBLE);
+                        }
+
+
+//                        Adapter = new MyHomePageAdapter(list_positionSearches, RemindingActivity.this, list_positionSearches_time, ids, ttdbsqlite);
+//                        listRemindingItem.setAdapter(Adapter);
                         break;
                 }
                 return false;
@@ -200,12 +206,65 @@ public class RemindingActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(getApplicationContext(), i + " onItemClick", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), DetailsTimeActivity.class);
+                intent.putExtra("position",i);
                 intent.putExtra("tv_itemcontent", descs.get(i));
                 intent.putExtra("tv_itemtime", times.get(i));
                 startActivity(intent);
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        initData();
+        super.onResume();
+    }
+
+    private void initadapter() {
+        list_positionSearches_time.clear();
+        list_positionSearches.clear();
+        ids.clear();
+        ttdbsqlite = new TransactiondatabaseSQL(this.getApplication());
+        c = ttdbsqlite.checktransaction();
+        c.moveToFirst();
+
+        while (c.moveToNext()) {
+            id = c.getInt(c.getColumnIndex("_id"));
+            //内容
+            cursorString1 = c.getString(c.getColumnIndex("name"));
+            String time = c.getString(c.getColumnIndex("time"));//时间 年月日时分
+            Log.e("TAG+adap", "onMenuItemClick: "+time );
+            list_positionSearches_time.add(time);
+            list_positionSearches.add(cursorString1);
+            ids.add(id);
+        }
+        for (int i = 0; i < list_positionSearches_time.size(); i++) {
+            Log.e("TAG+adap", "onMenuItemClick: "+list_positionSearches_time.get(i) );
+        }
+        map = new HashMap<>();
+        map.put("list_positionSearches_time", list_positionSearches_time);
+        map.put("list_positionSearches", list_positionSearches);
+        map.put("id", ids);
+        if (list_positionSearches.size() >0) {//-1
+            listRemindingItem.setVisibility(View.VISIBLE);
+            llRemingAffairs.setVisibility(View.VISIBLE);
+            tvAffairsleft.setVisibility(View.VISIBLE);
+            tvItemnumber.setVisibility(View.VISIBLE);
+            tvAffairsright.setVisibility(View.VISIBLE);
+            tvRemindingAddaffairs.setVisibility(View.GONE);
+            tvRemindingContext.setVisibility(View.GONE);
+            Adapter = new MyHomePageAdapter(list_positionSearches, this, list_positionSearches_time, ids, ttdbsqlite);
+            listRemindingItem.setAdapter(Adapter);
+        } else if (list_positionSearches.size() < 0) {
+            listRemindingItem.setVisibility(View.GONE);
+            llRemingAffairs.setVisibility(View.GONE);
+            tvAffairsleft.setVisibility(View.GONE);
+            tvItemnumber.setVisibility(View.GONE);
+            tvAffairsright.setVisibility(View.GONE);
+            tvRemindingAddaffairs.setVisibility(View.VISIBLE);
+            tvRemindingContext.setVisibility(View.VISIBLE);
+        }
     }
 
     private int dp2px(int dp) {
@@ -338,11 +397,38 @@ public class RemindingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_reminding_addaffairs:
-//                startActivity(AddTheTransactionActivity.class, true);
+                startActivity(AddTheTransactionActivity.class, true);
                 break;
             case R.id.imageView:
-//                startActivity(AddTheTransactionActivity.class, true);
+                startActivity(AddTheTransactionActivity.class, true);
                 break;
+        }
+    }
+
+    public static void deleteCalendarEvent(Context context, String title) {
+        Cursor eventCursor = context.getContentResolver().query(Uri.parse(CALANDER_EVENT_URL), null, null, null, null);
+        try {
+            if (eventCursor == null)//查询返回空值
+                return;
+            if (eventCursor.getCount() > 0) {
+                //遍历所有事件，找到title跟需要查询的title一样的项
+                for (eventCursor.moveToFirst(); !eventCursor.isAfterLast(); eventCursor.moveToNext()) {
+                    String eventTitle = eventCursor.getString(eventCursor.getColumnIndex("title"));
+                    if (!TextUtils.isEmpty(title) && title.equals(eventTitle)) {
+                        int id = eventCursor.getInt(eventCursor.getColumnIndex(CalendarContract.Calendars._ID));//取得id
+                        Uri deleteUri = ContentUris.withAppendedId(Uri.parse(CALANDER_EVENT_URL), id);
+                        int rows = context.getContentResolver().delete(deleteUri, null, null);
+                        if (rows == -1) {
+                            //事件删除失败
+                            return;
+                        }
+                    }
+                }
+            }
+        } finally {
+            if (eventCursor != null) {
+                eventCursor.close();
+            }
         }
     }
 }

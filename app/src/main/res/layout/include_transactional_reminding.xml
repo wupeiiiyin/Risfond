@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_trans_remind"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp_10"
-              android:layout_marginRight="@dimen/dp_10"
-              android:layout_marginBottom="@dimen/dp_10"
-              android:background="@drawable/bg_cicle_bead"
-              android:orientation="vertical">
+    android:id="@+id/ll_trans_remind"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:background="@drawable/bg_cicle_bead"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             style="@style/home_header"
@@ -23,7 +23,7 @@
             android:drawableLeft="@mipmap/remind"
             android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="事务提醒"/>
+            android:text="事务提醒" />
 
         <TextView
             android:layout_width="match_parent"
@@ -33,35 +33,52 @@
             android:drawableRight="@mipmap/rs_right_more"
             android:gravity="right"
             android:text="更多"
-            android:textColor="@color/color_quick_resume_text"/>
+            android:textColor="@color/color_quick_resume_text" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/remind_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="暂无事务提醒,您是否立即添加"/>
+            android:text="暂无事务提醒,您是否立即添加" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/line_dimgray"/>
+            android:background="@color/line_dimgray" />
 
         <TextView
+            android:id="@+id/Immediately_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/color_resume_blue_txt"
-            android:text="+立即添加"/>
+            android:text="+立即添加"
+            android:textColor="@color/color_resume_blue_txt" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.risfond.rnss.home.commonFuctions.reminding.view.MySwipeMenuListview
+            android:id="@+id/list_reminding_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:divider="@null" />
+
+    </LinearLayout>
 </LinearLayout>

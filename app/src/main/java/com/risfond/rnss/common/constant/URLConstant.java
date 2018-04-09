@@ -9,7 +9,8 @@ import com.risfond.rnss.BuildConfig;
  */
 
 public class URLConstant {
-
+    //denugURL头
+    public static final String DEBUG_URL_TOP = "http://192.168.30.157:8006/";
     /* URL头*/
     public static final String URL_TOP = BuildConfig.HOST;
     /* H5 URL头*/
@@ -54,6 +55,7 @@ public class URLConstant {
     /* 账号或手机号登录接口URL*/
     public static final String URL_BLEND_LOGIN = URL_TOP + "user/blendlogin";
     public static final String URL_BLEND_LOGINV3 = URL_TOP + "user/blendloginv3";
+    // TODO: 2018/3/9
     /* 发送验证码接口URL*/
     public static final String URL_SEND_BY_BLEND = URL_TOP + "message/sendbyblend";
     /* 龙虎榜接口URL*/
@@ -192,4 +194,37 @@ public class URLConstant {
     public static final String URL_GETPERFORMANCE_PERCENTAGE = URL_TOP + "user/GetPerformancePercentage";
     /*回款 入职 签约 数据接口*/
     public static final String URL_RETURNMONEY = URL_TOP + "Operation/ReturnedMoney";
+    //名片扫描接口
+//    http://192.168.30.8:8888/index.php?s=/3&page_id=47
+//    public static final String URL_BIZREADER= URL_TOP + "BusinessCard/GetCardInfo";
+//    public static final String URL_BIZREADER= "http://192.168.30.157:8006/BusinessCard/GetCardInfo";
+//    public static final String URL_BIZREADER= "http://rnssapi.risfond.com/BusinessCard/GetCardInfo";
+    public static final String URL_BIZREADER = URL_TOP + "BusinessCard/GetCardInfo";
+    //编辑/
+    public static final String URL_ADDBIZREADER = URL_TOP + "BusinessCard/AddCard";
+    //添加分组接口
+    public static final String ADD_PACKET = URL_TOP + "BusinessCard/AddCardType";
+    //获取分组
+    public static final String GET_PACKET = URL_TOP + "BusinessCard/GetCardType";
+    //    删除分组
+    public static final String DELETE_PACKET = URL_TOP + "BusinessCard/DeleteCardType";
+    //查询名片列表
+    public static final String QUERY_CARDT = URL_TOP + "BusinessCard/GetCardList";
+    //查询单条名片
+    public static final String GET_CARD = URL_TOP + "BusinessCard/GetCard";
+    //删除名片
+    public static final String DELETE_CARD = URL_TOP + "BusinessCard/DeleteCard";
+    //修改名片分组
+    public static final String EDIT_CARD = URL_TOP + "BusinessCard/EditCard";
+    //验证是否有补打卡审核权限
+    public static final String AUDIT_AUTHORITY = URL_TOP + "Attendance/IsFillVacancyList";
+    //审核补打卡申请
+    public static final String CARD_APPLICATION = URL_TOP + "Attendance/AuditAttendanceFillVacancy";
+    //待审核不打卡列表
+    public static final String REVIEW_LIST = URL_TOP + "Attendance/GetFillVacancyList";
+    //补卡审批未读消息接口
+//    public static final String URL_GET_TOP_INTERACTION_V3 = URL_TOP + "Interaction/GetTopInteraction3";
+    //
+    public static final String URL_GET_TOP_INTERACTION_V3 = URL_TOP + "Interaction/GetTopInteraction3";
+
 }

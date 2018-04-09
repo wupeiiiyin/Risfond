@@ -30,5 +30,6 @@
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
     <dimen name="text_size_28">28sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

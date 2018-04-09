@@ -1,12 +1,18 @@
 package com.risfond.rnss.message.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -48,8 +54,8 @@ import com.risfond.rnss.mine.modleInterface.IUserInfo;
 import com.risfond.rnss.scan.IScan;
 import com.risfond.rnss.scan.ScanActivity;
 import com.risfond.rnss.scan.ScanImpl;
-import com.risfond.rnss.search.activity.SearchActivity;
 import com.risfond.rnss.update.UpdateManager;
+import com.risfond.rnss.widget.ScrollInterceptScrollView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,7 +100,34 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
     ImageView homeMore;
     @BindView(R.id.ll_home_header)
     LinearLayout llHomeHeader;
-
+    @BindView(R.id.id_title_rootview)
+    RelativeLayout titlerootview;
+    @BindView(R.id.tv_title_img)
+    TextView tvTitleImg;
+    @BindView(R.id.ll_tv_img)
+    LinearLayout llTvImg;
+    @BindView(R.id.iv_title_right)
+    ImageView ivTitleRight;
+    @BindView(R.id.ll_title_search)
+    LinearLayout llTitleSearch;
+    @BindView(R.id.ll_title_share)
+    LinearLayout llTitleShare;
+    @BindView(R.id.tv_right_text)
+    TextView tvRightText;
+    @BindView(R.id.ll_right_text)
+    LinearLayout llRightText;
+    @BindView(R.id.id_title_right)
+    LinearLayout idTitleRight;
+    @BindView(R.id.tv_home_search_scroll)
+    TextView tvHomeSearchScroll;
+    @BindView(R.id.home_scan_scroll)
+    ImageView homeScanScroll;
+    @BindView(R.id.home_more_scroll)
+    ImageView homeMoreScroll;
+    @BindView(R.id.ll_home_heade_scroll)
+    LinearLayout llHomeHeadeScroll;
+    @BindView(R.id.lin_main)
+    LinearLayout linMain;
     private Context context;
     private FragmentTransaction transaction;
     private MessageFragment messageFragment;
@@ -110,12 +143,14 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
     private List<EMConversation> emConversations = new ArrayList<>();
     private int tip;
     private EMMessageListener msgListener;
+    private Window window;
     /**
      * 扫描跳转Activity RequestCode
      */
     public static final int REQUEST_CODE = 111;
 
     private IScan iScan;
+    private boolean translucentStatus;
 
     @Override
     public int getContentViewResId() {
@@ -145,6 +180,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
 
         //提前初始化shareSDK
         MobSDK.init(context);
+
     }
 
     /**
@@ -217,9 +253,75 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
+    //scroolView滑动监听
     @Override
     protected void onResume() {
+
         super.onResume();
+        //        homeFragment.mScrollView.setOnScrollistener(new CustomScroller.OnScrollistener() {
+        //            @Override
+        //            public void onScroll(int startY, int endY) {
+        //                //根据scrollview滑动更改标题栏透明度
+        //                changeAphla(startY, endY);
+        //            }
+        //
+        //        });
+        //    }
+        //        homeFragment.mScrollView.setOnScrollistener(new ScrollInterceptScrollView.OnScrollistener() {
+        //            @Override
+        //            public void onScroll(int startY, int endY) {
+        //                //根据scrollview滑动更改标题栏透明度
+        //                changeAphla(startY, endY);
+        //            }
+        //        });
+        //    }
+        //        /**
+        //         * 根据内容窗体的移动改变标题栏背景透明度
+        //         *
+        //         * @param startY scrollview开始滑动的y坐标（相对值）
+        //         * @param endY   scrollview结束滑动的y坐标（相对值）
+        //         */
+        //    private void changeAphla(int startY, int endY) {
+        //        //获取标题高度
+        //        int titleHeight = llHomeHeader.getMeasuredHeight();
+        //        //获取背景高度
+        //        int backHeight = llHomeHeadeScroll.getMeasuredHeight();
+        //
+        //        //获取控件的绝对位置坐标
+        //        int[] location = new int[2];
+        //        llHomeHeadeScroll.getLocationInWindow(location);
+        //        //从屏幕顶部到控件顶部的坐标位置Y
+        //        int currentY = location[1];
+        //        //表示回到原位（滑动到顶部）
+        //        if (currentY >= 0) {
+        ////            title.getBackground().mutate().setAlpha(0);
+        //            llHomeHeader.setBackgroundColor(Color.WHITE);
+        //        }
+        homeFragment.mScrollView.setbanlaceInterface(new ScrollInterceptScrollView.isbanlanceInterface() {
+
+
+            @TargetApi(Build.VERSION_CODES.M)
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void isbanlce(float length) {
+                Log.d("滑动距离", length + "");
+                if (length >= 100) {
+                    llHomeHeadeScroll.setVisibility(View.VISIBLE);
+                    window = getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.setStatusBarColor(getResources().getColor(R.color.color_white));
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+                    return;
+                } else {
+                    llHomeHeadeScroll.setVisibility(View.GONE);
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.color_blue)); // 蓝色
+//                    getWindow().setStatusBarColor(ContextCompat.getDrawable(context,)));
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                }
+
+            }
+        });
         if (EMClient.getInstance().isLoggedInBefore()) {
             if (NetUtils.hasNetwork(context)) {
                 if (manager.dialog == null) {
@@ -235,6 +337,17 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
             initAllConversations();
         }
     }
+
+    //    //状态栏颜色设置
+    //    public void changeSystemBarColor() {
+    //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    //            setTranslucentStatus(true);
+    //            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+    //            tintManager.setStatusBarTintEnabled(true);
+    //            tintManager.setStatusBarTintResource(R.color.colorAccent);//通知栏所需颜色
+    //        }
+    //
+    //    }
 
     private void requestService() {
         request.put("id", String.valueOf(SPUtil.loadId(context)));
@@ -283,10 +396,14 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
      *
      * @param str
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void titleName(String str) {
-        tvTitle.setText(str);
-        tvTitle.setVisibility(View.VISIBLE);
         llHomeHeader.setVisibility(View.GONE);
+        llHomeHeadeScroll.setVisibility(View.GONE);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.color_blue)); // 蓝色
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText(str);
     }
 
     @OnClick({R.id.tv_home_search, R.id.home_scan})
@@ -332,32 +449,58 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @OnCheckedChanged({R.id.rb_home, R.id.rb_message, R.id.rb_contacts, R.id.rb_mine})
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.rb_home:
+
                 if (isChecked) {
+//                    llHomeHeader.setVisibility(View.VISIBLE);
+//                    llHomeHeadeScroll.setVisibility(View.VISIBLE);
+//                    llBack.setVisibility(View.GONE);
+//                    tvTitle.setVisibility(View.GONE);
                     showHomeSearch();
                     initHomeFragment();
                     homeChecked();
+
                 }
                 break;
             case R.id.rb_message:
+
                 if (isChecked) {
+                    llHomeHeader.setVisibility(View.GONE);
+                    llHomeHeadeScroll.setVisibility(View.GONE);
+                    llBack.setVisibility(View.VISIBLE);
+                    tvTitle.setVisibility(View.VISIBLE);
                     titleName("消息");
                     initMessageFragment();
                     messageChecked();
+
                 }
                 break;
             case R.id.rb_contacts:
+
+
                 if (isChecked) {
+                    llHomeHeader.setVisibility(View.GONE);
+                    llHomeHeadeScroll.setVisibility(View.GONE);
+                    llBack.setVisibility(View.VISIBLE);
+                    tvTitle.setVisibility(View.VISIBLE);
                     titleName("联系人");
+
                     initContactsFragment();
                     contactsChecked();
+
                 }
                 break;
             case R.id.rb_mine:
+
                 if (isChecked) {
+                    llHomeHeader.setVisibility(View.GONE);
+                    llHomeHeadeScroll.setVisibility(View.GONE);
+                    llBack.setVisibility(View.VISIBLE);
+                    tvTitle.setVisibility(View.VISIBLE);
                     titleName("");
                     initMineFragment();
                     mineChecked();
@@ -367,7 +510,14 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
                 break;
         }
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void initTitle(){
+        llHomeHeadeScroll.setVisibility(View.VISIBLE);
+        window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.color_white));
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
     //显示主页
     private void initHomeFragment() {
         transaction = getSupportFragmentManager().beginTransaction();
@@ -382,6 +532,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
         transaction.show(homeFragment);
         //提交事务
         transaction.commit();
+
     }
 
     //显示消息
@@ -393,6 +544,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
             messageFragment = new MessageFragment();
             messageFragment.setArguments(bundle);
             transaction.add(R.id.fl_chat, messageFragment);
+            llHomeHeader.setVisibility(View.GONE);
         }
         hideFragment(transaction);
         transaction.show(messageFragment);
@@ -402,6 +554,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
 
     //显示联系人
     private void initContactsFragment() {
+
         transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         //第一种方式（add），初始化fragment并添加到事务中，如果为null就new一个
@@ -418,6 +571,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
 
     //显示我的
     private void initMineFragment() {
+
         transaction = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         //第一种方式（add），初始化fragment并添加到事务中，如果为null就new一个
@@ -429,6 +583,7 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
         }
         hideFragment(transaction);
         transaction.show(mineFragment);
+
         //提交事务
         transaction.commit();
     }
@@ -600,5 +755,29 @@ public class MainActivity extends BaseActivity implements ResponseCallBack, Scan
                 ToastUtil.showShort(context, "登录失败");
             }
         });
+    }
+
+    public void setTranslucentStatus(boolean translucentStatus) {
+        this.translucentStatus = translucentStatus;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    class GameThread implements Runnable {
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }   // 使用postInvalidate可以直接在线程中更新界面
+                linMain.postInvalidate();
+            }
+        }
     }
 }

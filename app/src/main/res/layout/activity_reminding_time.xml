@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:text="不提醒"
+            android:text="事务开始时"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:layout_weight="1"
